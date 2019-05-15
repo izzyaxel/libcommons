@@ -8,7 +8,7 @@ elseif(APPLE)
 endif()
 project(commons)
 set(CMAKE_CXX_STANDARD 17)
-add_library(commons STATIC
+add_library(${PROJECT_NAME} STATIC
 		src/commons/serialization.hh
 		src/buffer.cc src/commons/buffer.hh
 		src/misc.cc src/commons/misc.hh
