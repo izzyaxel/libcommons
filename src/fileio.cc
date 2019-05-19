@@ -60,24 +60,28 @@ FILE* openFile(std::string const &name, std::string const &mode)
 	return out;
 }
 
-void readFile(FILE *file, void *destBuffer, size_t amount, size_t acceptableTimeouts)
+size_t readFile(FILE *file, void *destBuffer, size_t amount, size_t acceptableTimeouts)
 {
-	size_t amtRead = 0, timeoutCounter = 0;
+	size_t amtRead = 0, timeoutCounter = 0, out = 0;
 	do
 	{
 		if(timeoutCounter >= acceptableTimeouts) throw std::runtime_error("Unable to read from file, timed out after " + std::to_string(acceptableTimeouts) + " 0-length reads");
 		amtRead = fread(destBuffer, 1, amount - amtRead, file);
+		out += amtRead;
 		if(amtRead == 0) timeoutCounter++;
 	} while(amtRead < amount);
+	return out;
 }
 
-void writeFile(FILE *file, void const *inputBuffer, size_t amount, size_t acceptableTimeouts)
+size_t writeFile(FILE *file, void const *inputBuffer, size_t amount, size_t acceptableTimeouts)
 {
-	size_t amtWritten = 0, timeoutCounter = 0;
+	size_t amtWritten = 0, timeoutCounter = 0, out = 0;
 	do
 	{
 		if(timeoutCounter >= acceptableTimeouts) throw std::runtime_error("Unable to write to file, timed out after " + std::to_string(acceptableTimeouts) + " 0-length writes");
 		amtWritten = fwrite(inputBuffer, 1, amount - amtWritten, file);
+		out += amtWritten;
 		if(amtWritten == 0) timeoutCounter++;
 	} while(amtWritten < amount);
+	return out;
 }

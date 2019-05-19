@@ -31,10 +31,10 @@ FILE *openFile(std::string const &name, std::string const &mode);
 /// \param file 
 /// \param destBuffer 
 /// \param amount 
-void readFile(FILE *file, void *destBuffer, size_t amount, size_t acceptableTimeouts = 10);
+size_t readFile(FILE *file, void *destBuffer, size_t amount, size_t acceptableTimeouts = 10);
 
 /// Continues writing until a timeout condition has been met or the data has successfully been written
 /// \param file 
 /// \param inputBuffer 
 /// \param amount 
-void writeFile(FILE *file, void const *inputBuffer, size_t amount, size_t acceptableTimeouts = 10);
+size_t writeFile(FILE *file, void const *inputBuffer, size_t amount, size_t acceptableTimeouts = 10);
