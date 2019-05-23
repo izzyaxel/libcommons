@@ -16,4 +16,17 @@ add_library(${PROJECT_NAME} STATIC
 		src/fileio.cc src/commons/fileio.hh
 		src/logger.cc src/commons/logger.hh
 		src/scheduling.cc src/commons/scheduling.hh
-		src/threadpool.cc src/commons/threadpool.hh)
+		src/threadpool.cc src/commons/threadpool.hh
+		
+		src/commons/math/compound.hh
+		src/commons/math/general.hh
+		src/commons/math/glmconversion.hh
+		src/commons/math/interpolation.hh
+		src/commons/math/mat3.hh
+		src/commons/math/mat4.hh
+		src/commons/math/quaternion.hh
+		src/commons/math/shapes.hh
+		src/commons/math/util.hh
+		src/commons/math/vec2.hh
+		src/commons/math/vec3.hh
+		src/commons/math/vec4.hh)

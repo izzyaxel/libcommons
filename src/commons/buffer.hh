@@ -5,7 +5,7 @@
 #include <vector>
 #include <cstdint>
 
-struct Buffer : public Serializable
+struct Buffer : public Serializable //TODO finish buffer
 {
 	void serialize(Serializer &serializer) override;
 	void deserialize(Serializer &serializer) override;
