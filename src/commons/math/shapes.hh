@@ -32,11 +32,11 @@ template<typename T> struct linesegment2D
 		float y1 = this->point1.y(), y2 = this->point2.y(), y3 = other.point1.y(), y4 = other.point2.y();
 		float pre = (x1 * y2 - y1 * x2), post = (x3 * y4 - y3 * x4);
 		float det = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
-		if (det == 0) return false;
+		if(det == 0) return false;
 		float x = (pre * (x3 - x4) - (x1 - x2) * post) / det;
 		float y = (pre * (y3 - y4) - (y1 - y2) * post) / det;
-		if (x < std::min(x1, x2) || x > std::max(x1, x2) || x < std::min(x3, x4) || x > std::max(x3, x4)) return false;
-		if (y < std::min(y1, y2) || y > std::max(y1, y2) || y < std::min(y3, y4) || y > std::max(y3, y4)) return false;
+		if(x < std::min(x1, x2) || x > std::max(x1, x2) || x < std::min(x3, x4) || x > std::max(x3, x4)) return false;
+		if(y < std::min(y1, y2) || y > std::max(y1, y2) || y < std::min(y3, y4) || y > std::max(y3, y4)) return false;
 		out = {x, y};
 		return true;
 	}
@@ -55,8 +55,8 @@ template<typename T> struct aabb2D
 		this->maxX = maxX;
 		this->minY = minY;
 		this->maxY = maxY;
-		this->centerX = (maxX - minX) / static_cast<T>(2.0);
-		this->centerY = (maxY - minY) / static_cast<T>(2.0);
+		this->centerX = (maxX - minX) / (T)2.0;
+		this->centerY = (maxY - minY) / (T)2.0;
 	}
 	
 	inline constexpr aabb2D(T minX, T maxX, T minY, T maxY, T centerX, T centerY)
@@ -73,7 +73,7 @@ template<typename T> struct aabb2D
 	{
 		this->centerX = center.x();
 		this->centerY = center.y();
-		T halfX = dimensions.x() / static_cast<T>(2), halfY = dimensions.y() / static_cast<T>(2);
+		T halfX = dimensions.x() / (T)2, halfY = dimensions.y() / (T)2;
 		this->minX = this->centerX - halfX;
 		this->maxX = this->centerX + halfX;
 		this->minY = this->centerY - halfY;
@@ -87,8 +87,8 @@ template<typename T> struct aabb2D
 		this->maxX = maxX;
 		this->minY = minY;
 		this->maxY = maxY;
-		this->centerX = (maxX - minX) / static_cast<T>(2.0);
-		this->centerY = (maxY - minY) / static_cast<T>(2.0);
+		this->centerX = (maxX - minX) / (T)2.0;
+		this->centerY = (maxY - minY) / (T)2.0;
 	}
 	
 	inline void offset(T xOffset, T yOffset)
@@ -97,8 +97,8 @@ template<typename T> struct aabb2D
 		this->maxX += xOffset;
 		this->minY += yOffset;
 		this->maxY += yOffset;
-		this->centerX = (maxX - minX) / static_cast<T>(2.0);
-		this->centerY = (maxY - minY) / static_cast<T>(2.0);
+		this->centerX = (maxX - minX) / (T)2.0;
+		this->centerY = (maxY - minY) / (T)2.0;
 	}
 	
 	/// Check if this AABB contains a given point
@@ -117,7 +117,7 @@ template<typename T> struct aabb2D
 	inline bool isIntersecting(circle<T> const &other)
 	{
 		aabb2D<T> broadOther = aabb2D<T>(other.center.x() - other.radius, other.center.x() + other.radius, other.center.y() - other.radius, other.center.y() + other.radius);
-		if (!this->isIntersecting(broadOther)) return false;
+		if(!this->isIntersecting(broadOther)) return false;
 		vec2<T> ul = {this->minX, this->maxY};
 		vec2<T> ur = {this->maxX, this->maxY};
 		vec2<T> ll = {this->minX, this->minY};
@@ -155,9 +155,9 @@ template<typename T> struct aabb3D
 		this->maxY = maxY;
 		this->minZ = minZ;
 		this->maxZ = maxZ;
-		this->centerX = (maxX - minX) / static_cast<T>(2.0);
-		this->centerY = (maxY - minY) / static_cast<T>(2.0);
-		this->centerZ = (maxZ - minZ) / static_cast<T>(2.0);
+		this->centerX = (maxX - minX) / (T)2.0;
+		this->centerY = (maxY - minY) / (T)2.0;
+		this->centerZ = (maxZ - minZ) / (T)2.0;
 	}
 	
 	/// Check if this AABB contains a given point
@@ -203,7 +203,7 @@ template<typename T> struct circle
 	{
 		aabb2D<T> broadThis = aabb2D<T>(this->center.x() - this->radius, this->center.x() + this->radius, this->center.y() - this->radius, this->center.y() + this->radius);
 		aabb2D<T> broadOther = aabb2D<T>(other.center.x() - other.radius, other.center.x() + other.radius, other.center.y() - other.radius, other.center.y() + other.radius);
-		if (!broadThis.isIntersecting(broadOther)) return false;
+		if(!broadThis.isIntersecting(broadOther)) return false;
 		T a = (this->center.x() - other.center.x()) * (this->center.x() - other.center.x());
 		T b = (this->center.y() - other.center.y()) * (this->center.y() - other.center.y());
 		T distance = std::sqrt(a + b);
@@ -219,8 +219,8 @@ template<typename T> struct circle
 		dR = std::sqrt((dX * dX) + (dY * dY));
 		D = (other.point1.x() * other.point2.y()) - (other.point2.x() * other.point1.y());
 		incidence = (this->radius * this->radius) * (dR * dR) - (D * D);
-		if (incidence < 0) return false;
-		else if (incidence == 0) return false;
+		if(incidence < 0) return false;
+		else if(incidence == 0) return false;
 		else //TODO finish
 		{
 			/*outFirst.x() = ((D * dY) + sign<T>(dY) * dX * std::sqrt(((this->radius * this->radius) * (dR * dR)) - (D * D))) / (dR * dR);
@@ -235,25 +235,25 @@ template<typename T> struct circle
 	inline bool isIntersecting(aabb2D<T> const &other) //TODO optimization
 	{
 		//broad phase
-		if (this->containsPoint({other.centerX, other.centerY})) return true;
+		if(this->containsPoint({other.centerX, other.centerY})) return true;
 		aabb2D<T> broadThis = aabb2D<T>(this->center.x() - this->radius, this->center.x() + this->radius, this->center.y() - this->radius, this->center.y() + this->radius);
-		if (!broadThis.isIntersecting(other)) return false;
+		if(!broadThis.isIntersecting(other)) return false;
 		
 		vec2<T> ul = {other.minX, other.maxY};
-		if (this->containsPoint(ul)) return true;
+		if(this->containsPoint(ul)) return true;
 		vec2<T> ur = {other.maxX, other.maxY};
-		if (this->containsPoint(ur)) return true;
+		if(this->containsPoint(ur)) return true;
 		vec2<T> ll = {other.minX, other.minY};
-		if (this->containsPoint(ll)) return true;
+		if(this->containsPoint(ll)) return true;
 		vec2<T> lr = {other.maxX, other.maxY};
-		if (this->containsPoint(lr)) return true;
+		if(this->containsPoint(lr)) return true;
 		
 		linesegment2D<T> top = linesegment2D<T>(ul, ur);
-		if (this->isIntersecting(top)) return true;
+		if(this->isIntersecting(top)) return true;
 		linesegment2D<T> bottom = linesegment2D<T>(ll, lr);
-		if (this->isIntersecting(bottom)) return true;
+		if(this->isIntersecting(bottom)) return true;
 		linesegment2D<T> right = linesegment2D<T>(ur, lr);
-		if (this->isIntersecting(right)) return true;
+		if(this->isIntersecting(right)) return true;
 		linesegment2D<T> left = linesegment2D<T>(ul, ll);
 		return this->isIntersecting(left);
 	}

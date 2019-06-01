@@ -154,7 +154,7 @@ template<typename T> struct vec3
 	
 	inline constexpr vec3<T>() = default;
 	
-	template<typename U> constexpr vec3<T>(vec3<U> const &other)
+	template<typename U> constexpr explicit vec3<T>(vec3<U> const &other)
 	{
 		this->data[0] = other.data[0];
 		this->data[1] = other.data[1];
@@ -169,7 +169,7 @@ template<typename T> struct vec3
 		this->data[2] = z;
 	}
 	
-	constexpr inline vec3<T>(T const &scalar)
+	constexpr inline explicit vec3<T>(T const &scalar)
 	{
 		this->data[0] = scalar;
 		this->data[1] = scalar;
@@ -184,7 +184,7 @@ template<typename T> struct vec3
 	}
 	
 	/// Truncate a v4 to a v3
-	constexpr inline vec3<T>(vec4<T> const &trunc)
+	constexpr inline explicit vec3<T>(vec4<T> const &trunc)
 	{
 		this->data[0] = trunc.x();
 		this->data[1] = trunc.y();
@@ -223,7 +223,7 @@ template<typename T> struct vec3
 	/// Add a scalar number to this v3
 	inline vec3<T> operator+(T const &scalar) const
 	{
-		return vec3<T>{static_cast<T>(this->data[0] + scalar), static_cast<T>(this->data[1] + scalar), static_cast<T>(this->data[2] + scalar)};
+		return vec3<T>{(T)(this->data[0] + scalar), (T)(this->data[1] + scalar), (T)(this->data[2] + scalar)};
 	}
 	
 	/// Subtract this v3 from another
@@ -235,7 +235,7 @@ template<typename T> struct vec3
 	/// Subtract a scalar number from this v3
 	inline vec3<T> operator-(T const &scalar) const
 	{
-		return vec3<T>{static_cast<T>(this->data[0] - scalar), static_cast<T>(this->data[1] - scalar), static_cast<T>(this->data[2] - scalar)};
+		return vec3<T>{(T)(this->data[0] - scalar), (T)(this->data[1] - scalar), (T)(this->data[2] - scalar)};
 	}
 	
 	/// Negate this v3
@@ -253,13 +253,13 @@ template<typename T> struct vec3
 	/// Multiply this v3 by a scalar number
 	inline vec3<T> operator*(T scalar) const
 	{
-		return vec3<T>{static_cast<T>(this->data[0] * scalar), static_cast<T>(this->data[1] * scalar), static_cast<T>(this->data[2] * scalar)};
+		return vec3<T>{(T)(this->data[0] * scalar), (T)(this->data[1] * scalar), (T)(this->data[2] * scalar)};
 	}
 	
 	inline vec3<T> operator*(quat<T> const &in)
 	{
 		vec3<T> q{in[0], in[1], in[2]};
-		vec3<T> w1 = this->cross(q) * static_cast<T>(2);
+		vec3<T> w1 = this->cross(q) * (T)(2);
 		return *this + w1 * in[3] + w1.cross(q);
 	}
 	
@@ -272,7 +272,7 @@ template<typename T> struct vec3
 	/// Divide this v3 by a scalar number
 	inline vec3<T> operator/(T const &scalar) const
 	{
-		return vec3<T>{static_cast<T>(this->data[0] / scalar), static_cast<T>(this->data[1] / scalar), static_cast<T>(this->data[2] / scalar)};
+		return vec3<T>{(T)(this->data[0] / scalar), (T)(this->data[1] / scalar), (T)(this->data[2] / scalar)};
 	}
 	
 	/// Compound add this v3 to another
@@ -321,7 +321,7 @@ template<typename T> struct vec3
 	}
 	
 	/// Increment all values in this v3 (postfix)
-	inline vec3<T> &operator++(int)
+	inline vec3<T> const operator++(int)
 	{
 		vec3<T> out = *this;
 		this->data[0]++;
@@ -340,7 +340,7 @@ template<typename T> struct vec3
 	}
 	
 	/// Decrement all values in this v3 (postfix)
-	inline vec3<T> &operator--(int)
+	inline vec3<T> const operator--(int)
 	{
 		vec3<T> out = *this;
 		this->data[0]--;

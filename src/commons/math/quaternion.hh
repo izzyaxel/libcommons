@@ -63,39 +63,39 @@ template<typename T> struct quat
 	}
 	
 	/// Convert a 4x4 matrix to a quaternion (this discards all non-rotation/orientation data)
-	constexpr inline quat<T>(mat4x4<T> const &in)
+	constexpr inline explicit quat<T>(mat4x4<T> const &in)
 	{
 		T trace = in[0][0] + in[1][1] + in[2][2];
 		if (trace > 0)
 		{
-			T root = static_cast<T>(2) * std::sqrt(trace + static_cast<T>(1));
+			T root = (T)2 * std::sqrt(trace + (T)1);
 			this->data[0] = (in[2][1] - in[1][2]) / root;
 			this->data[1] = (in[0][2] - in[2][0]) / root;
 			this->data[2] = (in[1][0] - in[0][1]) / root;
-			this->data[3] = root / static_cast<T>(4);
+			this->data[3] = root / (T)4;
 		}
 		else if (in[0][0] > in[1][1] && in[0][0] > in[2][2])
 		{
-			T root = static_cast<T>(2) * std::sqrt(static_cast<T>(1) + in[0][0] - in[1][1] - in[2][2]);
-			this->data[0] = root / static_cast<T>(4);
+			T root = (T)2 * std::sqrt((T)1 + in[0][0] - in[1][1] - in[2][2]);
+			this->data[0] = root / (T)4;
 			this->data[1] = (in[0][1] + in[1][0]) / root;
 			this->data[2] = (in[0][2] + in[2][0]) / root;
 			this->data[3] = (in[2][1] - in[1][2]) / root;
 		}
 		else if (in[1][1] > in[2][2])
 		{
-			T root = static_cast<T>(2) * std::sqrt(static_cast<T>(1) + in[1][1] - in[0][0] - in[2][2]);
+			T root = (T)2 * std::sqrt((T)1 + in[1][1] - in[0][0] - in[2][2]);
 			this->data[0] = (in[0][1] + in[1][0]) / root;
-			this->data[1] = root / static_cast<T>(4);
+			this->data[1] = root / (T)4;
 			this->data[2] = (in[1][2] + in[2][1]) / root;
 			this->data[3] = (in[0][2] - in[2][0]) / root;
 		}
 		else
 		{
-			T root = static_cast<T>(2) * std::sqrt(static_cast<T>(1) + in[2][2] - in[0][0] - in[1][1]);
+			T root = (T)2 * std::sqrt((T)1 + in[2][2] - in[0][0] - in[1][1]);
 			this->data[0] = (in[0][2] + in[2][0]) / root;
 			this->data[1] = (in[1][2] + in[2][1]) / root;
-			this->data[2] = root / static_cast<T>(4);
+			this->data[2] = root / (T)4;
 			this->data[3] = (in[1][0] - in[0][1]) / root;
 		}
 	}
@@ -151,7 +151,7 @@ template<typename T> struct quat
 	{
 		vec3<T> q = {this->data[0], this->data[1], this->data[2]};
 		vec3<T> c = other.cross(q);
-		vec3<T> w1 = c * static_cast<T>(2);
+		vec3<T> w1 = c * (T)2;
 		return other + w1 * this->data[3] + w1.cross(q);
 	}
 	
@@ -215,8 +215,8 @@ template<typename T> struct quat
 	/// Convert this quaternion into euler angles (in radians)
 	inline vec3<T> toEuler() const
 	{
-		T one = static_cast<T>(1);
-		T two = static_cast<T>(2);
+		T one = (T)1;
+		T two = (T)2;
 		T sinr = two * (this->w() * this->x() + this->y() * this->z());
 		T cosr = one - (two * (this->x() * this->x() + this->y() * this->y()));
 		T roll = std::atan2(sinr, cosr);
@@ -254,7 +254,7 @@ template<typename T> struct quat
 	inline vec4<T> toAxial() const
 	{
 		float angle, divisor, x, y, z;
-		angle = static_cast<T>(2) * std::acos(this->w());
+		angle = (T)2 * std::acos(this->w());
 		divisor = std::sqrt(1 - (this->w() * this->w()));
 		if( divisor < 0.001f)
 		{
@@ -273,7 +273,7 @@ template<typename T> struct quat
 	
 	inline void fromAxial(vec4<T> const &in)
 	{
-		float a = in[3] / static_cast<T>(2);
+		float a = in[3] / (T)2;
 		float s = std::sin(a);
 		this->data[0] = in[0] * s;
 		this->data[1] = in[1] * s;
@@ -285,7 +285,7 @@ template<typename T> struct quat
 	/// Convert an axial rotation into a rotation quaternion
 	inline void fromAxial(T const &xIn, T const &yIn, T const &zIn, T const &angle)
 	{
-		float a = angle / static_cast<T>(2);
+		float a = angle / (T)2;
 		float s = std::sin(a);
 		this->data[0] = xIn * s;
 		this->data[1] = yIn * s;
@@ -297,7 +297,7 @@ template<typename T> struct quat
 	/// Convert an axial rotation into a rotation quaternion
 	inline void fromAxial(vec3<T> const &xyzIn, T const &angle)
 	{
-		float a = angle / static_cast<T>(2);
+		float a = angle / (T)2;
 		float s = std::sin(a);
 		this->data[0] = xyzIn[0] * s;
 		this->data[1] = xyzIn[1] * s;
@@ -332,7 +332,7 @@ template<typename T> struct quat
 	}
 	
 	/// A cumulative version of lookAt
-	inline static quat<T> lookAt(vec3<T> originPos, vec3<T> targetPos, quat<T> const &currentRotation, T lerp = static_cast<T>(1))
+	inline static quat<T> lookAt(vec3<T> originPos, vec3<T> targetPos, quat<T> const &currentRotation, T lerp = (T)1)
 	{
 		vec3<T> frontTo = vec3<T>{targetPos - originPos}.normalized() * currentRotation.conjugated();
 		return vecDelta({0, 0, 1}, frontTo, lerp);
@@ -348,7 +348,7 @@ template<typename T> struct quat
 		return quat<T>{xQuat * yQuat}.normalized();
 	}
 	
-	inline static quat<T> vecDelta(vec3<T> from, vec3<T> to, T lerp = static_cast<T>(1))
+	inline static quat<T> vecDelta(vec3<T> from, vec3<T> to, T lerp = (T)1)
 	{
 		if (lerp < 0) lerp = 0;
 		if (lerp > 1) lerp = 1;
@@ -363,7 +363,7 @@ template<typename T> struct quat
 		return axialToQuat(rotAxis.x(), rotAxis.y(), rotAxis.z(), rot * lerp);
 	}
 	
-	inline quat<T> limitRotationRange(vec3<T> up, T angleLimit, T lerp = static_cast<T>(1))
+	inline quat<T> limitRotationRange(vec3<T> up, T angleLimit, T lerp = (T)1)
 	{
 		vec3<T> upQ = -up * this->conjugated();
 		upQ.normalize();
@@ -379,7 +379,7 @@ template<typename T> struct quat
 		return out;
 	}
 	
-	inline quat<T> correctOrientation(vec3<T> up, T lerp = static_cast<T>(1))
+	inline quat<T> correctOrientation(vec3<T> up, T lerp = (T)1)
 	{
 		vec3<T> upQ = up * this->conjugated();
 		upQ.normalize();

@@ -6,19 +6,19 @@
 /// Uses an int64_t for the base and a float or double offset from the base to minimize rounding errors
 template <typename T> struct Compound
 {
-	int64_t base;
-	T offset;
+	int64_t base = 0;
+	T offset = 0;
 	
 	/// Specialization conversion constructor
-	template <typename U> Compound<T>(Compound<U> const &other)
+	template <typename U> explicit Compound<T>(Compound<U> const &other)
 	{
 		this->base = other.base;
 		this->offset = other.offset;
 	}
 	
-	Compound(T in)
+	explicit Compound(T in)
 	{
-		this->base = static_cast<int64_t>(std::floor(in));
+		this->base = (int64_t)std::floor(in);
 		this->offset = in - this->base;
 	}
 	
@@ -105,12 +105,12 @@ template <typename T> struct Compound
 	/// Get the scalar value from this Compound
 	inline T scalar()
 	{
-		return static_cast<T>(this->base + this->offset);
+		return (T)this->base + this->offset;
 	}
 	
 	/// Get the specialized scalar value from this Compound
 	template <typename U> U scalar()
 	{
-		return static_cast<U>(this->base + this->offset);
+		return (U)this->base + this->offset;
 	}
 };

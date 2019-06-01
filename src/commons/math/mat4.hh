@@ -23,7 +23,7 @@ template<typename T> struct mat4x4
 	inline constexpr mat4x4<T>() = default;
 	
 	/// Specialization conversion constructor
-	template<typename U> constexpr mat4x4<T>(mat4x4<U> const &other)
+	template<typename U> constexpr explicit mat4x4<T>(mat4x4<U> const &other)
 	{
 		this->data[0][0] = other.data[0][0];
 		this->data[0][1] = other.data[0][1];
@@ -67,7 +67,7 @@ template<typename T> struct mat4x4
 	}
 	
 	/// Convert a quaternion to a 4x4 matrix
-	constexpr inline mat4x4<T>(quat<T> const &in)
+	constexpr inline explicit mat4x4<T>(quat<T> const &in)
 	{
 		T sqx = in.data[0] * in.data[0];
 		T sqy = in.data[1] * in.data[1];
@@ -78,16 +78,16 @@ template<typename T> struct mat4x4
 		this->data[2][2] = -sqx - sqy + sqz + sqw;
 		T t1 = in.data[0] * in.data[1];
 		T t2 = in.data[2] * in.data[3];
-		this->data[1][0] = ((T) 2) * (t1 + t2);
-		this->data[0][1] = ((T) 2) * (t1 - t2);
+		this->data[1][0] = ((T)2 * (t1 + t2));
+		this->data[0][1] = ((T)2 * (t1 - t2));
 		t1 = in.data[0] * in.data[2];
 		t2 = in.data[1] * in.data[3];
-		this->data[2][0] = ((T) 2) * (t1 - t2);
-		this->data[0][2] = ((T) 2) * (t1 + t2);
+		this->data[2][0] = (T)2 * (t1 - t2);
+		this->data[0][2] = (T)2 * (t1 + t2);
 		t1 = in.data[1] * in.data[2];
 		t2 = in.data[0] * in.data[3];
-		this->data[2][1] = ((T) 2) * (t1 + t2);
-		this->data[1][2] = ((T) 2) * (t1 - t2);
+		this->data[2][1] = (T)2 * (t1 + t2);
+		this->data[1][2] = (T)2 * (t1 - t2);
 	}
 	
 	/// Copy constructor
@@ -206,7 +206,7 @@ template<typename T> struct mat4x4
 				- data[1][0] * (data[0][1] * A2323 - data[2][1] * A0323 + data[3][1] * A0223)
 				+ data[2][0] * (data[0][1] * A1323 - data[1][1] * A0323 + data[3][1] * A0123)
 				- data[3][0] * (data[0][1] * A1223 - data[1][1] * A0223 + data[2][1] * A0123);
-		det = static_cast<T>(1) / det;
+		det = (T)1 / det;
 		
 		*this = mat4x4<T>{
 				det *   (data[1][1] * A2323 - data[2][1] * A1323 + data[3][1] * A1223),
@@ -255,7 +255,7 @@ template<typename T> struct mat4x4
 		        - data[1][0] * (data[0][1] * A2323 - data[2][1] * A0323 + data[3][1] * A0223)
 		        + data[2][0] * (data[0][1] * A1323 - data[1][1] * A0323 + data[3][1] * A0123)
 		        - data[3][0] * (data[0][1] * A1223 - data[1][1] * A0223 + data[2][1] * A0123);
-		det = static_cast<T>(1) / det;
+		det = (T)1 / det;
 		
 		return mat4x4<T>{
 				det *   (data[1][1] * A2323 - data[2][1] * A1323 + data[3][1] * A1223),
@@ -415,13 +415,13 @@ template <typename T> inline mat4x4<T> viewMatrix(quat<T> const &cameraRotation,
 
 template <typename T> inline mat4x4<T> perspectiveProjectionMatrix(T fov, T nearPlane, T farPlane, uint32_t width, uint32_t height)
 {
-	T halfFOV = static_cast<T>(1) / std::tan(static_cast<T>(0.5) * degToRad(fov));
+	T halfFOV = (T)1 / std::tan((T)0.5 * degToRad(fov));
 	mat4x4<T> out{};
-	out[0][0] = halfFOV * (static_cast<T>(height) / static_cast<T>(width));
+	out[0][0] = halfFOV * ((T)height / (T)width);
 	out[1][1] = halfFOV;
 	out[2][2] = (farPlane + nearPlane) / (farPlane - nearPlane);
-	out[2][3] = static_cast<T>(1);
-	out[3][2] = -(static_cast<T>(2) * farPlane * nearPlane) / (farPlane - nearPlane);
+	out[2][3] = (T)(1);
+	out[3][2] = -((T)(2) * farPlane * nearPlane) / (farPlane - nearPlane);
 	out[3][3] = 0;
 	return out;
 }
@@ -429,9 +429,9 @@ template <typename T> inline mat4x4<T> perspectiveProjectionMatrix(T fov, T near
 template <typename T> inline mat4x4<T> orthoProjectionMatrix(T left, T right, T top, T bottom, T zNear, T zFar)
 {
 	mat4x4<T> out{};
-	out[0][0] = static_cast<T>(2) / (right - left);
-	out[1][1] = static_cast<T>(2) / (top - bottom);
-	out[2][2] = -static_cast<T>(2) / (zFar - zNear);
+	out[0][0] = (T)2 / (right - left);
+	out[1][1] = (T)2 / (top - bottom);
+	out[2][2] = -(T)2 / (zFar - zNear);
 	out[3][0] = -(right + left) / (right - left);
 	out[3][1] = -(top + bottom) / (top - bottom);
 	out[3][2] = -(zFar + zNear) / (zFar - zNear);

@@ -20,7 +20,7 @@ template<typename T> struct vec2
 	
 	inline constexpr vec2<T>() = default;
 	
-	template<typename U> constexpr vec2<T>(vec2<U> const &other)
+	template<typename U> constexpr explicit vec2<T>(vec2<U> const &other)
 	{
 		this->data[0] = other.data[0];
 		this->data[1] = other.data[1];
@@ -32,7 +32,7 @@ template<typename T> struct vec2
 		this->data[1] = y;
 	}
 	
-	constexpr inline vec2<T>(T const &scalar)
+	constexpr inline explicit vec2<T>(T const &scalar)
 	{
 		this->data[0] = scalar;
 		this->data[1] = scalar;
@@ -65,7 +65,7 @@ template<typename T> struct vec2
 	
 	inline vec2<T> operator+(T const &scalar) const
 	{
-		return vec2<T>{static_cast<T>(this->data[0] + scalar), static_cast<T>(this->data[1] + scalar)};
+		return vec2<T>{(T)(this->data[0] + scalar), (T)(this->data[1] + scalar)};
 	}
 	
 	inline vec2<T> operator-(vec2<T> const &other) const
@@ -75,7 +75,7 @@ template<typename T> struct vec2
 	
 	inline vec2<T> operator-(T const &scalar) const
 	{
-		return vec2<T>{static_cast<T>(this->data[0] - scalar), static_cast<T>(this->data[1] - scalar)};
+		return vec2<T>{(T)(this->data[0] - scalar), (T)(this->data[1] - scalar)};
 	}
 	
 	inline vec2<T> operator-() const
@@ -90,7 +90,7 @@ template<typename T> struct vec2
 	
 	inline vec2<T> operator*(T scalar) const
 	{
-		return vec2<T>{static_cast<T>(this->data[0] * scalar), static_cast<T>(this->data[1] * scalar)};
+		return vec2<T>{(T)(this->data[0] * scalar), (T)(this->data[1] * scalar)};
 	}
 	
 	inline vec2<T> operator/(vec2<T> const &other) const
@@ -100,7 +100,7 @@ template<typename T> struct vec2
 	
 	inline vec2<T> operator/(T const &scalar) const
 	{
-		return vec2<T>{static_cast<T>(this->data[0] / scalar), static_cast<T>(this->data[1] / scalar)};
+		return vec2<T>{(T)(this->data[0] / scalar), (T)(this->data[1] / scalar)};
 	}
 	
 	inline vec2<T> &operator+=(vec2<T> const &other)
@@ -138,7 +138,7 @@ template<typename T> struct vec2
 		return *this;
 	}
 	
-	inline vec2<T> &operator++(int)
+	inline vec2<T> const operator++(int)
 	{
 		vec2<T> out = *this;
 		this->data[0]++;
@@ -153,7 +153,7 @@ template<typename T> struct vec2
 		return *this;
 	}
 	
-	inline vec2<T> &operator--(int)
+	inline vec2<T> const operator--(int)
 	{
 		vec2<T> out = *this;
 		this->data[0]--;

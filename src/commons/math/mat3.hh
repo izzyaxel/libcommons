@@ -15,7 +15,7 @@ template<typename T> struct mat3x3
 	
 	inline constexpr mat3x3<T>() = default;
 	
-	template<typename U> constexpr mat3x3<T>(mat3x3<U> const &in)
+	template<typename U> constexpr explicit mat3x3<T>(mat3x3<U> const &in)
 	{
 		this->data[0][0] = in[0][0];
 		this->data[0][1] = in[0][1];
@@ -28,7 +28,7 @@ template<typename T> struct mat3x3
 		this->data[2][2] = in[2][2];
 	}
 	
-	constexpr inline mat3x3<T>(mat4x4<T> const &in)
+	constexpr inline explicit mat3x3<T>(mat4x4<T> const &in)
 	{
 		this->data[0][0] = in[0][0];
 		this->data[0][1] = in[0][1];
@@ -154,7 +154,7 @@ template<typename T> struct mat3x3
 		out.data[2][0] = this->data[1][0] * this->data[2][1] - this->data[1][1] * this->data[2][0];
 		out.data[2][1] = this->data[0][1] * this->data[2][0] - this->data[0][0] * this->data[2][1];
 		out.data[2][2] = this->data[0][0] * this->data[1][1] - this->data[0][1] * this->data[1][0];
-		out = out.compoundScale(static_cast<T>(1) / out.determinant());
+		out = out.compoundScale((T)1 / out.determinant());
 		return out;
 	}
 	

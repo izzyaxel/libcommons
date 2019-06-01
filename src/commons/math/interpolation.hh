@@ -13,8 +13,8 @@
 template <typename T> T alerp(T a, T b, T progress, T curve)
 {
 	T expProg = std::pow(progress, curve);
-	T lerp = expProg / (expProg + std::pow(static_cast<T>(1) - progress, curve));
-	return (static_cast<T>(1) - lerp) * a  + lerp * b;
+	T lerp = expProg / (expProg + std::pow((T)1 - progress, curve));
+	return ((T)1 - lerp) * a  + lerp * b;
 }
 
 /// Logarithmic lerp, return value approaches b logarithmically faster as progress approaches 1
@@ -48,37 +48,37 @@ template<typename T> vec2<T> lerpV2(vec2<T> const &src, vec2<T> const &dest, flo
 /// Ease out lerp: fast in slow out
 template<typename T> vec2<T> eoerpV2(vec2<T> const &src, vec2<T> const &dest, float progress)
 {
-	return lerpV2(src, dest, static_cast<float>(std::sin(progress * pi<T> * static_cast<T>(0.5))));
+	return lerpV2(src, dest, (float)(std::sin(progress * pi<T> * (T)0.5)));
 }
 
 /// Ease in lerp: slow in fast out
 template<typename T> vec2<T> eierpV2(vec2<T> const &src, vec2<T> const &dest, float progress)
 {
-	return lerpV2(src, dest, static_cast<float>(static_cast<T>(1.0) - std::cos(progress * pi<T> * static_cast<T>(0.5))));
+	return lerpV2(src, dest, (float)((T)1.0 - std::cos(progress * pi<T> * (T)0.5)));
 }
 
 /// Exponential ease out lerp: fast in slower out
 template<typename T> vec2<T> exeoerpV2(vec2<T> const &src, vec2<T> const &dest, float progress)
 {
-	return lerpV2(src, dest, static_cast<float>(std::sin((progress * progress) * pi<T> * static_cast<T>(0.5))));
+	return lerpV2(src, dest, (float)(std::sin((progress * progress) * pi<T> * (T)0.5)));
 }
 
 /// Exponential ease in lerp: slower in fast out
 template<typename T> vec2<T> exeierpV2(vec2<T> const &src, vec2<T> const &dest, float progress)
 {
-	return lerpV2(src, dest, static_cast<float>(static_cast<T>(1.0) - std::cos((progress * progress) * pi<T> * static_cast<T>(0.5))));
+	return lerpV2(src, dest, (float)((T)1.0 - std::cos((progress * progress) * pi<T> * (T)0.5)));
 }
 
 /// Smoothstep lerp: slow in slow out
 template<typename T> vec2<T> serpV2(vec2<T> const &src, vec2<T> const &dest, float progress)
 {
-	return lerpV2(src, dest, static_cast<float>((progress * progress) * (static_cast<T>(3.0) - (static_cast<T>(2.0) * progress))));
+	return lerpV2(src, dest, (float)((progress * progress) * ((T)3.0 - ((T)2.0 * progress))));
 }
 
 /// Smootherstep lerp: slower in slower out
 template<typename T> vec2<T> sserpV2(vec2<T> const &src, vec2<T> const &dest, float progress)
 {
-	return lerpV2(src, dest, static_cast<float>(std::pow(progress, 3) * (progress * (static_cast<T>(6.0) * progress - static_cast<T>(15.0)) + static_cast<T>(10.0))));
+	return lerpV2(src, dest, (float)(std::pow(progress, 3) * (progress * ((T)6.0 * progress - (T)15.0) + (T)10.0)));
 }
 
 
@@ -87,46 +87,46 @@ template<typename T> vec2<T> sserpV2(vec2<T> const &src, vec2<T> const &dest, fl
 template<typename T> vec3<T> lerpV3(vec3<T> const &src, vec3<T> const &dest, float progress)
 {
 	vec3<T> out;
-	out[0] = progress * dest[0] + (static_cast<T>(1.0) - progress) * src[0];
-	out[1] = progress * dest[1] + (static_cast<T>(1.0) - progress) * src[1];
-	out[2] = progress * dest[2] + (static_cast<T>(1.0) - progress) * src[2];
+	out[0] = progress * dest[0] + ((T)1.0 - progress) * src[0];
+	out[1] = progress * dest[1] + ((T)1.0 - progress) * src[1];
+	out[2] = progress * dest[2] + ((T)1.0 - progress) * src[2];
 	return out;
 }
 
 /// Ease out lerp: fast in slow out
 template<typename T> vec3<T> eoerpV3(vec3<T> const &src, vec3<T> const &dest, float progress)
 {
-	return lerpV3(src, dest, static_cast<float>(std::sin(progress * pi<T> * static_cast<T>(0.5))));
+	return lerpV3(src, dest, (float)(std::sin(progress * pi<T> * (T)0.5)));
 }
 
 /// Ease in lerp: slow in fast out
 template<typename T> vec3<T> eierpV3(vec3<T> const &src, vec3<T> const &dest, float progress)
 {
-	return lerpV3(src, dest, static_cast<float>(static_cast<T>(1.0) - std::cos(progress * pi<T> * static_cast<T>(0.5))));
+	return lerpV3(src, dest, (float)((T)1.0 - std::cos(progress * pi<T> * (T)0.5)));
 }
 
 /// Exponential ease out lerp: fast in slower out
 template<typename T> vec3<T> exeoerpV3(vec3<T> const &src, vec3<T> const &dest, float progress)
 {
-	return lerpV3(src, dest, static_cast<float>(std::sin((progress * progress) * pi<T> * static_cast<T>(0.5))));
+	return lerpV3(src, dest, (float)(std::sin((progress * progress) * pi<T> * (T)0.5)));
 }
 
 /// Exponential ease in lerp slower in fast out
 template<typename T> vec3<T> exeierpV3(vec3<T> const &src, vec3<T> const &dest, float progress)
 {
-	return lerpV3(src, dest, static_cast<float>(static_cast<T>(1.0) - std::cos((progress * progress) * pi<T> * static_cast<T>(0.5))));
+	return lerpV3(src, dest, (float)((T)1.0 - std::cos((progress * progress) * pi<T> * (T)0.5)));
 }
 
 /// Smoothstep lerp: slow in slow out
 template<typename T> vec3<T> serpV3(vec3<T> const &src, vec3<T> const &dest, float progress)
 {
-	return lerpV3(src, dest, static_cast<float>((progress * progress) * (static_cast<T>(3.0) - (static_cast<T>(2.0) * progress))));
+	return lerpV3(src, dest, (float)((progress * progress) * ((T)3.0 - ((T)2.0 * progress))));
 }
 
 /// Smootherstep lerp: slower in slower out
 template<typename T> vec3<T> sserpV3(vec3<T> const &src, vec3<T> const &dest, float progress)
 {
-	return lerpV3(src, dest, static_cast<float>(std::pow(progress, 3) * (progress * (static_cast<T>(6.0) * progress - static_cast<T>(15.0)) + static_cast<T>(10.0))));
+	return lerpV3(src, dest, (float)(std::pow(progress, 3) * (progress * ((T)6.0 * progress - (T)15.0) + (T)10.0)));
 }
 
 
@@ -145,37 +145,37 @@ template<typename T> vec4<T> lerpV4(vec4<T> const &src, vec4<T> const &dest, flo
 /// Ease out lerp: fast in slow out
 template<typename T> vec4<T> eoerpV4(vec4<T> const &src, vec4<T> const &dest, float progress)
 {
-	return lerpV4(src, dest, static_cast<float>(std::sin(progress * pi<T> * static_cast<T>(0.5))));
+	return lerpV4(src, dest, (float)(std::sin(progress * pi<T> * (T)0.5)));
 }
 
 /// Ease in lerp: slow in fast out
 template<typename T> vec4<T> eierpV4(vec4<T> const &src, vec4<T> const &dest, float progress)
 {
-	return lerpV4(src, dest, static_cast<float>(static_cast<T>(1.0) - std::cos(progress * pi<T> * static_cast<T>(0.5))));
+	return lerpV4(src, dest, (float)((T)1.0 - std::cos(progress * pi<T> * (T)0.5)));
 }
 
 /// Exponential ease out lerp: fast in slower out
 template<typename T> vec4<T> exeoerpV4(vec4<T> const &src, vec4<T> const &dest, float progress)
 {
-	return lerpV4(src, dest, static_cast<float>(std::sin((progress * progress) * pi<T> * static_cast<T>(0.5))));
+	return lerpV4(src, dest, (float)(std::sin((progress * progress) * pi<T> * (T)0.5)));
 }
 
 /// Exponential ease in lerp: slower in fast out
 template<typename T> vec4<T> exeierpV4(vec4<T> const &src, vec4<T> const &dest, float progress)
 {
-	return lerpV4(src, dest, static_cast<float>(static_cast<T>(1.0) - std::cos((progress * progress) * pi<T> * static_cast<T>(0.5))));
+	return lerpV4(src, dest, (float)((T)1.0 - std::cos((progress * progress) * pi<T> * (T)0.5)));
 }
 
 /// Smoothstep lerp: slow in slow out
 template<typename T> vec4<T> serpV4(vec4<T> const &src, vec4<T> const &dest, float progress)
 {
-	return lerpV4(src, dest, static_cast<float>((progress * progress) * (static_cast<T>(3.0) - (static_cast<T>(2.0) * progress))));
+	return lerpV4(src, dest, (float)((progress * progress) * ((T)3.0 - ((T)2.0 * progress))));
 }
 
 /// Smootherstep lerp: slower in slower out
 template<typename T> vec4<T> sserpV4(vec4<T> const &src, vec4<T> const &dest, float progress)
 {
-	return lerpV4(src, dest, static_cast<float>(std::pow(progress, 3) * (progress * (static_cast<T>(6.0) * progress - static_cast<T>(15.0)) + static_cast<T>(10.0))));
+	return lerpV4(src, dest, (float)(std::pow(progress, 3) * (progress * ((T)6.0 * progress - (T)15.0) + (T)10.0)));
 }
 
 //Quat
@@ -187,11 +187,11 @@ template<typename T> quat<T> slerpQuat(quat<T> const &A, quat<T> const &B, T val
 	if (dot < -1) dot = -1;
 	if (dot == 1) return A;
 	T angle = std::acos(dot);
-	T sqi = std::sqrt(static_cast<T>(1) - dot * dot);
-	T vA = std::sin((static_cast<T>(1) - value) * angle) / sqi;
+	T sqi = std::sqrt((T)1 - dot * dot);
+	T vA = std::sin(((T)1 - value) * angle) / sqi;
 	T vB = std::sin(value * angle) / sqi;
-	return quat<T>
-			{A[0] * vA + B[0] * vB,
+	return quat<T>{
+			A[0] * vA + B[0] * vB,
 			A[1] * vA + B[1] * vB,
 			A[2] * vA + B[2] * vB,
 			A[3] * vA + B[3] * vB}.normalized();

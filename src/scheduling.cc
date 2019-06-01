@@ -3,7 +3,7 @@
 int32_t Scheduler::scheduleTask(long msDelay, Task taskCallback)
 {
 	std::chrono::steady_clock::time_point future = std::chrono::steady_clock::now() + std::chrono::steady_clock::duration{std::chrono::milliseconds(msDelay)};
-	int32_t id = static_cast<int >(this->tasks.size());
+	int32_t id = (int32_t)this->tasks.size();
 	this->tasks[id] = std::pair<std::chrono::steady_clock::time_point, Task>{future, taskCallback};
 	return id;
 }

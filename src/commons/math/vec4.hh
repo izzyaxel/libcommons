@@ -76,7 +76,7 @@ template<typename T> struct vec4
 	
 	inline constexpr vec4<T>() = default;
 	
-	template<typename U> constexpr vec4<T>(vec4<U> const &other)
+	template<typename U> constexpr explicit vec4<T>(vec4<U> const &other)
 	{
 		this->data[0] = other.data[0];
 		this->data[1] = other.data[1];
@@ -93,7 +93,7 @@ template<typename T> struct vec4
 		this->data[3] = w;
 	}
 	
-	constexpr inline vec4<T>(T const &scalar)
+	constexpr inline explicit vec4<T>(T const &scalar)
 	{
 		this->data[0] = scalar;
 		this->data[1] = scalar;
@@ -157,7 +157,7 @@ template<typename T> struct vec4
 	/// Add a scalar number to this v4
 	inline vec4<T> operator+(T const &scalar) const
 	{
-		return vec4<T>{static_cast<T>(this->data[0] + scalar), static_cast<T>(this->data[1] + scalar), static_cast<T>(this->data[2] + scalar), static_cast<T>(this->data[3] + scalar)};
+		return vec4<T>{(T)(this->data[0] + scalar), (T)(this->data[1] + scalar), (T)(this->data[2] + scalar), (T)(this->data[3] + scalar)};
 	}
 	
 	/// Subtract this v4 from another
@@ -169,7 +169,7 @@ template<typename T> struct vec4
 	/// Subtract a scalar number from this v4
 	inline vec4<T> operator-(T const &scalar) const
 	{
-		return vec4<T>{static_cast<T>(this->data[0] - scalar), static_cast<T>(this->data[1] - scalar), static_cast<T>(this->data[2] - scalar), static_cast<T>(this->data[3] - scalar)};
+		return vec4<T>{(T)(this->data[0] - scalar), (T)(this->data[1] - scalar), (T)(this->data[2] - scalar), (T)(this->data[3] - scalar)};
 	}
 	
 	/// Negate this v4
@@ -187,7 +187,7 @@ template<typename T> struct vec4
 	/// Multiply this v4 by a scalar number
 	inline vec4<T> operator*(T scalar) const
 	{
-		return vec4<T>{static_cast<T>(this->data[0] * scalar), static_cast<T>(this->data[1] * scalar), static_cast<T>(this->data[2] * scalar), static_cast<T>(this->data[3] * scalar)};
+		return vec4<T>{(T)(this->data[0] * scalar), (T)(this->data[1] * scalar), (T)(this->data[2] * scalar), (T)(this->data[3] * scalar)};
 	}
 	
 	inline vec4<T> operator*(mat4x4<T> const &mat)
@@ -209,7 +209,7 @@ template<typename T> struct vec4
 	/// Divide this v4 by a scalar number
 	inline vec4<T> operator/(T const &scalar) const
 	{
-		return vec4<T>{static_cast<T>(this->data[0] / scalar), static_cast<T>(this->data[1] / scalar), static_cast<T>(this->data[2] / scalar), static_cast<T>(this->data[3] / scalar)};
+		return vec4<T>{(T)(this->data[0] / scalar), (T)(this->data[1] / scalar), (T)(this->data[2] / scalar), (T)(this->data[3] / scalar)};
 	}
 	
 	/// Compound add this v4 to another
@@ -263,7 +263,7 @@ template<typename T> struct vec4
 	}
 	
 	/// Increment all values in this v4 (postfix)
-	inline vec4<T> &operator++(int)
+	inline vec4<T> const operator++(int)
 	{
 		vec4<T> out = *this;
 		this->data[0]++;
@@ -284,7 +284,7 @@ template<typename T> struct vec4
 	}
 	
 	/// Decrement all values in this v4 (postfix)
-	inline vec4<T> &operator--(int)
+	inline vec4<T> const operator--(int)
 	{
 		vec4<T> out = *this;
 		this->data[0]--;

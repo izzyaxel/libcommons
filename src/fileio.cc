@@ -28,7 +28,7 @@ std::vector<uint8_t> readFile(std::string const &filePath)
 		return {};
 	}
 	fseek(in, SEEK_END, SEEK_SET);
-	size_t len = static_cast<size_t>(ftell(in));
+	size_t len = (size_t)ftell(in);
 	rewind(in);
 	std::vector<uint8_t> data;
 	data.resize(len);
