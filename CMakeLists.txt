@@ -18,6 +18,7 @@ add_library(${PROJECT_NAME} STATIC
 		src/logger.cc src/commons/logger.hh
 		src/scheduling.cc src/commons/scheduling.hh
 		src/threadpool.cc src/commons/threadpool.hh
+		src/commons/dataBuffer.hh
 		
 		src/commons/math/compound.hh
 		src/commons/math/general.hh
