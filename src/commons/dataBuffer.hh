@@ -12,8 +12,8 @@ enum struct SeekPos
 template <typename T> struct DataBuffer
 {
 	DataBuffer() = delete;
-	explicit DataBuffer(std::vector<uint8_t> const &buffer) : buffer(buffer) {}
-	explicit DataBuffer(std::vector<T> const &buffer)
+	inline explicit DataBuffer(std::vector<uint8_t> const &buffer) : buffer(buffer) {}
+	inline explicit DataBuffer(std::vector<T> const &buffer)
 	{
 		size_t convSize = sizeof(T) * buffer.size();
 		uint8_t const *tmp = reinterpret_cast<uint8_t const *>(buffer.data());
@@ -42,12 +42,12 @@ template <typename T> struct DataBuffer
 		return amt;
 	}
 	
-	void rewind()
+	inline void rewind()
 	{
 		this->pos = 0;
 	}
 	
-	bool seek(size_t amt, SeekPos seekPos)
+	inline bool seek(size_t amt, SeekPos seekPos)
 	{
 		switch(seekPos)
 		{
@@ -79,7 +79,7 @@ private:
 	size_t pos = 0;
 	std::vector<uint8_t> buffer{};
 	
-	void sanity()
+	inline void sanity()
 	{
 		if(this->pos > this->buffer.size()) this->pos = this->buffer.size();
 	}
