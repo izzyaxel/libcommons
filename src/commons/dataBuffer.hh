@@ -30,7 +30,7 @@ template <typename T> struct DataBuffer
 		this->sanity();
 		if(this->pos + amt > this->buffer.size())
 		{
-			size_t modAmt = this->buffer.size() - (this->pos + amt);
+			size_t modAmt = amt - (this->buffer.size() - (this->pos));
 			memcpy(dst, this->buffer.data(), modAmt);
 			this->pos += modAmt;
 			return modAmt;
