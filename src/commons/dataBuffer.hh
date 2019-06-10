@@ -12,7 +12,6 @@ enum struct SeekPos
 template <typename T> struct DataBuffer
 {
 	DataBuffer() = delete;
-	inline explicit DataBuffer(std::vector<uint8_t> const &buffer) : buffer(buffer) {}
 	inline explicit DataBuffer(std::vector<T> const &buffer)
 	{
 		size_t convSize = sizeof(T) * buffer.size();
@@ -26,19 +25,18 @@ template <typename T> struct DataBuffer
 		this->buffer = {tmp, tmp + convSize};
 	}
 	
-	template <typename F> size_t read(F *dst, size_t amt)
+	size_t read(void *dst, size_t amt)
 	{
 		this->sanity();
-		size_t convAmt = sizeof(F) * amt;
-		if(this->pos + convAmt > this->buffer.size())
+		if(this->pos + amt > this->buffer.size())
 		{
-			size_t modAmt = this->buffer.size() - (this->pos + convAmt);
+			size_t modAmt = this->buffer.size() - (this->pos + amt);
 			memcpy(dst, this->buffer.data(), modAmt);
 			this->pos += modAmt;
-			return modAmt / sizeof(F);
+			return modAmt;
 		}
-		memcpy(dst, this->buffer.data(), convAmt);
-		this->pos += convAmt;
+		memcpy(dst, this->buffer.data(), amt);
+		this->pos += amt;
 		return amt;
 	}
 	
@@ -73,6 +71,7 @@ template <typename T> struct DataBuffer
 				}
 				return false;
 		}
+		return false;
 	}
 	
 private:
