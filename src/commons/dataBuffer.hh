@@ -28,6 +28,7 @@ template <typename T> struct DataBuffer
 	size_t read(void *dst, size_t amt)
 	{
 		this->sanity();
+		if(this->pos == this->buffer.size()) return 0;
 		if(this->pos + amt > this->buffer.size())
 		{
 			size_t modAmt = amt - (this->buffer.size() - (this->pos));
