@@ -8,7 +8,7 @@ elseif(APPLE)
 endif()
 project(commons)
 set(CMAKE_CXX_STANDARD 17)
-add_library(${PROJECT_NAME} STATIC
+set(SRC
 		src/commons/serialization.hh
 		src/buffer.cc src/commons/buffer.hh
 		src/events.cc src/commons/events.hh
@@ -19,7 +19,7 @@ add_library(${PROJECT_NAME} STATIC
 		src/scheduling.cc src/commons/scheduling.hh
 		src/threadpool.cc src/commons/threadpool.hh
 		src/commons/dataBuffer.hh
-		
+
 		src/commons/math/compound.hh
 		src/commons/math/general.hh
 		src/commons/math/glmconversion.hh
@@ -32,3 +32,8 @@ add_library(${PROJECT_NAME} STATIC
 		src/commons/math/vec2.hh
 		src/commons/math/vec3.hh
 		src/commons/math/vec4.hh)
+if(WIN32 OR WIN64)
+	add_library(${PROJECT_NAME} STATIC ${SRC})
+elseif(UNIX)
+	add_library(${PROJECT_NAME} SHARED ${SRC})
+endif()
