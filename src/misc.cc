@@ -23,7 +23,7 @@ std::string getCWD()
 	#elif defined(LINUX)
 	char dir[2048];
 	getcwd(dir, 2048);
-	return {dir};
+	return std::string{dir} + "/";
 	#endif
 }
 
