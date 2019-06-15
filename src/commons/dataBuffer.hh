@@ -36,7 +36,7 @@ template <typename T> struct DataBuffer
 			this->pos += modAmt;
 			return modAmt;
 		}
-		memcpy(dst, this->buffer.data(), amt);
+		memcpy(dst, this->buffer.data() + pos, amt);
 		this->pos += amt;
 		return amt;
 	}
@@ -73,6 +73,11 @@ template <typename T> struct DataBuffer
 				return false;
 		}
 		return false;
+	}
+	
+	inline size_t tell()
+	{
+		return this->pos;
 	}
 	
 private:
