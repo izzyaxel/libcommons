@@ -62,26 +62,26 @@ FILE* openFile(std::string const &name, std::string const &mode)
 
 size_t readFile(FILE *file, void *destBuffer, size_t amount, size_t acceptableTimeouts)
 {
-	size_t amtRead = 0, timeoutCounter = 0, out = 0;
+	size_t amtRead = 0, timeoutCounter = 0;
 	do
 	{
 		if(timeoutCounter >= acceptableTimeouts) throw std::runtime_error("Unable to read from file, timed out after " + std::to_string(acceptableTimeouts) + " 0-length reads");
-		amtRead = fread(destBuffer, 1, amount - amtRead, file);
-		out += amtRead;
-		if(amtRead == 0) timeoutCounter++;
+		size_t read = fread(reinterpret_cast<uint8_t *>(destBuffer) + amtRead, 1, amount - amtRead, file);
+		amtRead += read;
+		if(read == 0) timeoutCounter++;
 	} while(amtRead < amount);
-	return out;
+	return amtRead;
 }
 
 size_t writeFile(FILE *file, void const *inputBuffer, size_t amount, size_t acceptableTimeouts)
 {
-	size_t amtWritten = 0, timeoutCounter = 0, out = 0;
+	size_t amtWritten = 0, timeoutCounter = 0;
 	do
 	{
 		if(timeoutCounter >= acceptableTimeouts) throw std::runtime_error("Unable to write to file, timed out after " + std::to_string(acceptableTimeouts) + " 0-length writes");
-		amtWritten = fwrite(inputBuffer, 1, amount - amtWritten, file);
-		out += amtWritten;
-		if(amtWritten == 0) timeoutCounter++;
+		size_t wrote = fwrite(inputBuffer, 1, amount - amtWritten, file);
+		amtWritten += wrote;
+		if(wrote == 0) timeoutCounter++;
 	} while(amtWritten < amount);
-	return out;
+	return amtWritten;
 }
