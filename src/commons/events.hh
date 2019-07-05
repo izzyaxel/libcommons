@@ -1,23 +1,39 @@
 #pragma once
 
-#include <unordered_map>
-#include <vector>
 #include <functional>
+#include <tuple>
 
-using EventID = int64_t;
-using Callback = std::function<void()>;
-
-struct EventBus
+/// Usage:
+/// template <typename ...Args> struct EventBase : public std::function<void(Args ...)>
+/// {
+///     using std::function<void(Args ...)>::function;
+/// };
+/// 
+/// struct EventA : public EventBase<int>
+/// {
+///     using EventBase::EventBase;
+/// };
+/// 
+/// struct EventB : public EventBase<int>
+/// {
+///     using EventBase::EventBase;
+/// };
+/// 
+/// EventBus<EventA, EventB> eventBus;
+/// 
+/// The way this is set up allows multiple events with the same parameters to be treated as separate events
+template <typename ... Ts> struct EventBus
 {
-	/// Post an event, and run all callbacks associated with it
-	/// \param id EventID of the event to post
-	void post(EventID id);
+	template <typename Event> void registerEventHandler(Event const &event)
+	{
+		std::get<std::vector<Event>>(this->registrars).push_back(event);
+	}
 	
-	/// Register a callback to run when an event is posted
-	/// \param id EventID of the event to register to
-	/// \param callback The Callback to run when the event is posted
-	void registerEventHandler(EventID id, Callback const &callback);
-	
+	template <typename Event, typename ... Args> void post(Args ... args)
+	{
+		for(auto const &event : std::get<std::vector<Event>>(this->registrars)) event(args ...);
+	}
+
 private:
-	std::unordered_map<EventID, std::vector<Callback>> events;
+	std::tuple<std::vector<Ts> ...> registrars;
 };

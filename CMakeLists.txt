@@ -6,12 +6,13 @@ elseif(UNIX)
 elseif(APPLE)
 	add_definitions(-DOSX)
 endif()
+
 project(commons)
 set(CMAKE_CXX_STANDARD 17)
 set(SRC
 		src/commons/serialization.hh
 		src/buffer.cc src/commons/buffer.hh
-		src/events.cc src/commons/events.hh
+		src/commons/events.hh
 		src/misc.cc src/commons/misc.hh
 		src/stringtools.cc src/commons/stringtools.hh
 		src/fileio.cc src/commons/fileio.hh
