@@ -6,7 +6,7 @@
 
 enum struct Severity
 {
-	INFO, ERROR, FATAL,
+	INFO, ERR, FATAL,
 };
 
 struct Logger

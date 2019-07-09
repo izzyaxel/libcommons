@@ -20,7 +20,7 @@ void Logger::log(Severity severity, std::string const &message)
 			this->buf.push_back(message);
 			break;
 		
-		case Severity::ERROR:
+		case Severity::ERR:
 			this->buf.push_back("[ERROR]: " + message);
 			break;
 		
