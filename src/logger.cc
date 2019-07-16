@@ -44,11 +44,11 @@ void Logger::log(Severity severity, std::string const &message)
 	{
 		case LogVerbosity::NORMAL: break;
 		case LogVerbosity::TIMESTAMPS:
-			prefix << std::put_time(&tm, "%H-%M-%S");
+			prefix << std::put_time(&tm, "[%H:%M.%S]");
 			break;
 		
 		case LogVerbosity::TIMESTAMPSANDDATES:
-			prefix << std::put_time(&tm, "%d-%m-%Y %H-%M-%S");
+			prefix << std::put_time(&tm, "[%d-%m-%Y %H:%M.%S]");
 			break;
 	}
 	switch(severity)
