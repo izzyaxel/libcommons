@@ -1,6 +1,6 @@
 #include "commons/logger.hh"
 
-Logger::Logger(LogTarget target) : target(target) {}
+#include <iomanip>
 
 Logger::~Logger()
 {
@@ -8,19 +8,49 @@ Logger::~Logger()
 	fclose(this->out);
 }
 
-void Logger::setFileTarget(std::string const &filePath)
+void Logger::setOptions(LoggerOptions const &options)
+{
+	if((this->target == LogTarget::FILE || this->target == LogTarget::BOTH) && options.target == LogTarget::STDOUT)
+	{
+		if(this->out)
+		{
+			fflush(this->out);
+			fclose(this->out);
+			this->out = nullptr;
+		}
+	}
+	this->target = options.target;
+	this->verbosity = options.verbosity;
+	if(!options.logFilePath.empty()) this->setFileTarget(options.logFilePath, options.appendToLogFile);
+}
+
+void Logger::setFileTarget(std::string const &filePath, bool append)
 {
 	if(this->out)
 	{
 		fflush(this->out);
 		fclose(this->out);
 	}
-	this->out = fopen(filePath.data(), "w");
+	this->out = fopen(filePath.data(), append ? "a" : "w");
 	if(!this->out) printf("Failed to start log file\n");
 }
 
 void Logger::log(Severity severity, std::string const &message)
 {
+	std::stringstream prefix;
+	auto t = std::time(nullptr);
+	auto tm = *std::localtime(&t);
+	switch(this->verbosity)
+	{
+		case LogVerbosity::NORMAL: break;
+		case LogVerbosity::TIMESTAMPS:
+			prefix << std::put_time(&tm, "%H-%M-%S");
+			break;
+		
+		case LogVerbosity::TIMESTAMPSANDDATES:
+			prefix << std::put_time(&tm, "%d-%m-%Y %H-%M-%S");
+			break;
+	}
 	switch(severity)
 	{
 		case Severity::INFO:
@@ -28,11 +58,11 @@ void Logger::log(Severity severity, std::string const &message)
 			break;
 		
 		case Severity::ERR:
-			this->buf.push_back("[ERROR]: " + message);
+			this->buf.push_back(prefix.str() + " [ERROR]: " + message);
 			break;
 		
 		case Severity::FATAL:
-			this->buf.push_back("[FATAL]: " + message);
+			this->buf.push_back(prefix.str() + " [FATAL]: " + message);
 			break;
 	}
 }
