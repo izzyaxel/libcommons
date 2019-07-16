@@ -54,7 +54,7 @@ void Logger::log(Severity severity, std::string const &message)
 	switch(severity)
 	{
 		case Severity::INFO:
-			this->buf.push_back(message);
+			this->buf.push_back(prefix.str() + " " + message);
 			break;
 		
 		case Severity::ERR:
