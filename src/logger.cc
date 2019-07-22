@@ -22,6 +22,7 @@ void Logger::setOptions(LoggerOptions const &options)
 	this->target = options.target;
 	this->verbosity = options.verbosity;
 	if(!options.logFilePath.empty()) this->setFileTarget(options.logFilePath, options.appendToLogFile);
+	this->autoFlush = options.autoFlush;
 }
 
 void Logger::setFileTarget(std::string const &filePath, bool append)
@@ -65,6 +66,7 @@ void Logger::log(Severity severity, std::string const &message)
 			this->buf.push_back(prefix.str() + " [FATAL]: " + message);
 			break;
 	}
+	if(this->autoFlush) this->flush();
 }
 
 void Logger::flush()

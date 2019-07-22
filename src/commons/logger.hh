@@ -24,7 +24,7 @@ struct LoggerOptions
 	LogTarget target = LogTarget::STDOUT;
 	LogVerbosity verbosity = LogVerbosity::NORMAL;
 	std::string logFilePath = "";
-	bool appendToLogFile = false;
+	bool appendToLogFile = false, autoFlush = true;
 };
 
 struct Logger
@@ -44,4 +44,5 @@ private:
 	LogVerbosity verbosity;
 	FILE *out = nullptr;
 	std::vector<std::string> buf;
+	bool autoFlush = true;
 };
