@@ -38,32 +38,33 @@ void Logger::setFileTarget(std::string const &filePath, bool append)
 
 void Logger::log(Severity severity, std::string const &message)
 {
+	if(this->verbosity == LogVerbosity::NONE) return;
 	std::stringstream prefix;
 	auto t = std::time(nullptr);
 	auto tm = *std::localtime(&t);
-	switch(this->verbosity)
+	switch(this->stamping)
 	{
-		case LogVerbosity::NORMAL: break;
-		case LogVerbosity::TIMESTAMPS:
+		case LogStamping::NONE: break;
+		case LogStamping::TIMESTAMPS:
 			prefix << std::put_time(&tm, "[%H:%M.%S]");
 			break;
 		
-		case LogVerbosity::TIMESTAMPSANDDATES:
+		case LogStamping ::TIMESTAMPSANDDATES:
 			prefix << std::put_time(&tm, "[%d-%m-%Y %H:%M.%S]");
 			break;
 	}
 	switch(severity)
 	{
 		case Severity::INFO:
-			this->buf.push_back(prefix.str() + " " + message);
+			if(this->verbosity == LogVerbosity::HIGH)this->buf.push_back(prefix.str() + " " + message);
 			break;
 		
 		case Severity::ERR:
-			this->buf.push_back(prefix.str() + " [ERROR]: " + message);
+			if(this->verbosity == LogVerbosity::HIGH || this->verbosity == LogVerbosity::MED) this->buf.push_back(prefix.str() + " [ERROR]: " + message);
 			break;
 		
 		case Severity::FATAL:
-			this->buf.push_back(prefix.str() + " [FATAL]: " + message);
+			if(this->verbosity == LogVerbosity::HIGH || this->verbosity == LogVerbosity::MED || this->verbosity == LogVerbosity::LOW) this->buf.push_back(prefix.str() + " [FATAL]: " + message);
 			break;
 	}
 	if(this->autoFlush) this->flush();
