@@ -28,13 +28,13 @@ template<typename T> struct linesegment2D
 	/// Find the point of intersection between this line and another
 	inline bool isIntersecting(linesegment2D<T> const &other, vec2<T> &out)
 	{
-		float x1 = this->point1.x(), x2 = this->point2.x(), x3 = other.point1.x(), x4 = other.point2.x();
-		float y1 = this->point1.y(), y2 = this->point2.y(), y3 = other.point1.y(), y4 = other.point2.y();
-		float pre = (x1 * y2 - y1 * x2), post = (x3 * y4 - y3 * x4);
-		float det = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
+		T x1 = this->point1.x(), x2 = this->point2.x(), x3 = other.point1.x(), x4 = other.point2.x();
+		T y1 = this->point1.y(), y2 = this->point2.y(), y3 = other.point1.y(), y4 = other.point2.y();
+		T pre = (x1 * y2 - y1 * x2), post = (x3 * y4 - y3 * x4);
+		T det = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
 		if(det == 0) return false;
-		float x = (pre * (x3 - x4) - (x1 - x2) * post) / det;
-		float y = (pre * (y3 - y4) - (y1 - y2) * post) / det;
+		T x = (pre * (x3 - x4) - (x1 - x2) * post) / det;
+		T y = (pre * (y3 - y4) - (y1 - y2) * post) / det;
 		if(x < std::min(x1, x2) || x > std::max(x1, x2) || x < std::min(x3, x4) || x > std::max(x3, x4)) return false;
 		if(y < std::min(y1, y2) || y > std::max(y1, y2) || y < std::min(y3, y4) || y > std::max(y3, y4)) return false;
 		out = {x, y};
@@ -105,6 +105,17 @@ template<typename T> struct aabb2D
 	inline bool containsPoint(T x, T y)
 	{
 		return x > this->minX && x < this->maxX && y > this->minY && y < this->maxY;
+	}
+	
+	/// AABB-line segment collision
+	inline bool isIntersecting(linesegment2D<T> const &other) //TODO determine whether figuring out what 2 segments are closest to the line segment is less expensive than checking all 4
+	{
+		T hWidth = (this->maxY - this->minY) / (T)2, hHeight = (this->maxX - this->minX) / 2;
+		linesegment2D<T> top{vec2<T>{this->centerX - hWidth, this->centerY + hHeight}, vec2<T>{this->centerX + hWidth, this->centerY + hHeight}},
+		bottom{vec2<T>{this->centerX - hWidth, this->centerY - hHeight}, vec2<T>{this->centerX + hWidth, this->centerY - hHeight}},
+		left{vec2<T>{this->centerX - hWidth, this->centerY - hHeight}, vec2<T>{this->centerX - hWidth, this->centerY + hHeight}},
+		right{vec2<T>{this->centerX + hWidth, this->centerY - hHeight}, vec2<T>{this->centerX + hWidth, this->centerY + hHeight}};
+		return top.isIntersecting(other) || bottom.isIntersecting(other) || left.isIntersecting(other) || right.isIntersecting(other);
 	}
 	
 	/// AABB-aabb collision
