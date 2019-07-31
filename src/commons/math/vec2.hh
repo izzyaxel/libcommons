@@ -13,10 +13,10 @@ template<typename T> struct vec2
 	inline T const &y() const { return this->data[1]; }
 	
 	// 2-way Swizzling (sort of) 2 permutations
-	inline vec2<T> xx() { return vec2<T>{this->data[0], this->data[0]}; }
-	inline vec2<T> yy() { return vec2<T>{this->data[1], this->data[1]}; }
-	inline vec2<T> xx() const { return vec2<T>{this->data[0], this->data[0]}; }
-	inline vec2<T> yy() const { return vec2<T>{this->data[1], this->data[1]}; }
+	inline vec2<T> xx() { return vec2<T>{this->data[0], this->data[0]};}
+	inline vec2<T> yy() { return vec2<T>{this->data[1], this->data[1]};}
+	inline vec2<T> xx() const { return vec2<T>{this->data[0], this->data[0]};}
+	inline vec2<T> yy() const { return vec2<T>{this->data[1], this->data[1]};}
 	
 	inline constexpr vec2<T>() = default;
 	

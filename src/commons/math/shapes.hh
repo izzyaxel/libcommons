@@ -1,6 +1,6 @@
 #pragma once
 
-#include "vec2.hh"
+#include "general.hh"
 
 template<typename T> struct circle;
 template<typename T> struct capsule;
@@ -108,14 +108,24 @@ template<typename T> struct aabb2D
 	}
 	
 	/// AABB-line segment collision
-	inline bool isIntersecting(linesegment2D<T> const &other) //TODO determine whether figuring out what 2 segments are closest to the line segment is less expensive than checking all 4
+	inline bool isIntersecting(linesegment2D<T> const &other, T &closestHit)
 	{
 		T hWidth = (this->maxY - this->minY) / (T)2, hHeight = (this->maxX - this->minX) / 2;
 		linesegment2D<T> top{vec2<T>{this->centerX - hWidth, this->centerY + hHeight}, vec2<T>{this->centerX + hWidth, this->centerY + hHeight}},
 		bottom{vec2<T>{this->centerX - hWidth, this->centerY - hHeight}, vec2<T>{this->centerX + hWidth, this->centerY - hHeight}},
 		left{vec2<T>{this->centerX - hWidth, this->centerY - hHeight}, vec2<T>{this->centerX - hWidth, this->centerY + hHeight}},
 		right{vec2<T>{this->centerX + hWidth, this->centerY - hHeight}, vec2<T>{this->centerX + hWidth, this->centerY + hHeight}};
-		return top.isIntersecting(other) || bottom.isIntersecting(other) || left.isIntersecting(other) || right.isIntersecting(other);
+		vec2<T> topInterPt, bottomInterPt, leftInterPt, rightInterPt;
+		bool topInter = top.isIntersecting(other, topInterPt);
+		bool bottomInter = bottom.isIntersecting(other, bottomInterPt);
+		bool leftInter = left.isIntersecting(other, leftInterPt);
+		bool rightInter = right.isIntersecting(other, rightInterPt);
+		float topDist = distance<T>(top.point2, topInterPt);
+		float bottomDist = distance<T>(bottom.point2, bottomInterPt);
+		float leftDist = distance<T>(left.point2, leftInterPt);
+		float rightDist = distance<T>(right.point2, rightInterPt);
+		if(topInter || bottomInter || leftInter || rightInter) closestHit = std::min(std::min(topDist, bottomDist), std::min(leftDist, rightDist));
+		return topInter || bottomInter || leftInter || rightInter;
 	}
 	
 	/// AABB-aabb collision

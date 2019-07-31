@@ -1,5 +1,7 @@
 #pragma once
 
+#include "vec2.hh"
+
 #include <vector>
 #include <ctgmath>
 
@@ -27,6 +29,11 @@ template<typename T> T degToRad(T degree)
 template<typename T> T radToDeg(T radian)
 {
 	return radian / (pi<T> / (T)180);
+}
+
+template<typename T> T distance(vec2<T> const &a, vec2<T> const &b)
+{
+	return (T)std::sqrt(std::pow(b.x() - a.x(), 2) + std::pow(b.y() - a.y(), 2));
 }
 
 /// A pascal triangle, typically used for finding weights, eg for blurring algorithms
