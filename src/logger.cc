@@ -8,6 +8,7 @@ std::string Logger::endl()
 	if(this->autoFlush)
 	{
 		this->push();
+		this->flush();
 	}
 	return "";
 }
