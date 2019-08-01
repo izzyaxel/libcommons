@@ -2,7 +2,7 @@
 
 #include <iomanip>
 
-void Logger::endl()
+std::string Logger::endl()
 {
 	if(this->autoFlush)
 	{
@@ -13,6 +13,7 @@ void Logger::endl()
 	{
 		this->tempBuf << "\n";
 	}
+	return "";
 }
 
 std::string Logger::timestamp()
