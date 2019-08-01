@@ -2,15 +2,17 @@
 
 #include <iomanip>
 
-std::string Logger::endl()
+void Logger::endl()
 {
-	this->tempBuf << "\n";
 	if(this->autoFlush)
 	{
 		this->push();
 		this->flush();
 	}
-	return "";
+	else
+	{
+		this->tempBuf << "\n";
+	}
 }
 
 std::string Logger::timestamp()

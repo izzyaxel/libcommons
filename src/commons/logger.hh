@@ -39,7 +39,7 @@ struct Logger
 {
 	~Logger();
 	
-	std::string endl();
+	void endl();
 	std::string timestamp();
 	
 	//Writes into the temporary buffer to construct a log message, must then be pushed to the main buffer
@@ -49,6 +49,11 @@ struct Logger
 	template <typename T> Logger& operator << (T val)
 	{
 		this->tempBuf << std::to_string(val);
+		return *this;
+	}
+	template <typename T> Logger& operator << (T *val)
+	{
+		this->tempBuf << val;
 		return *this;
 	}
 	
