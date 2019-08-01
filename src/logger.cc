@@ -2,10 +2,64 @@
 
 #include <iomanip>
 
+std::string Logger::endl = "\n";
+
+std::string Logger::timestamp()
+{
+	std::stringstream prefix;
+	auto t = std::time(nullptr);
+	auto tm = *std::localtime(&t);
+	switch(this->stamping)
+	{
+		case LogStamping::NONE: break;
+		case LogStamping::TIMESTAMPS:
+			prefix << std::put_time(&tm, "[%H:%M.%S]");
+			break;
+		
+		case LogStamping ::TIMESTAMPSANDDATES:
+			prefix << std::put_time(&tm, "[%d-%m-%Y %H:%M.%S]");
+			break;
+	}
+	return prefix.str();
+}
+
 Logger::~Logger()
 {
 	this->flush();
 	fclose(this->out);
+}
+
+Logger& Logger::operator<<(Sev val)
+{
+	switch(val)
+	{
+		case Sev::INFO: break;
+		case Sev::ERR:
+			this->tempBuf += "[ERROR]: ";
+			break;
+		case Sev::FATAL:
+			this->tempBuf += "[FATAL]: ";
+			break;
+	}
+	return *this;
+}
+
+Logger& Logger::operator<<(char const *val)
+{
+	this->tempBuf += val;
+	return *this;
+}
+
+Logger& Logger::operator<<(std::string const &val)
+{
+	this->tempBuf += val;
+	return *this;
+}
+
+void Logger::push()
+{
+	this->buf.push_back(this->tempBuf);
+	this->tempBuf = "";
 }
 
 void Logger::setOptions(LoggerOptions const &options)

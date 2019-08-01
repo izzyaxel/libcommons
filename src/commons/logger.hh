@@ -38,6 +38,22 @@ struct Logger
 {
 	~Logger();
 	
+	static std::string endl;
+	std::string timestamp();
+	
+	//Writes into the temporary buffer to construct a log message, must then be pushed to the main buffer
+	Logger& operator << (Sev val);
+	Logger& operator << (char const *val);
+	Logger& operator << (std::string const &val);
+	template <typename T> Logger& operator << (T val)
+	{
+		this->tempBuf += std::to_string(val);
+		return *this;
+	}
+	
+	/// Push the temporary buffer to the main buffer
+	void push();
+	
 	void setOptions(LoggerOptions const &options);
 	
 	void setFileTarget(std::string const &filePath, bool append = false);
@@ -52,5 +68,6 @@ private:
 	LogVerbosity verbosity;
 	FILE *out = nullptr;
 	std::vector<std::string> buf;
+	std::string tempBuf;
 	bool autoFlush = true;
 };
