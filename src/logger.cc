@@ -2,7 +2,15 @@
 
 #include <iomanip>
 
-std::string Logger::endl = "\n";
+std::string Logger::endl()
+{
+	this->tempBuf << "\n";
+	if(this->autoFlush)
+	{
+		this->push();
+	}
+	return "";
+}
 
 std::string Logger::timestamp()
 {
@@ -35,10 +43,10 @@ Logger& Logger::operator<<(Sev val)
 	{
 		case Sev::INFO: break;
 		case Sev::ERR:
-			this->tempBuf += "[ERROR]: ";
+			this->tempBuf << "[ERROR]: ";
 			break;
 		case Sev::FATAL:
-			this->tempBuf += "[FATAL]: ";
+			this->tempBuf << "[FATAL]: ";
 			break;
 	}
 	return *this;
@@ -46,20 +54,20 @@ Logger& Logger::operator<<(Sev val)
 
 Logger& Logger::operator<<(char const *val)
 {
-	this->tempBuf += val;
+	this->tempBuf << val;
 	return *this;
 }
 
 Logger& Logger::operator<<(std::string const &val)
 {
-	this->tempBuf += val;
+	this->tempBuf << val;
 	return *this;
 }
 
 void Logger::push()
 {
-	this->buf.push_back(this->tempBuf);
-	this->tempBuf = "";
+	this->buf.push_back(this->tempBuf.str());
+	this->tempBuf.str(std::string());
 }
 
 void Logger::setOptions(LoggerOptions const &options)
@@ -90,7 +98,7 @@ void Logger::setFileTarget(std::string const &filePath, bool append)
 	if(!this->out) printf("Failed to start log file\n");
 }
 
-void Logger::log(Severity severity, std::string const &message)
+void Logger::log(Sev severity, std::string const &message)
 {
 	if(this->verbosity == LogVerbosity::NONE) return;
 	std::stringstream prefix;

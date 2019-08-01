@@ -3,6 +3,7 @@
 #include <string>
 #include <cstdio>
 #include <vector>
+#include <sstream>
 
 enum struct Severity
 {
@@ -38,7 +39,7 @@ struct Logger
 {
 	~Logger();
 	
-	static std::string endl;
+	std::string endl();
 	std::string timestamp();
 	
 	//Writes into the temporary buffer to construct a log message, must then be pushed to the main buffer
@@ -47,7 +48,7 @@ struct Logger
 	Logger& operator << (std::string const &val);
 	template <typename T> Logger& operator << (T val)
 	{
-		this->tempBuf += std::to_string(val);
+		this->tempBuf << std::to_string(val);
 		return *this;
 	}
 	
@@ -68,6 +69,6 @@ private:
 	LogVerbosity verbosity;
 	FILE *out = nullptr;
 	std::vector<std::string> buf;
-	std::string tempBuf;
+	std::stringstream tempBuf;
 	bool autoFlush = true;
 };
