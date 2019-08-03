@@ -40,7 +40,7 @@ struct Logger
 	~Logger();
 	
 	std::string endl();
-	std::string timestamp();
+	[[nodiscard]] std::string timestamp();
 	
 	//Writes into the temporary buffer to construct a log message, must then be pushed to the main buffer
 	Logger& operator << (Sev val);

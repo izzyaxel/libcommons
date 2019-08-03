@@ -98,7 +98,7 @@ template<typename T> struct mat3x3
 	}
 	
 	/// Get the determinant of this 3x3 matrix
-	inline T determinant() const
+	[[nodiscard]] inline T determinant() const
 	{
 		return
 				this->data[0][0] * this->data[1][1] * this->data[2][2] -
@@ -110,7 +110,7 @@ template<typename T> struct mat3x3
 	}
 	
 	/// Get a compound scaled 4x4 matrix from this matrix and a 3-dimensional vector
-	inline mat3x3<T> compoundScale(vec3<T> const &scaleVec) const
+	[[nodiscard]] inline mat3x3<T> compoundScale(vec3<T> const &scaleVec) const
 	{
 		mat3x3<T> out;
 		out[0][0] = this->data[0][0] * scaleVec[0];
@@ -125,7 +125,7 @@ template<typename T> struct mat3x3
 		return out;
 	}
 	
-	inline mat3x3<T> compoundScale(T const &scalar) const
+	[[nodiscard]] inline mat3x3<T> compoundScale(T const &scalar) const
 	{
 		mat3x3<T> out;
 		out[0][0] = this->data[0][0] * scalar;
@@ -141,7 +141,7 @@ template<typename T> struct mat3x3
 	}
 	
 	/// Get an inverted 3x3 matrix based on this one
-	inline mat3x3<T> invert() const
+	[[nodiscard]] inline mat3x3<T> invert() const
 	{
 		mat3x3<T> out;
 		
@@ -159,7 +159,7 @@ template<typename T> struct mat3x3
 	}
 	
 	/// Transpose this 3x3 matrix
-	inline mat3x3<T> transpose() const
+	[[nodiscard]] inline mat3x3<T> transpose() const
 	{
 		mat3x3<T> out;
 		out[0][0] = this->data[0][0];
@@ -174,15 +174,13 @@ template<typename T> struct mat3x3
 		return out;
 	}
 	
-	using value_type = T;
-	
-	inline size_t size() const
+	[[nodiscard]] inline size_t size() const
 	{
 		return 9;
 	}
 	
 	/// Compose a string out of this mat4x4's values
-	inline std::string toString() const
+	[[nodiscard]] inline std::string toString() const
 	{
 		std::string out = "(mat3x3)\n";
 		for (int i = 0; i < 3; i++)

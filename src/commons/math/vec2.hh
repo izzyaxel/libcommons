@@ -7,16 +7,34 @@ template<typename T> struct vec2
 {
 	T data[2];
 	
-	inline T &x() { return this->data[0]; }
-	inline T &y() { return this->data[1]; }
-	inline T const &x() const { return this->data[0]; }
-	inline T const &y() const { return this->data[1]; }
+	[[nodiscard]] inline T &x() { return this->data[0]; }
+	[[nodiscard]] inline T &y() { return this->data[1]; }
+	[[nodiscard]] inline T const &x() const
+	{
+		return this->data[0];
+	}
+	[[nodiscard]] inline T const &y() const
+	{
+		return this->data[1];
+	}
 	
 	// 2-way Swizzling (sort of) 2 permutations
-	inline vec2<T> xx() { return vec2<T>{this->data[0], this->data[0]};}
-	inline vec2<T> yy() { return vec2<T>{this->data[1], this->data[1]};}
-	inline vec2<T> xx() const { return vec2<T>{this->data[0], this->data[0]};}
-	inline vec2<T> yy() const { return vec2<T>{this->data[1], this->data[1]};}
+	[[nodiscard]] inline vec2<T> xx()
+	{
+		return vec2<T>{this->data[0], this->data[0]};
+	}
+	[[nodiscard]] inline vec2<T> yy()
+	{
+		return vec2<T>{this->data[1], this->data[1]};
+	}
+	[[nodiscard]] inline vec2<T> xx() const
+	{
+		return vec2<T>{this->data[0], this->data[0]};
+	}
+	[[nodiscard]] inline vec2<T> yy() const
+	{
+		return vec2<T>{this->data[1], this->data[1]};
+	}
 	
 	inline constexpr vec2<T>() = default;
 	
@@ -178,17 +196,17 @@ template<typename T> struct vec2
 		this->data[1] = -this->data[1];
 	}
 	
-	inline vec2<T> inverse() const
+	[[nodiscard]] inline vec2<T> inverse() const
 	{
 		return {-this->data[0], -this->data[1]};
 	}
 	
-	inline T mag() const
+	[[nodiscard]] inline T mag() const
 	{
 		return std::sqrt(this->data[0] * this->data[0] + this->data[1] * this->data[1]);
 	}
 	
-	inline T dot(vec2<T> const &b) const
+	[[nodiscard]] inline T dot(vec2<T> const &b) const
 	{
 		return this->data[0] * b.x + this->data[1] * b.y;
 	}
@@ -200,7 +218,7 @@ template<typename T> struct vec2
 		this->data[1] /= length;
 	}
 	
-	inline vec2<T> normalized() const
+	[[nodiscard]] inline vec2<T> normalized() const
 	{
 		vec2<T> out;
 		T length = this->mag();
@@ -211,12 +229,12 @@ template<typename T> struct vec2
 	
 	using value_type = T;
 	
-	inline size_t size() const
+	[[nodiscard]] inline size_t size() const
 	{
 		return 2;
 	}
 	
-	inline std::string toString() const
+	[[nodiscard]] inline std::string toString() const
 	{
 		std::string out = "(vec2)\n[x: ";
 		out += std::to_string(this->data[0]);

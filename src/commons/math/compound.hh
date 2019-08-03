@@ -103,13 +103,13 @@ template <typename T> struct Compound
 	}
 	
 	/// Get the scalar value from this Compound
-	inline T scalar()
+	[[nodiscard]] inline T scalar()
 	{
 		return (T)this->base + this->offset;
 	}
 	
 	/// Get the specialized scalar value from this Compound
-	template <typename U> U scalar()
+	template <typename U> [[nodiscard]] U scalar()
 	{
 		return (U)this->base + this->offset;
 	}

@@ -14,65 +14,65 @@ template<typename T> struct vec4
 	T data[4];
 	
 	/// Get a reference to one of the contained values
-	inline T &x() { return this->data[0]; }
-	inline T &y() { return this->data[1]; }
-	inline T &z() { return this->data[2]; }
-	inline T &w() { return this->data[3]; }
-	inline T const &x() const { return this->data[0]; }
-	inline T const &y() const { return this->data[1]; }
-	inline T const &z() const { return this->data[2]; }
-	inline T const &w() const { return this->data[3]; }
-	inline T &r() { return this->data[0]; }
-	inline T &g() { return this->data[1]; }
-	inline T &b() { return this->data[2]; }
-	inline T &a() { return this->data[3]; }
-	inline T const &r() const { return this->data[0]; }
-	inline T const &g() const { return this->data[1]; }
-	inline T const &b() const { return this->data[2]; }
-	inline T const &a() const { return this->data[3]; }
+	[[nodiscard]] inline T &x() {return this->data[0];}
+	[[nodiscard]] inline T &y() {return this->data[1];}
+	[[nodiscard]] inline T &z() {return this->data[2];}
+	[[nodiscard]] inline T &w() {return this->data[3];}
+	[[nodiscard]] inline T const &x() const {return this->data[0];}
+	[[nodiscard]] inline T const &y() const {return this->data[1];}
+	[[nodiscard]] inline T const &z() const {return this->data[2];}
+	[[nodiscard]] inline T const &w() const {return this->data[3];}
+	[[nodiscard]] inline T &r() {return this->data[0];}
+	[[nodiscard]] inline T &g() {return this->data[1];}
+	[[nodiscard]] inline T &b() {return this->data[2];}
+	[[nodiscard]] inline T &a() {return this->data[3];}
+	[[nodiscard]] inline T const &r() const {return this->data[0];}
+	[[nodiscard]] inline T const &g() const {return this->data[1];}
+	[[nodiscard]] inline T const &b() const {return this->data[2];}
+	[[nodiscard]] inline T const &a() const {return this->data[3];}
 	
 	//TODO do it
 	/// 4-way Swizzling (sort of), 256 permutations
 	
 	//TODO finish it
 	/// 3-way Swizzling (sort of), 64 permutations 
-	inline vec3<T> xyz() { return vec3<T>{this->data[0], this->data[1], this->data[2]}; }
+	[[nodiscard]] inline vec3<T> xyz() {return vec3<T>{this->data[0], this->data[1], this->data[2]};}
 	
-	inline vec3<T> xyz() const { return vec3<T>{this->data[0], this->data[1], this->data[2]}; }
+	[[nodiscard]] inline vec3<T> xyz() const {return vec3<T>{this->data[0], this->data[1], this->data[2]};}
 	
 	/// 2-way Swizzling (sort of), 16 permutations
-	inline vec2<T> xx() { return vec2<T>{this->data[0], this->data[0]}; }
-	inline vec2<T> yy() { return vec2<T>{this->data[1], this->data[1]}; }
-	inline vec2<T> zz() { return vec2<T>{this->data[2], this->data[2]}; }
-	inline vec2<T> ww() { return vec2<T>{this->data[3], this->data[3]}; }
-	inline vec2<T> xy() { return vec2<T>{this->data[0], this->data[1]}; }
-	inline vec2<T> xz() { return vec2<T>{this->data[0], this->data[2]}; }
-	inline vec2<T> xw() { return vec2<T>{this->data[0], this->data[3]}; }
-	inline vec2<T> yx() { return vec2<T>{this->data[1], this->data[0]}; }
-	inline vec2<T> yz() { return vec2<T>{this->data[1], this->data[2]}; }
-	inline vec2<T> yw() { return vec2<T>{this->data[1], this->data[3]}; }
-	inline vec2<T> zx() { return vec2<T>{this->data[2], this->data[0]}; }
-	inline vec2<T> zy() { return vec2<T>{this->data[2], this->data[1]}; }
-	inline vec2<T> zw() { return vec2<T>{this->data[2], this->data[3]}; }
-	inline vec2<T> wx() { return vec2<T>{this->data[3], this->data[0]}; }
-	inline vec2<T> wy() { return vec2<T>{this->data[3], this->data[1]}; }
-	inline vec2<T> wz() { return vec2<T>{this->data[3], this->data[2]}; }
-	inline vec2<T> xx() const { return vec2<T>{this->data[0], this->data[0]}; }
-	inline vec2<T> yy() const { return vec2<T>{this->data[1], this->data[1]}; }
-	inline vec2<T> zz() const { return vec2<T>{this->data[2], this->data[2]}; }
-	inline vec2<T> ww() const { return vec2<T>{this->data[3], this->data[3]}; }
-	inline vec2<T> xy() const { return vec2<T>{this->data[0], this->data[1]}; }
-	inline vec2<T> xz() const { return vec2<T>{this->data[0], this->data[2]}; }
-	inline vec2<T> xw() const { return vec2<T>{this->data[0], this->data[3]}; }
-	inline vec2<T> yx() const { return vec2<T>{this->data[1], this->data[0]}; }
-	inline vec2<T> yz() const { return vec2<T>{this->data[1], this->data[2]}; }
-	inline vec2<T> yw() const { return vec2<T>{this->data[1], this->data[3]}; }
-	inline vec2<T> zx() const { return vec2<T>{this->data[2], this->data[0]}; }
-	inline vec2<T> zy() const { return vec2<T>{this->data[2], this->data[1]}; }
-	inline vec2<T> zw() const { return vec2<T>{this->data[2], this->data[3]}; }
-	inline vec2<T> wx() const { return vec2<T>{this->data[3], this->data[0]}; }
-	inline vec2<T> wy() const { return vec2<T>{this->data[3], this->data[1]}; }
-	inline vec2<T> wz() const { return vec2<T>{this->data[3], this->data[2]}; }
+	[[nodiscard]] inline vec2<T> xx() {return vec2<T>{this->data[0], this->data[0]};}
+	[[nodiscard]] inline vec2<T> yy() {return vec2<T>{this->data[1], this->data[1]};}
+	[[nodiscard]] inline vec2<T> zz() {return vec2<T>{this->data[2], this->data[2]};}
+	[[nodiscard]] inline vec2<T> ww() {return vec2<T>{this->data[3], this->data[3]};}
+	[[nodiscard]] inline vec2<T> xy() {return vec2<T>{this->data[0], this->data[1]};}
+	[[nodiscard]] inline vec2<T> xz() {return vec2<T>{this->data[0], this->data[2]};}
+	[[nodiscard]] inline vec2<T> xw() {return vec2<T>{this->data[0], this->data[3]};}
+	[[nodiscard]] inline vec2<T> yx() {return vec2<T>{this->data[1], this->data[0]};}
+	[[nodiscard]] inline vec2<T> yz() {return vec2<T>{this->data[1], this->data[2]};}
+	[[nodiscard]] inline vec2<T> yw() {return vec2<T>{this->data[1], this->data[3]};}
+	[[nodiscard]] inline vec2<T> zx() {return vec2<T>{this->data[2], this->data[0]};}
+	[[nodiscard]] inline vec2<T> zy() {return vec2<T>{this->data[2], this->data[1]};}
+	[[nodiscard]] inline vec2<T> zw() {return vec2<T>{this->data[2], this->data[3]};}
+	[[nodiscard]] inline vec2<T> wx() {return vec2<T>{this->data[3], this->data[0]};}
+	[[nodiscard]] inline vec2<T> wy() {return vec2<T>{this->data[3], this->data[1]};}
+	[[nodiscard]] inline vec2<T> wz() {return vec2<T>{this->data[3], this->data[2]};}
+	[[nodiscard]] inline vec2<T> xx() const {return vec2<T>{this->data[0], this->data[0]};}
+	[[nodiscard]] inline vec2<T> yy() const {return vec2<T>{this->data[1], this->data[1]};}
+	[[nodiscard]] inline vec2<T> zz() const {return vec2<T>{this->data[2], this->data[2]};}
+	[[nodiscard]] inline vec2<T> ww() const {return vec2<T>{this->data[3], this->data[3]};}
+	[[nodiscard]] inline vec2<T> xy() const {return vec2<T>{this->data[0], this->data[1]};}
+	[[nodiscard]] inline vec2<T> xz() const {return vec2<T>{this->data[0], this->data[2]};}
+	[[nodiscard]] inline vec2<T> xw() const {return vec2<T>{this->data[0], this->data[3]};}
+	[[nodiscard]] inline vec2<T> yx() const {return vec2<T>{this->data[1], this->data[0]};}
+	[[nodiscard]] inline vec2<T> yz() const {return vec2<T>{this->data[1], this->data[2]};}
+	[[nodiscard]] inline vec2<T> yw() const {return vec2<T>{this->data[1], this->data[3]};}
+	[[nodiscard]] inline vec2<T> zx() const {return vec2<T>{this->data[2], this->data[0]};}
+	[[nodiscard]] inline vec2<T> zy() const {return vec2<T>{this->data[2], this->data[1]};}
+	[[nodiscard]] inline vec2<T> zw() const {return vec2<T>{this->data[2], this->data[3]};}
+	[[nodiscard]] inline vec2<T> wx() const {return vec2<T>{this->data[3], this->data[0]};}
+	[[nodiscard]] inline vec2<T> wy() const {return vec2<T>{this->data[3], this->data[1]};}
+	[[nodiscard]] inline vec2<T> wz() const {return vec2<T>{this->data[3], this->data[2]};}
 	
 	inline constexpr vec4<T>() = default;
 	
@@ -319,19 +319,19 @@ template<typename T> struct vec4
 	}
 	
 	/// Get an inverted v4
-	inline vec4<T> inverse() const
+	[[nodiscard]] inline vec4<T> inverse() const
 	{
 		return vec4<T>{-this->data[0], -this->data[1], -this->data[2], -this->data[3]};
 	}
 	
 	/// Get the magnitude of this v4
-	inline T mag() const
+	[[nodiscard]] inline T mag() const
 	{
 		return std::sqrt(this->data[0] * this->data[0] + this->data[1] * this->data[1] + this->data[2] * this->data[2] + this->data[3] * this->data[3]);
 	}
 	
 	/// Get the dot product of this v4 and another
-	inline T dot(vec4<T> const &b) const
+	[[nodiscard]] inline T dot(vec4<T> const &b) const
 	{
 		return this->data[3] * b.w + this->data[0] * b.x + this->data[1] * b.y + this->data[2] * b.z;
 	}
@@ -347,7 +347,7 @@ template<typename T> struct vec4
 	}
 	
 	/// Get a normalized v4
-	inline vec4<T> normalized() const
+	[[nodiscard]] inline vec4<T> normalized() const
 	{
 		vec4<T> out;
 		T length = this->mag();
@@ -358,15 +358,13 @@ template<typename T> struct vec4
 		return out;
 	}
 	
-	using value_type = T;
-	
-	inline size_t size() const
+	[[nodiscard]] inline size_t size() const
 	{
 		return 4;
 	}
 	
 	/// Compose a string out of this v4's values
-	inline std::string toString() const
+	[[nodiscard]] inline std::string toString() const
 	{
 		std::string out = "(vec4)\n[x: ";
 		out += std::to_string(this->data[0]);

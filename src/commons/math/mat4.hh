@@ -162,7 +162,7 @@ template<typename T> struct mat4x4
 	}
 	
 	/// Get the determinant of this 4x4 matrix
-	inline T determinant() const
+	[[nodiscard]] inline T determinant() const
 	{
 		return
 				this->data[0][3] * this->data[1][2] * this->data[2][1] * this->data[3][0] - this->data[0][2] * this->data[1][3] * this->data[2][1] * this->data[3][0] -
@@ -230,7 +230,7 @@ template<typename T> struct mat4x4
 	
 	//row-column reversed
 	/// Get a new inverted mat4x4 from this one
-	inline mat4x4<T> inverse() const
+	[[nodiscard]] inline mat4x4<T> inverse() const
 	{
 		T A2323 = this->data[2][2] * this->data[3][3] - this->data[3][2] * this->data[2][3];
 		T A1323 = this->data[1][2] * this->data[3][3] - this->data[3][2] * this->data[1][3];
@@ -278,7 +278,7 @@ template<typename T> struct mat4x4
 	}
 	
 	/// Transpose this 4x4 matrix
-	inline mat4x4<T> transpose() const
+	[[nodiscard]] inline mat4x4<T> transpose() const
 	{
 		mat4x4<T> out;
 		out[0][0] = this->data[0][0];
@@ -300,15 +300,13 @@ template<typename T> struct mat4x4
 		return out;
 	}
 	
-	using value_type = T;
-	
-	inline size_t size() const
+	[[nodiscard]] inline size_t size() const
 	{
 		return 16;
 	}
 	
 	/// Compose a string out of this mat4x4's values
-	inline std::string toString() const
+	[[nodiscard]] inline std::string toString() const
 	{
 		std::string out = "(mat4x4)\n";
 		for (int i = 0; i < 4; i++)
@@ -348,7 +346,7 @@ template<typename T> struct mat4x4
 	}
 };
 
-template <typename T> inline mat4x4<T> translateMat(vec3<T> const &in)
+template <typename T> [[nodiscard]] inline mat4x4<T> translateMat(vec3<T> const &in)
 {
 	mat4x4<T> out{};
 	out[3][0] = in[0];
@@ -357,13 +355,13 @@ template <typename T> inline mat4x4<T> translateMat(vec3<T> const &in)
 	return out;
 }
 
-template <typename T> inline mat4x4<T> rotateMat(quat<T> const &in)
+template <typename T> [[nodiscard]] inline mat4x4<T> rotateMat(quat<T> const &in)
 {
 	return mat4x4<T>{in};
 }
 
 /// Convert a vec3 scale into a mat4x4 representation
-template <typename T> inline mat4x4<T> scaleMat(vec3<T> const &scale)
+template <typename T> [[nodiscard]] inline mat4x4<T> scaleMat(vec3<T> const &scale)
 {
 	mat4x4<T> out{};
 	out[0][0] = scale[0];
@@ -372,7 +370,7 @@ template <typename T> inline mat4x4<T> scaleMat(vec3<T> const &scale)
 	return out;
 }
 
-template <typename T> inline mat4x4<T> scaleMat(T scalar)
+template <typename T> [[nodiscard]] inline mat4x4<T> scaleMat(T scalar)
 {
 	mat4x4<T> out;
 	out[0][0] = scalar;
@@ -381,7 +379,7 @@ template <typename T> inline mat4x4<T> scaleMat(T scalar)
 	return out;
 }
 
-template <typename T> inline mat4x4<T> modelMatrix(vec3<T> const &position, quat<T> const &rotation, vec3<T> const &scale)
+template <typename T> [[nodiscard]] inline mat4x4<T> modelMatrix(vec3<T> const &position, quat<T> const &rotation, vec3<T> const &scale)
 {
 	mat4x4<T> t = translateMat(position);
 	mat4x4<T> r = rotateMat(rotation);
@@ -389,7 +387,7 @@ template <typename T> inline mat4x4<T> modelMatrix(vec3<T> const &position, quat
 	return s * r * t;
 }
 
-template <typename T> inline mat4x4<T> modelMatrixText(vec3<T> const &position, quat<T> const &rotation, vec3<T> const &scale)
+template <typename T> [[nodiscard]] inline mat4x4<T> modelMatrixText(vec3<T> const &position, quat<T> const &rotation, vec3<T> const &scale)
 {
 	mat4x4<T> t = translateMat(position);
 	mat4x4<T> r = rotateMat(rotation);
@@ -397,7 +395,7 @@ template <typename T> inline mat4x4<T> modelMatrixText(vec3<T> const &position, 
 	return s * t * r;
 }
 
-template <typename T> inline mat4x4<T> modelMatrix(vec3<T> const &position, vec3<T> const &origin, quat<T> const &rotation, vec3<T> const &scale)
+template <typename T> [[nodiscard]] inline mat4x4<T> modelMatrix(vec3<T> const &position, vec3<T> const &origin, quat<T> const &rotation, vec3<T> const &scale)
 {
 	mat4x4<T> tOffset = translateMat(origin);
 	mat4x4<T> r = rotateMat(rotation);
@@ -406,14 +404,14 @@ template <typename T> inline mat4x4<T> modelMatrix(vec3<T> const &position, vec3
 	return s * tOffset * r * t;
 }
 
-template <typename T> inline mat4x4<T> viewMatrix(quat<T> const &cameraRotation, vec3<T> const &cameraPosition)
+template <typename T> [[nodiscard]] inline mat4x4<T> viewMatrix(quat<T> const &cameraRotation, vec3<T> const &cameraPosition)
 {
 	mat4x4<T> rot = mat4x4<T>{cameraRotation.inverse()};
 	mat4x4<T> trans = translateMat(cameraPosition.inverse());
 	return trans * rot;
 }
 
-template <typename T> inline mat4x4<T> perspectiveProjectionMatrix(T fov, T nearPlane, T farPlane, uint32_t width, uint32_t height)
+template <typename T> [[nodiscard]] inline mat4x4<T> perspectiveProjectionMatrix(T fov, T nearPlane, T farPlane, uint32_t width, uint32_t height)
 {
 	T halfFOV = (T)1 / std::tan((T)0.5 * degToRad(fov));
 	mat4x4<T> out{};
@@ -426,7 +424,7 @@ template <typename T> inline mat4x4<T> perspectiveProjectionMatrix(T fov, T near
 	return out;
 }
 
-template <typename T> inline mat4x4<T> orthoProjectionMatrix(T left, T right, T top, T bottom, T zNear, T zFar)
+template <typename T> [[nodiscard]] inline mat4x4<T> orthoProjectionMatrix(T left, T right, T top, T bottom, T zNear, T zFar)
 {
 	mat4x4<T> out{};
 	out[0][0] = (T)2 / (right - left);
@@ -438,7 +436,7 @@ template <typename T> inline mat4x4<T> orthoProjectionMatrix(T left, T right, T 
 	return out;
 }
 
-template <typename T> inline mat4x4<T> modelViewProjectionMatrix(mat4x4<T> const &model, mat4x4<T> const &view, mat4x4<T> const &projection)
+template <typename T> [[nodiscard]] inline mat4x4<T> modelViewProjectionMatrix(mat4x4<T> const &model, mat4x4<T> const &view, mat4x4<T> const &projection)
 {
 	return model * view * projection;
 }

@@ -8,25 +8,25 @@
 #include "mat4.hh"
 
 //to glm
-template <typename T> glm::vec2 IRtoGLMvec2(vec2<T> const &in)
+template <typename T> [[nodiscard]] glm::vec2 IRtoGLMvec2(vec2<T> const &in)
 {
 	glm::vec2 out = glm::vec2{in[0], in[1]};
 	return out;
 }
 
-template <typename T> glm::vec3 IRtoGLMvec3(vec3<T> const &in)
+template <typename T> [[nodiscard]] glm::vec3 IRtoGLMvec3(vec3<T> const &in)
 {
 	glm::vec3 out = glm::vec3{in[0], in[1], in[2]};
 	return out;
 }
 
-template <typename T> glm::vec4 IRtoGLMvec4(vec4<T> const &in)
+template <typename T> [[nodiscard]] glm::vec4 IRtoGLMvec4(vec4<T> const &in)
 {
 	glm::vec4 out = glm::vec4{in[0], in[1], in[2], in[3]};
 	return out;
 }
 
-template <typename T> glm::mat3x3 IRtoGLMmat3(mat3x3<T> const &in)
+template <typename T> [[nodiscard]] glm::mat3x3 IRtoGLMmat3(mat3x3<T> const &in)
 {
 	glm::mat3x3 out;
 	out[0][0] = in[0][0];
@@ -41,7 +41,7 @@ template <typename T> glm::mat3x3 IRtoGLMmat3(mat3x3<T> const &in)
 	return out;
 }
 
-template <typename T> glm::mat4x4 IRtoGLMmat4(mat4x4<T> const &in)
+template <typename T> [[nodiscard]] glm::mat4x4 IRtoGLMmat4(mat4x4<T> const &in)
 {
 	glm::mat4x4 out;
 	out[0][0] = in[0][0];
@@ -64,25 +64,25 @@ template <typename T> glm::mat4x4 IRtoGLMmat4(mat4x4<T> const &in)
 }
 
 //glm to iris
-template <typename T> vec2<T> GLMtoIRvec2(glm::vec2 const &in)
+template <typename T> [[nodiscard]] vec2<T> GLMtoIRvec2(glm::vec2 const &in)
 {
 	vec2<T> out = {in[0], in[1]};
 	return out;
 }
 
-template <typename T> vec3<T> GLMtoIRvec3(glm::vec3 const &in)
+template <typename T> [[nodiscard]] vec3<T> GLMtoIRvec3(glm::vec3 const &in)
 {
 	vec3<T> out = {in[0], in[1], in[2]};
 	return out;
 }
 
-template <typename T> vec4<T> GLMtoIRvec4(glm::vec4 const &in)
+template <typename T> [[nodiscard]] vec4<T> GLMtoIRvec4(glm::vec4 const &in)
 {
 	vec4<T> out = {in[0], in[1], in[2], in[3]};
 	return out;
 }
 
-template <typename T> mat3x3<T> GLMtoIRmat3(glm::mat3x3 const &in)
+template <typename T> [[nodiscard]] mat3x3<T> GLMtoIRmat3(glm::mat3x3 const &in)
 {
 	mat3x3<T> out;
 	out[0][0] = in[0][0];
@@ -97,7 +97,7 @@ template <typename T> mat3x3<T> GLMtoIRmat3(glm::mat3x3 const &in)
 	return out;
 }
 
-template <typename T> mat4x4<T> GLMtoIRmat4(glm::mat4x4 const &in)
+template <typename T> [[nodiscard]] mat4x4<T> GLMtoIRmat4(glm::mat4x4 const &in)
 {
 	mat4x4<T> out;
 	out[0][0] = in[0][0];

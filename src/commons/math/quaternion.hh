@@ -11,42 +11,42 @@ template<typename T> struct quat
 	T data[4]{0, 0, 0, 1};
 	
 	/// Get a reference to one of the contained values
-	inline T &x()
+	[[nodiscard]] inline T &x()
 	{
 		return this->data[0];
 	}
 	
-	inline T &y()
+	[[nodiscard]] inline T &y()
 	{
 		return this->data[1];
 	}
 	
-	inline T &z()
+	[[nodiscard]] inline T &z()
 	{
 		return this->data[2];
 	}
 	
-	inline T &w()
+	[[nodiscard]] inline T &w()
 	{
 		return this->data[3];
 	}
 	
-	inline T const &x() const
+	[[nodiscard]] inline T const &x() const
 	{
 		return this->data[0];
 	}
 	
-	inline T const &y() const
+	[[nodiscard]] inline T const &y() const
 	{
 		return this->data[1];
 	}
 	
-	inline T const &z() const
+	[[nodiscard]] inline T const &z() const
 	{
 		return this->data[2];
 	}
 	
-	inline T const &w() const
+	[[nodiscard]] inline T const &w() const
 	{
 		return this->data[3];
 	}
@@ -171,13 +171,13 @@ template<typename T> struct quat
 	}
 	
 	/// Get a new conjugated quaternion
-	inline quat<T> conjugated() const
+	[[nodiscard]] inline quat<T> conjugated() const
 	{
 		return quat<T>{-this->data[0], -this->data[1], -this->data[2], this->data[3]};
 	}
 	
 	/// Find the magnitude(length) of this quaternion
-	inline T mag() const
+	[[nodiscard]] inline T mag() const
 	{
 		return std::sqrt(this->data[0] * this->data[0] + this->data[1] * this->data[1] + this->data[2] * this->data[2] + this->data[3] * this->data[3]);
 	}
@@ -193,27 +193,27 @@ template<typename T> struct quat
 	}
 	
 	/// Get a new normalized quaternion
-	inline quat<T> normalized() const
+	[[nodiscard]] inline quat<T> normalized() const
 	{
 		T length = this->mag();
 		return quat<T>{this->data[0] / length, this->data[1] / length, this->data[2] / length, this->data[3] / length};
 	}
 	
 	/// Get the dot product of this and another quaternion
-	inline T dot(quat<T> const &other) const
+	[[nodiscard]] inline T dot(quat<T> const &other) const
 	{
 		return this->data[3] * other[3] + this->data[0] * other[0] + this->data[1] * other[1] + this->data[2] * other[2];
 	}
 	
 	/// Get a new inverted quaternion
-	inline quat<T> inverse() const
+	[[nodiscard]] inline quat<T> inverse() const
 	{
 		T length = this->mag();
 		return quat<T>{-this->data[0] / length, -this->data[1] / length, -this->data[2] / length, this->data[3] / length};
 	}
 	
 	/// Convert this quaternion into euler angles (in radians)
-	inline vec3<T> toEuler() const
+	[[nodiscard]] inline vec3<T> toEuler() const
 	{
 		T one = (T)1;
 		T two = (T)2;
@@ -232,7 +232,7 @@ template<typename T> struct quat
 	
 	/// Convert euler angles to a quaternion rotation
 	/// \param euler {roll, pitch, yaw} in radians
-	inline static quat<T> fromEuler(vec3<T> const &euler)
+	[[nodiscard]] inline static quat<T> fromEuler(vec3<T> const &euler)
 	{
 		quat<T> out;
 		double half = 0.5;
@@ -251,7 +251,7 @@ template<typename T> struct quat
 		return out.normalized();
 	}
 	
-	inline vec4<T> toAxial() const
+	[[nodiscard]] inline vec4<T> toAxial() const
 	{
 		float angle, divisor, x, y, z;
 		angle = (T)2 * std::acos(this->w());
@@ -310,7 +310,7 @@ template<typename T> struct quat
 	/// \param originPos Typically the position of the camera
 	/// \param targetPos The point in the world to aim at
 	/// \param upVec A normalized direction vector specifying what direction up is to be considered
-	inline static quat<T> lookAt(vec3<T> const &originPos, vec3<T> const &targetPos, vec3<T> const &upVec)
+	[[nodiscard]] inline static quat<T> lookAt(vec3<T> const &originPos, vec3<T> const &targetPos, vec3<T> const &upVec)
 	{
 		vec3<T> front = targetPos - originPos;
 		front.normalize();
@@ -332,14 +332,14 @@ template<typename T> struct quat
 	}
 	
 	/// A cumulative version of lookAt
-	inline static quat<T> lookAt(vec3<T> originPos, vec3<T> targetPos, quat<T> const &currentRotation, T lerp = (T)1)
+	[[nodiscard]] inline static quat<T> lookAt(vec3<T> originPos, vec3<T> targetPos, quat<T> const &currentRotation, T lerp = (T)1)
 	{
 		vec3<T> frontTo = vec3<T>{targetPos - originPos}.normalized() * currentRotation.conjugated();
 		return vecDelta({0, 0, 1}, frontTo, lerp);
 	}
 	
 	/// Create a rotation quaternion to multiply an orientation quaternion by, from relative mouse movement values
-	inline static quat<T> rotateFromMouse(T xrel, T yrel, T lookSensitivity)
+	[[nodiscard]] inline static quat<T> rotateFromMouse(T xrel, T yrel, T lookSensitivity)
 	{
 		float a = (-xrel * lookSensitivity) / 2.0f;
 		quat<T> xQuat = quat<T>{0.0f, std::sin(a), 0.0f, std::cos(a)};
@@ -348,7 +348,7 @@ template<typename T> struct quat
 		return quat<T>{xQuat * yQuat}.normalized();
 	}
 	
-	inline static quat<T> vecDelta(vec3<T> from, vec3<T> to, T lerp = (T)1)
+	[[nodiscard]] inline static quat<T> vecDelta(vec3<T> from, vec3<T> to, T lerp = (T)1)
 	{
 		if (lerp < 0) lerp = 0;
 		if (lerp > 1) lerp = 1;
@@ -363,7 +363,7 @@ template<typename T> struct quat
 		return axialToQuat(rotAxis.x(), rotAxis.y(), rotAxis.z(), rot * lerp);
 	}
 	
-	inline quat<T> limitRotationRange(vec3<T> up, T angleLimit, T lerp = (T)1)
+	[[nodiscard]] inline quat<T> limitRotationRange(vec3<T> up, T angleLimit, T lerp = (T)1)
 	{
 		vec3<T> upQ = -up * this->conjugated();
 		upQ.normalize();
@@ -379,7 +379,7 @@ template<typename T> struct quat
 		return out;
 	}
 	
-	inline quat<T> correctOrientation(vec3<T> up, T lerp = (T)1)
+	[[nodiscard]] inline quat<T> correctOrientation(vec3<T> up, T lerp = (T)1)
 	{
 		vec3<T> upQ = up * this->conjugated();
 		upQ.normalize();
@@ -391,15 +391,13 @@ template<typename T> struct quat
 		return vecDelta({0, 1, 0}, upFixed, lerp);
 	}
 	
-	using value_type = T;
-	
-	inline size_t size() const
+	[[nodiscard]] inline size_t size() const
 	{
 		return 4;
 	}
 	
 	/// Get a formatted string of the contents of this quaternion
-	inline std::string toString() const
+	[[nodiscard]] inline std::string toString() const
 	{
 		std::string out = "(quat)\n[";
 		for (int i = 0; i < 4; i++)

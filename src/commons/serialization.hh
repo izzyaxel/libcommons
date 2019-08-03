@@ -51,7 +51,7 @@ struct Serializer
 		this->read(reinterpret_cast<uint8_t *>(&out), sizeof(T));
 	}
 	
-	inline size_t size()
+	[[nodiscard]] inline size_t size()
 	{
 		return this->_size;
 	}

@@ -3,7 +3,6 @@
 #include "general.hh"
 
 template<typename T> struct circle;
-template<typename T> struct capsule;
 
 template<typename T> struct linesegment2D
 {
@@ -18,7 +17,7 @@ template<typename T> struct linesegment2D
 		this->point2 = p2;
 	}
 	
-	inline vec2<T> getNormal()
+	[[nodiscard]] inline vec2<T> getNormal()
 	{
 		vec2<T> vec = this->point1 - this->point2;
 		vec.normalize();
@@ -26,7 +25,7 @@ template<typename T> struct linesegment2D
 	}
 	
 	/// Find the point of intersection between this line and another
-	inline bool isIntersecting(linesegment2D<T> const &other, vec2<T> &out)
+	[[nodiscard]] inline bool isIntersecting(linesegment2D<T> const &other, vec2<T> &out)
 	{
 		T x1 = this->point1.x(), x2 = this->point2.x(), x3 = other.point1.x(), x4 = other.point2.x();
 		T y1 = this->point1.y(), y2 = this->point2.y(), y3 = other.point1.y(), y4 = other.point2.y();
@@ -102,13 +101,13 @@ template<typename T> struct aabb2D
 	}
 	
 	/// Check if this AABB contains a given point
-	inline bool containsPoint(T x, T y)
+	[[nodiscard]] inline bool containsPoint(T x, T y)
 	{
 		return x > this->minX && x < this->maxX && y > this->minY && y < this->maxY;
 	}
 	
 	/// AABB-line segment collision
-	inline bool isIntersecting(linesegment2D<T> const &other, T &closestHit)
+	[[nodiscard]] inline bool isIntersecting(linesegment2D<T> const &other, T &closestHit)
 	{
 		T hWidth = (this->maxY - this->minY) / (T)2, hHeight = (this->maxX - this->minX) / 2;
 		linesegment2D<T> top{vec2<T>{this->centerX - hWidth, this->centerY + hHeight}, vec2<T>{this->centerX + hWidth, this->centerY + hHeight}},
@@ -129,13 +128,13 @@ template<typename T> struct aabb2D
 	}
 	
 	/// AABB-aabb collision
-	inline bool isIntersecting(aabb2D<T> const &other)
+	[[nodiscard]] inline bool isIntersecting(aabb2D<T> const &other)
 	{
 		return (this->minX < other.maxX) != (this->maxX < other.minX) && (this->minY < other.maxY) != (this->maxY < other.minY);
 	}
 	
 	/// AABB-circle collision
-	inline bool isIntersecting(circle<T> const &other)
+	[[nodiscard]] inline bool isIntersecting(circle<T> const &other)
 	{
 		aabb2D<T> broadOther = aabb2D<T>(other.center.x() - other.radius, other.center.x() + other.radius, other.center.y() - other.radius, other.center.y() + other.radius);
 		if(!this->isIntersecting(broadOther)) return false;
@@ -151,7 +150,7 @@ template<typename T> struct aabb2D
 	}
 	
 	/// Predict an intersection with another AABB
-	inline bool predictIntersection(T xOffset, T yOffset, aabb2D<T> const &other)
+	[[nodiscard]] inline bool predictIntersection(T xOffset, T yOffset, aabb2D<T> const &other)
 	{
 		return (this->minX + xOffset < other.maxX) != (this->maxX + xOffset < other.minX) && (this->minY + yOffset < other.maxY) != (this->maxY + yOffset < other.minY);
 	}
@@ -182,19 +181,19 @@ template<typename T> struct aabb3D
 	}
 	
 	/// Check if this AABB contains a given point
-	inline bool containsPoint(T x, T y, T z)
+	[[nodiscard]] inline bool containsPoint(T x, T y, T z)
 	{
 		return x > this->minX && x < this->maxX && y > this->minY && y < this->maxY && z > this->minZ && z < this->maxZ;
 	}
 	
 	/// Check if this AABB is intersecting with another
-	inline bool isIntersecting(aabb3D<T> const &other)
+	[[nodiscard]] inline bool isIntersecting(aabb3D<T> const &other)
 	{
 		return (this->minX < other.maxX) != (this->maxX < other.minX) && (this->minY < other.maxY) != (this->maxY < other.minY) && (this->minZ < other.maxZ) != (this->maxZ < other.minZ);
 	}
 	
 	/// Predict an intersection with another AABB
-	inline bool predictIntersection(T xOffset, T yOffset, T zOffset, aabb3D<T> const &other)
+	[[nodiscard]] inline bool predictIntersection(T xOffset, T yOffset, T zOffset, aabb3D<T> const &other)
 	{
 		return (this->minX + xOffset < other.maxX) != (this->maxX + xOffset < other.minX) && (this->minY + yOffset < other.maxY) != (this->maxY + yOffset < other.minY) && (this->minZ + zOffset < other.maxZ) != (this->maxZ + zOffset < other.minZ);
 	}
@@ -220,7 +219,7 @@ template<typename T> struct circle
 	}
 	
 	/// Circle-circle collision
-	inline bool isIntersecting(circle<T> const &other)
+	[[nodiscard]] inline bool isIntersecting(circle<T> const &other)
 	{
 		aabb2D<T> broadThis = aabb2D<T>(this->center.x() - this->radius, this->center.x() + this->radius, this->center.y() - this->radius, this->center.y() + this->radius);
 		aabb2D<T> broadOther = aabb2D<T>(other.center.x() - other.radius, other.center.x() + other.radius, other.center.y() - other.radius, other.center.y() + other.radius);
@@ -232,7 +231,7 @@ template<typename T> struct circle
 	}
 	
 	/// Circle-line
-	inline bool isIntersecting(linesegment2D<T> const &other)
+	[[nodiscard]] inline bool isIntersecting(linesegment2D<T> const &other)
 	{
 		T dX, dY, dR, D, incidence;
 		dX = other.point2.x() - other.point1.x();
@@ -253,7 +252,7 @@ template<typename T> struct circle
 	}
 	
 	/// Circle-aabb collision
-	inline bool isIntersecting(aabb2D<T> const &other) //TODO optimization
+	[[nodiscard]] inline bool isIntersecting(aabb2D<T> const &other) //TODO optimization
 	{
 		//broad phase
 		if(this->containsPoint({other.centerX, other.centerY})) return true;
@@ -279,7 +278,7 @@ template<typename T> struct circle
 		return this->isIntersecting(left);
 	}
 	
-	inline bool containsPoint(vec2<T> const &point)
+	[[nodiscard]] inline bool containsPoint(vec2<T> const &point)
 	{
 		T distance = std::sqrt(((this->center.x() - point.x()) * (this->center.x() - point.x())) + ((this->center.y() - point.y()) * (this->center.y() - point.y())));
 		return distance < this->radius;
@@ -287,12 +286,4 @@ template<typename T> struct circle
 	
 	vec2<T> center;
 	T radius;
-};
-
-template<typename T> struct capsule //TODO finish
-{
-	inline constexpr capsule() = default;
-	//inline capsule() :  {}
-	
-	
 };
