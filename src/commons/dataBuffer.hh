@@ -26,7 +26,7 @@ template <typename T> struct DataBuffer
 		this->buffer = {tmp, tmp + convSize};
 	}
 	
-	[[nodiscard]] size_t read(void *dst, size_t amt)
+	size_t read(void *dst, size_t amt)
 	{
 		this->sanity();
 		if(this->pos == this->buffer.size()) return 0;
@@ -47,7 +47,7 @@ template <typename T> struct DataBuffer
 		this->pos = 0;
 	}
 	
-	[[nodiscard]] inline bool seek(size_t amt, SeekPos seekPos)
+	inline bool seek(size_t amt, SeekPos seekPos)
 	{
 		switch(seekPos)
 		{
