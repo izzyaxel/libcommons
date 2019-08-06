@@ -114,7 +114,7 @@ template<typename T> struct aabb2D
 		bottom{vec2<T>{this->centerX - hWidth, this->centerY - hHeight}, vec2<T>{this->centerX + hWidth, this->centerY - hHeight}},
 		left{vec2<T>{this->centerX - hWidth, this->centerY - hHeight}, vec2<T>{this->centerX - hWidth, this->centerY + hHeight}},
 		right{vec2<T>{this->centerX + hWidth, this->centerY - hHeight}, vec2<T>{this->centerX + hWidth, this->centerY + hHeight}};
-		vec2<T> topInterPt, bottomInterPt, leftInterPt, rightInterPt;
+		vec2<T> topInterPt{}, bottomInterPt{}, leftInterPt{}, rightInterPt{};
 		bool topInter = top.isIntersecting(other, topInterPt);
 		bool bottomInter = bottom.isIntersecting(other, bottomInterPt);
 		bool leftInter = left.isIntersecting(other, leftInterPt);
