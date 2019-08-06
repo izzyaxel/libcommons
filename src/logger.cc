@@ -86,6 +86,7 @@ void Logger::setOptions(LoggerOptions const &options)
 		}
 	}
 	this->target = options.target;
+	this->stamping = options.stamping;
 	this->verbosity = options.verbosity;
 	if(!options.logFilePath.empty()) this->setFileTarget(options.logFilePath, options.appendToLogFile);
 	this->autoFlush = options.autoFlush;
