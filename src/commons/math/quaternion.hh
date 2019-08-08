@@ -51,7 +51,15 @@ template<typename T> struct quat
 		return this->data[3];
 	}
 	
-	inline constexpr quat<T>() = default;
+	constexpr inline quat<T>() = default;
+	
+	template<typename Q> constexpr inline explicit quat<T>(quat<Q> const &other)
+	{
+		this->data[0] = other[0];
+		this->data[1] = other[1];
+		this->data[2] = other[2];
+		this->data[3] = other[3];
+	}
 	
 	/// Construct a quaternion out of given values
 	constexpr inline quat<T>(T xIn, T yIn, T zIn, T wIn)
