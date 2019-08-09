@@ -190,6 +190,24 @@ template<typename T> struct vec2
 		this->set(value, value);
 	}
 	
+	inline void floor()
+	{
+		this->data[0] = (T)std::floor(this->data[0]);
+		this->data[1] = (T)std::floor(this->data[1]);
+	}
+	
+	inline void ceil()
+	{
+		this->data[0] = (T)std::ceil(this->data[0]);
+		this->data[1] = (T)std::ceil(this->data[1]);
+	}
+	
+	inline void round()
+	{
+		this->data[0] = (T)std::round(this->data[0]);
+		this->data[1] = (T)std::round(this->data[1]);
+	}
+	
 	inline void invert()
 	{
 		this->data[0] = -this->data[0];

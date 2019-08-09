@@ -309,6 +309,30 @@ template<typename T> struct vec4
 		this->set(value, value, value, value);
 	}
 	
+	inline void floor()
+	{
+		this->data[0] = (T)std::floor(this->data[0]);
+		this->data[1] = (T)std::floor(this->data[1]);
+		this->data[2] = (T)std::floor(this->data[2]);
+		this->data[3] = (T)std::floor(this->data[3]);
+	}
+	
+	inline void ceil()
+	{
+		this->data[0] = (T)std::ceil(this->data[0]);
+		this->data[1] = (T)std::ceil(this->data[1]);
+		this->data[2] = (T)std::ceil(this->data[2]);
+		this->data[3] = (T)std::ceil(this->data[3]);
+	}
+	
+	inline void round()
+	{
+		this->data[0] = (T)std::round(this->data[0]);
+		this->data[1] = (T)std::round(this->data[1]);
+		this->data[2] = (T)std::round(this->data[2]);
+		this->data[3] = (T)std::round(this->data[3]);
+	}
+	
 	/// Invert sign on all values
 	inline void invert()
 	{
