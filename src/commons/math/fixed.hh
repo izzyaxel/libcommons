@@ -4,7 +4,7 @@
 #include <cmath>
 
 //Fixed point number
-template <uint32_t bits, typename V> struct fixed
+template <uint32_t bits, typename V> struct fixed //FIXME 64 bit type templates cause infinite recursion on std::is_integral asserts, possibly a MinGW bug
 {
 	static_assert(!std::is_floating_point<V>() && bits <= sizeof(V) * 8);
 	
