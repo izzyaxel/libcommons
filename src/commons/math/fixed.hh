@@ -6,7 +6,7 @@
 //Fixed point number
 template <uint32_t bits, typename V> struct fixed
 {
-	static_assert(std::is_integral<V>() && bits <= sizeof(V) * 8);
+	static_assert(!std::is_floating_point<V>() && bits <= sizeof(V) * 8);
 	
 	#if defined(__MINGW32__) || defined(__clang__)
 	using int128_t = __int128_t;
@@ -307,12 +307,12 @@ template <uint32_t bits, typename V> struct fixed
 	}
 	
 	//Outputs
-	constexpr inline float toFloat() const
+	[[nodiscard]] constexpr inline float toFloat() const
 	{
 		return ((float)this->val / this->scale);
 	}
 	
-	constexpr inline double toDouble() const
+	[[nodiscard]] constexpr inline double toDouble() const
 	{
 		return ((double)this->val / this->scale);
 	}
