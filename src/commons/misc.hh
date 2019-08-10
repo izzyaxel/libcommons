@@ -1,5 +1,6 @@
 #pragma once
 
+#include "math/fixed.hh"
 #include <string>
 
 [[nodiscard]] std::string getCWD();

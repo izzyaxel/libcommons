@@ -45,14 +45,15 @@ template <uint32_t bits, typename V> struct fixed
 		return this->val != 0;
 	}
 	
-	//Comparison //TODO unfinished
-	template <uint32_t obits, typename T> constexpr bool operator ==(fixed<obits, T> other) const
+	//Comparison
+	/*template <uint32_t obits, typename T> constexpr bool operator ==(fixed<obits, T> other) const
 	{
 		if(bits != obits)
 		{
-			
+			fixed<bits, T> conv = other.changeBits<bits>(); //FIXME wot??
+			return this->val == conv.val;
 		}
-		return (obits == this->scale && other.val == this->val) || this->toDouble() == other.toDouble();
+		return this->val == other.val;
 	}
 	
 	template <uint32_t obits, typename T> constexpr inline bool operator !=(fixed<obits, T> other) const
@@ -64,7 +65,8 @@ template <uint32_t bits, typename V> struct fixed
 	{
 		if(bits != obits)
 		{
-			
+			fixed<bits, T> conv = other.changeBits<bits>();
+			return this->val < conv.val;
 		}
 		return this->val < other.val;
 	}
@@ -73,7 +75,8 @@ template <uint32_t bits, typename V> struct fixed
 	{
 		if(bits != obits)
 		{
-			
+			fixed<bits, T> conv = other.changeBits<bits>();
+			return this->val > conv.val;
 		}
 		return this->val > other.val;
 	}
@@ -82,7 +85,8 @@ template <uint32_t bits, typename V> struct fixed
 	{
 		if(bits != obits)
 		{
-			
+			fixed<bits, T> conv = other.changeBits<bits>();
+			return this->val <= conv.val;
 		}
 		return this->val <= other.val;
 	}
@@ -91,10 +95,11 @@ template <uint32_t bits, typename V> struct fixed
 	{
 		if(bits != obits)
 		{
-			
+			fixed<bits, T> conv = other.changeBits<bits>();
+			return this->val >= conv.val;
 		}
 		return this->val >= other.val;
-	}
+	}*/
 	
 	//Math
 	constexpr inline fixed<bits, V> operator -() const
