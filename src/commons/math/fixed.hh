@@ -2,6 +2,7 @@
 
 #include <cstdint>
 #include <cmath>
+#include "../logger.hh"
 
 //Fixed point number
 template <uint32_t bits, typename V> struct fixed
@@ -320,6 +321,12 @@ template <uint32_t bits, typename V> struct fixed
 	template <uint32_t nbits> constexpr fixed<nbits, V> changeBits() const
 	{
 		return fixed<nbits, V>{this->toDouble()};
+	}
+	
+	constexpr Logger& operator <<(Logger &logger)
+	{
+		logger << this->toDouble();
+		return logger;
 	}
 	
 private:
