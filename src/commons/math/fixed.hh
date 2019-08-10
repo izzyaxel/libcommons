@@ -17,9 +17,10 @@ template <uint32_t bits, typename V> struct fixed
 	#endif
 	
 	fixed() = default;
-	fixed<bits, V>& operator =(fixed<bits, V> const &other) = default;
-	fixed<bits, V>(fixed<bits, V> const &other) = default;
-	fixed<bits, V>(fixed<bits, V> &&other) = default;
+	constexpr fixed<bits, V>& operator =(fixed<bits, V> const &other) = default;
+	constexpr fixed<bits, V>& operator =(fixed<bits, V> &&other) = default;
+	constexpr fixed<bits, V>(fixed<bits, V> const &other) = default;
+	constexpr fixed<bits, V>(fixed<bits, V> &&other) = default;
 	
 	constexpr explicit inline fixed(float val) : val(std::round(val * this->scale)) {}
 	constexpr explicit inline fixed(double val) : val(std::round(val * this->scale)) {}
