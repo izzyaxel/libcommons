@@ -107,7 +107,7 @@ template <uint32_t bits, typename V> struct fixed
 	}*/
 	
 	//Math
-	constexpr inline fixed<bits, V> operator -() const
+	constexpr inline fixed<bits, V> operator -()
 	{
 		this->val = -this->val;
 		return *this;
@@ -119,7 +119,7 @@ template <uint32_t bits, typename V> struct fixed
 		out.val = this->val + other.val;
 		return out;
 	}
-	constexpr inline fixed<bits, V> operator +=(fixed<bits, V> other) const
+	constexpr inline fixed<bits, V> operator +=(fixed<bits, V> other)
 	{
 		this->val = this->val + other.val;
 		return *this;
@@ -131,7 +131,7 @@ template <uint32_t bits, typename V> struct fixed
 		out.val = this->val - other.val;
 		return out;
 	}
-	constexpr inline fixed<bits, V> operator -=(fixed<bits, V> other) const
+	constexpr inline fixed<bits, V> operator -=(fixed<bits, V> other)
 	{
 		this->val = this->val - other.val;
 		return *this;
@@ -143,7 +143,7 @@ template <uint32_t bits, typename V> struct fixed
 		out.val = ((int128_t)this->val * (int128_t)other.val) / this->scale;
 		return out;
 	}
-	constexpr inline fixed<bits, V> operator *=(fixed<bits, V> other) const
+	constexpr inline fixed<bits, V> operator *=(fixed<bits, V> other)
 	{
 		this->val = ((int128_t)this->val * (int128_t)other.val) / this->scale;
 		return *this;
@@ -155,7 +155,7 @@ template <uint32_t bits, typename V> struct fixed
 		out.val = ((int128_t)this->val * this->scale) / (int128_t)other.val;
 		return out;
 	}
-	constexpr inline fixed<bits, V> operator /=(fixed<bits, V> other) const
+	constexpr inline fixed<bits, V> operator /=(fixed<bits, V> other)
 	{
 		this->val = ((int128_t)this->val * this->scale) / (int128_t)other.val;
 		return *this;
@@ -178,7 +178,7 @@ template <uint32_t bits, typename V> struct fixed
 		static_assert(std::is_integral<T>() || std::is_floating_point<T>());
 		return *this + fixed<bits, T>{other};
 	}
-	template <typename T> constexpr fixed<bits, V> operator +=(T other) const
+	template <typename T> constexpr fixed<bits, V> operator +=(T other)
 	{
 		static_assert(std::is_integral<T>() || std::is_floating_point<T>());
 		this->val = (*this + fixed<bits, T>{other}).val;
@@ -190,7 +190,7 @@ template <uint32_t bits, typename V> struct fixed
 		static_assert(std::is_integral<T>() || std::is_floating_point<T>());
 		return *this - fixed<bits, T>{other};
 	}
-	template <typename T> constexpr fixed<bits, V> operator -=(T other) const
+	template <typename T> constexpr fixed<bits, V> operator -=(T other)
 	{
 		static_assert(std::is_integral<T>() || std::is_floating_point<T>());
 		this->val = (*this - fixed<bits, T>{other}).val;
@@ -202,10 +202,10 @@ template <uint32_t bits, typename V> struct fixed
 		static_assert(std::is_integral<T>() || std::is_floating_point<T>());
 		return *this * fixed<bits, T>{other};
 	}
-	template <typename T> constexpr fixed<bits, V> operator *=(T other) const
+	template <typename T> constexpr fixed<bits, V> operator *=(T other)
 	{
 		static_assert(std::is_integral<T>() || std::is_floating_point<T>());
-		this->val = (*this - fixed<bits, T>{other}).val;
+		this->val = (*this * fixed<bits, T>{other}).val;
 		return *this;
 	}
 	
@@ -214,7 +214,7 @@ template <uint32_t bits, typename V> struct fixed
 		static_assert(std::is_integral<T>() || std::is_floating_point<T>());
 		return *this / fixed<bits, T>{other};
 	}
-	template <typename T> constexpr fixed<bits, V> operator /=(T other) const
+	template <typename T> constexpr fixed<bits, V> operator /=(T other)
 	{
 		static_assert(std::is_integral<T>() || std::is_floating_point<T>());
 		this->val = this->val / other;
@@ -226,7 +226,7 @@ template <uint32_t bits, typename V> struct fixed
 		static_assert(std::is_integral<T>() || std::is_floating_point<T>());
 		return *this % fixed<bits, T>{other};
 	}
-	template <typename T> constexpr fixed<bits, V> operator %=(T other) const
+	template <typename T> constexpr fixed<bits, V> operator %=(T other)
 	{
 		static_assert(std::is_integral<T>() || std::is_floating_point<T>());
 		this->val = (*this % fixed<bits, T>{other});
@@ -276,31 +276,31 @@ template <uint32_t bits, typename V> struct fixed
 		return out;
 	}
 	
-	constexpr fixed<bits, V> inline operator <<=(int32_t other) const
+	constexpr fixed<bits, V> inline operator <<=(int32_t other)
 	{
 		this->val = this->val << other;
 		return *this;
 	}
 	
-	constexpr fixed<bits, V> inline operator >>=(int32_t other) const
+	constexpr fixed<bits, V> inline operator >>=(int32_t other)
 	{
 		this->val = this->val >> other;
 		return *this;
 	}
 	
-	constexpr fixed<bits, V> inline operator |=(int32_t other) const
+	constexpr fixed<bits, V> inline operator |=(int32_t other)
 	{
 		this->val = this->val | other;
 		return *this;
 	}
 	
-	constexpr fixed<bits, V> inline operator &=(int32_t other) const
+	constexpr fixed<bits, V> inline operator &=(int32_t other)
 	{
 		this->val = this->val & other;
 		return *this;
 	}
 	
-	constexpr fixed<bits, V> inline operator ^=(int32_t other) const
+	constexpr fixed<bits, V> inline operator ^=(int32_t other)
 	{
 		this->val = this->val ^ other;
 		return *this;
@@ -317,7 +317,7 @@ template <uint32_t bits, typename V> struct fixed
 		return ((double)this->val / this->scale);
 	}
 	
-	template <uint32_t nbits> constexpr fixed<nbits, V> changeBits() const
+	template <uint32_t nbits> [[nodiscard]] constexpr fixed<nbits, V> changeBits() const
 	{
 		return fixed<nbits, V>{this->toDouble()};
 	}
