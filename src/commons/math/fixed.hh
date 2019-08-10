@@ -2,7 +2,6 @@
 
 #include <cstdint>
 #include <cmath>
-#include "../logger.hh"
 
 //Fixed point number
 template <uint32_t bits, typename V> struct fixed
@@ -116,7 +115,7 @@ template <uint32_t bits, typename V> struct fixed
 	
 	constexpr inline fixed<bits, V> operator +(fixed<bits, V> other) const
 	{
-		fixed<bits, V> out;
+		fixed<bits, V> out{};
 		out.val = this->val + other.val;
 		return out;
 	}
@@ -128,7 +127,7 @@ template <uint32_t bits, typename V> struct fixed
 	
 	constexpr inline fixed<bits, V> operator -(fixed<bits, V> other) const
 	{
-		fixed<bits, V> out;
+		fixed<bits, V> out{};
 		out.val = this->val - other.val;
 		return out;
 	}
@@ -140,7 +139,7 @@ template <uint32_t bits, typename V> struct fixed
 	
 	constexpr inline fixed<bits, V> operator *(fixed<bits, V> other) const
 	{
-		fixed<bits, V> out;
+		fixed<bits, V> out{};
 		out.val = ((int128_t)this->val * (int128_t)other.val) / this->scale;
 		return out;
 	}
@@ -152,7 +151,7 @@ template <uint32_t bits, typename V> struct fixed
 	
 	constexpr inline fixed<bits, V> operator /(fixed<bits, V> other) const
 	{
-		fixed<bits, V> out;
+		fixed<bits, V> out{};
 		out.val = ((int128_t)this->val * this->scale) / (int128_t)other.val;
 		return out;
 	}
@@ -164,7 +163,7 @@ template <uint32_t bits, typename V> struct fixed
 	
 	constexpr inline fixed<bits, V> operator %(fixed<bits, V> other) const
 	{
-		fixed<bits, V> out;
+		fixed<bits, V> out{};
 		out.val = this->val % other.val;
 		return out;
 	}
@@ -237,42 +236,42 @@ template <uint32_t bits, typename V> struct fixed
 	//Bitwise
 	constexpr fixed<bits, V> inline operator ~() const
 	{
-		fixed<bits, V> out;
+		fixed<bits, V> out{};
 		out.val = ~this->val;
 		return out;
 	}
 	
 	constexpr fixed<bits, V> inline operator >>(int32_t other) const
 	{
-		fixed<bits, V> out;
+		fixed<bits, V> out{};
 		out.val = this->val >> other;
 		return out;
 	}
 	
 	constexpr fixed<bits, V> inline operator <<(int32_t other) const
 	{
-		fixed<bits, V> out;
+		fixed<bits, V> out{};
 		out.val = this->val << other;
 		return out;
 	}
 	
 	constexpr fixed<bits, V> inline operator |(int32_t other) const
 	{
-		fixed<bits, V> out;
+		fixed<bits, V> out{};
 		out.val = this->val | other;
 		return out;
 	}
 	
 	constexpr fixed<bits, V> inline operator &(int32_t other) const
 	{
-		fixed<bits, V> out;
+		fixed<bits, V> out{};
 		out.val = this->val & other;
 		return out;
 	}
 	
 	constexpr fixed<bits, V> inline operator ^(int32_t other) const
 	{
-		fixed<bits, V> out;
+		fixed<bits, V> out{};
 		out.val = this->val ^ other;
 		return out;
 	}
@@ -321,12 +320,6 @@ template <uint32_t bits, typename V> struct fixed
 	template <uint32_t nbits> constexpr fixed<nbits, V> changeBits() const
 	{
 		return fixed<nbits, V>{this->toDouble()};
-	}
-	
-	constexpr Logger& operator <<(Logger &logger)
-	{
-		logger << this->toDouble();
-		return logger;
 	}
 	
 private:

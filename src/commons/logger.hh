@@ -4,6 +4,7 @@
 #include <cstdio>
 #include <vector>
 #include <sstream>
+#include "math/fixed.hh"
 
 enum struct Severity
 {
@@ -54,6 +55,12 @@ struct Logger
 	template <typename T> Logger& operator << (T *val)
 	{
 		this->tempBuf << val;
+		return *this;
+	}
+	
+	template<uint32_t bits, typename V> Logger& operator <<(fixed<bits, V> val)
+	{
+		this->tempBuf << val.toDouble();
 		return *this;
 	}
 	
