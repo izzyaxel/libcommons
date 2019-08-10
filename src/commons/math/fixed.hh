@@ -22,16 +22,16 @@ template <uint32_t bits, typename V> struct fixed //FIXME 64 bit type templates 
 	constexpr fixed<bits, V>(fixed<bits, V> const &other) = default;
 	constexpr fixed<bits, V>(fixed<bits, V> &&other) = default;
 	
-	constexpr explicit inline fixed(float val) : val(std::round(val * this->scale)) {}
-	constexpr explicit inline fixed(double val) : val(std::round(val * this->scale)) {}
-	constexpr explicit inline fixed(uint8_t val) : val(val * this->scale) {}
-	constexpr explicit inline fixed(uint16_t val) : val(val * this->scale) {}
-	constexpr explicit inline fixed(uint32_t val) : val(val * this->scale) {}
-	constexpr explicit inline fixed(uint64_t val) : val(val * this->scale) {}
-	constexpr explicit inline fixed(int8_t val) : val(val * this->scale) {}
-	constexpr explicit inline fixed(int16_t val) : val(val * this->scale) {}
-	constexpr explicit inline fixed(int32_t val) : val(val * this->scale) {}
-	constexpr explicit inline fixed(int64_t val) : val(val * this->scale) {}
+	constexpr inline fixed(float val) : val(std::round(val * this->scale)) {}
+	constexpr inline fixed(double val) : val(std::round(val * this->scale)) {}
+	constexpr inline fixed(uint8_t val) : val(val * this->scale) {}
+	constexpr inline fixed(uint16_t val) : val(val * this->scale) {}
+	constexpr inline fixed(uint32_t val) : val(val * this->scale) {}
+	constexpr inline fixed(uint64_t val) : val(val * this->scale) {}
+	constexpr inline fixed(int8_t val) : val(val * this->scale) {}
+	constexpr inline fixed(int16_t val) : val(val * this->scale) {}
+	constexpr inline fixed(int32_t val) : val(val * this->scale) {}
+	constexpr inline fixed(int64_t val) : val(val * this->scale) {}
 	
 	//Conversion
 	constexpr explicit inline operator float() const
