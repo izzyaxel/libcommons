@@ -332,7 +332,7 @@ template <uint32_t bits, typename V> struct fixed //FIXME infinite recursion in 
 	}
 	
 private:
-	static constexpr uint32_t const scale = 1 << bits;
+	static constexpr uint64_t const scale = (uint64_t)1 << bits;
 	V val;
 };
 static_assert(std::is_pod<fixed<8, int32_t>>());
