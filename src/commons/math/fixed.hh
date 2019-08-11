@@ -331,8 +331,14 @@ template <uint32_t bits, typename V> struct fixed
 		return fixed<nbits, V>{this->toDouble()};
 	}
 	
+	/// The smallest representable change for this fixed-point specialization
+	[[nodiscard]] static constexpr inline double step()
+	{
+		return 1.0 / (1 << bits);
+	}
+	
 private:
-	static constexpr uint128_t const scale = (uint128_t)1 << bits;
+	static constexpr uint64_t const scale = (uint64_t)1 << bits;
 	V val;
 };
 static_assert(std::is_pod<fixed<8, int32_t>>());
