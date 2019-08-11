@@ -4,7 +4,7 @@
 #include <cmath>
 
 //Fixed point number
-template <uint32_t bits, typename V> struct fixed //FIXME 64 bit type templates cause infinite recursion on std::is_integral asserts, possibly a MinGW bug
+template <uint32_t bits, typename V> struct fixed //FIXME infinite recursion in math operators
 {
 	static_assert(!std::is_floating_point<V>() && bits <= sizeof(V) * 8);
 	
@@ -106,134 +106,142 @@ template <uint32_t bits, typename V> struct fixed //FIXME 64 bit type templates 
 		return this->val >= other.val;
 	}*/
 	
-	//Math
+	//Math operators
 	constexpr inline fixed<bits, V> operator -()
 	{
 		this->val = -this->val;
 		return *this;
 	}
 	
+	 //Self
 	constexpr inline fixed<bits, V> operator +(fixed<bits, V> other) const
 	{
 		fixed<bits, V> out{};
 		out.val = this->val + other.val;
 		return out;
 	}
-	constexpr inline fixed<bits, V> operator +=(fixed<bits, V> other)
-	{
-		this->val = this->val + other.val;
-		return *this;
-	}
-	
 	constexpr inline fixed<bits, V> operator -(fixed<bits, V> other) const
 	{
 		fixed<bits, V> out{};
 		out.val = this->val - other.val;
 		return out;
 	}
-	constexpr inline fixed<bits, V> operator -=(fixed<bits, V> other)
-	{
-		this->val = this->val - other.val;
-		return *this;
-	}
-	
 	constexpr inline fixed<bits, V> operator *(fixed<bits, V> other) const
 	{
 		fixed<bits, V> out{};
 		out.val = ((int128_t)this->val * (int128_t)other.val) / this->scale;
 		return out;
 	}
-	constexpr inline fixed<bits, V> operator *=(fixed<bits, V> other)
-	{
-		this->val = ((int128_t)this->val * (int128_t)other.val) / this->scale;
-		return *this;
-	}
-	
 	constexpr inline fixed<bits, V> operator /(fixed<bits, V> other) const
 	{
 		fixed<bits, V> out{};
 		out.val = ((int128_t)this->val * this->scale) / (int128_t)other.val;
 		return out;
 	}
-	constexpr inline fixed<bits, V> operator /=(fixed<bits, V> other)
-	{
-		this->val = ((int128_t)this->val * this->scale) / (int128_t)other.val;
-		return *this;
-	}
-	
 	constexpr inline fixed<bits, V> operator %(fixed<bits, V> other) const
 	{
 		fixed<bits, V> out{};
 		out.val = this->val % other.val;
 		return out;
 	}
-	constexpr inline fixed<bits, V> operator %=(fixed<bits, V> other) const
+	
+	 //Self compound
+	constexpr inline fixed<bits, V> operator +=(fixed<bits, V> other)
+	{
+		this->val = this->val + other.val;
+		return *this;
+	}
+	constexpr inline fixed<bits, V> operator -=(fixed<bits, V> other)
+	{
+		this->val = this->val - other.val;
+		return *this;
+	}
+	constexpr inline fixed<bits, V> operator *=(fixed<bits, V> other)
+	{
+		this->val = ((int128_t)this->val * (int128_t)other.val) / this->scale;
+		return *this;
+	}
+	constexpr inline fixed<bits, V> operator /=(fixed<bits, V> other)
+	{
+		this->val = ((int128_t)this->val * this->scale) / (int128_t)other.val;
+		return *this;
+	}
+	constexpr inline fixed<bits, V> operator %=(fixed<bits, V> other)
 	{
 		this->val = this->val % other.val;
 		return *this;
 	}
 	
+	 //Value
 	template <typename T> constexpr fixed<bits, V> operator +(T other) const
 	{
 		static_assert(std::is_integral<T>() || std::is_floating_point<T>());
-		return *this + fixed<bits, T>{other};
+		fixed<bits, T> out{};
+		out.val = this->val + (T)std::round(other * this->scale);
+		return out;
 	}
-	template <typename T> constexpr fixed<bits, V> operator +=(T other)
-	{
-		static_assert(std::is_integral<T>() || std::is_floating_point<T>());
-		this->val = (*this + fixed<bits, T>{other}).val;
-		return *this;
-	}
-	
 	template <typename T> constexpr fixed<bits, V> operator -(T other) const
 	{
 		static_assert(std::is_integral<T>() || std::is_floating_point<T>());
-		return *this - fixed<bits, T>{other};
+		fixed<bits, T> out{};
+		out.val = this->val - (T)std::round(other * this->scale);
+		return out;
+	}
+	template <typename T> constexpr fixed<bits, V> operator *(T other) const
+	{
+		static_assert(std::is_integral<T>() || std::is_floating_point<T>());
+		fixed<bits, T> out{};
+		out.val = ((int128_t)this->val * (int128_t)std::round(other * this->scale)) / this->scale;
+		return out;
+	}
+	template <typename T> constexpr fixed<bits, V> operator /(T other) const
+	{
+		static_assert(std::is_integral<T>() || std::is_floating_point<T>());
+		fixed<bits, T> out{};
+		out.val = ((int128_t)this->val * this->scale) / (int128_t)std::round(other * this->scale);
+		return out;
+	}
+	template <typename T> constexpr fixed<bits, V> operator %(T other) const
+	{
+		static_assert(std::is_integral<T>() || std::is_floating_point<T>());
+		fixed<bits, T> out{};
+		out.val = this->val % (T)std::round(other * this->scale);
+		return out;
+	}
+	
+	 //Value compound
+	template <typename T> constexpr fixed<bits, V> operator +=(T other)
+	{
+		static_assert(std::is_integral<T>() || std::is_floating_point<T>());
+		this->val = this->val + (T)std::round(other * this->scale);
+		return *this;
 	}
 	template <typename T> constexpr fixed<bits, V> operator -=(T other)
 	{
 		static_assert(std::is_integral<T>() || std::is_floating_point<T>());
-		this->val = (*this - fixed<bits, T>{other}).val;
+		this->val = this->val - (T)std::round(other * this->scale);
 		return *this;
-	}
-	
-	template <typename T> constexpr fixed<bits, V> operator *(T other) const
-	{
-		static_assert(std::is_integral<T>() || std::is_floating_point<T>());
-		return *this * fixed<bits, T>{other};
 	}
 	template <typename T> constexpr fixed<bits, V> operator *=(T other)
 	{
 		static_assert(std::is_integral<T>() || std::is_floating_point<T>());
-		this->val = (*this * fixed<bits, T>{other}).val;
+		this->val = ((int128_t)this->val * (int128_t)std::round(other * this->scale)) / this->scale;
 		return *this;
-	}
-	
-	template <typename T> constexpr fixed<bits, V> operator /(T other) const
-	{
-		static_assert(std::is_integral<T>() || std::is_floating_point<T>());
-		return *this / fixed<bits, T>{other};
 	}
 	template <typename T> constexpr fixed<bits, V> operator /=(T other)
 	{
 		static_assert(std::is_integral<T>() || std::is_floating_point<T>());
-		this->val = this->val / other;
+		this->val = ((int128_t)this->val * this->scale) / (int128_t)std::round(other * this->scale);
 		return *this;
-	}
-	
-	template <typename T> constexpr fixed<bits, V> operator %(T other) const
-	{
-		static_assert(std::is_integral<T>() || std::is_floating_point<T>());
-		return *this % fixed<bits, T>{other};
 	}
 	template <typename T> constexpr fixed<bits, V> operator %=(T other)
 	{
 		static_assert(std::is_integral<T>() || std::is_floating_point<T>());
-		this->val = (*this % fixed<bits, T>{other});
+		this->val = this->val % (T)std::round(other * this->scale);
 		return *this;
 	}
 	
-	//Bitwise
+	 //Bitwise
 	constexpr fixed<bits, V> inline operator ~() const
 	{
 		fixed<bits, V> out{};
@@ -276,6 +284,7 @@ template <uint32_t bits, typename V> struct fixed //FIXME 64 bit type templates 
 		return out;
 	}
 	
+	 //Bitwise compound
 	constexpr fixed<bits, V> inline operator <<=(int32_t other)
 	{
 		this->val = this->val << other;
