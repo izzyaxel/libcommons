@@ -1,5 +1,7 @@
 #pragma once
 
+#include "fixed.hh"
+
 #include <ctgmath>
 #include <cstring>
 
@@ -14,6 +16,7 @@ template<typename T> struct vec4
 	T data[4];
 	
 	/// Get a reference to one of the contained values
+	
 	[[nodiscard]] inline T &x() {return this->data[0];}
 	[[nodiscard]] inline T &y() {return this->data[1];}
 	[[nodiscard]] inline T &z() {return this->data[2];}
@@ -35,28 +38,12 @@ template<typename T> struct vec4
 	/// 4-way Swizzling (sort of), 256 permutations
 	
 	//TODO finish it
-	/// 3-way Swizzling (sort of), 64 permutations 
-	[[nodiscard]] inline vec3<T> xyz() {return vec3<T>{this->data[0], this->data[1], this->data[2]};}
+	/// 3-way Swizzling (sort of), 64 permutations
 	
 	[[nodiscard]] inline vec3<T> xyz() const {return vec3<T>{this->data[0], this->data[1], this->data[2]};}
 	
 	/// 2-way Swizzling (sort of), 16 permutations
-	[[nodiscard]] inline vec2<T> xx() {return vec2<T>{this->data[0], this->data[0]};}
-	[[nodiscard]] inline vec2<T> yy() {return vec2<T>{this->data[1], this->data[1]};}
-	[[nodiscard]] inline vec2<T> zz() {return vec2<T>{this->data[2], this->data[2]};}
-	[[nodiscard]] inline vec2<T> ww() {return vec2<T>{this->data[3], this->data[3]};}
-	[[nodiscard]] inline vec2<T> xy() {return vec2<T>{this->data[0], this->data[1]};}
-	[[nodiscard]] inline vec2<T> xz() {return vec2<T>{this->data[0], this->data[2]};}
-	[[nodiscard]] inline vec2<T> xw() {return vec2<T>{this->data[0], this->data[3]};}
-	[[nodiscard]] inline vec2<T> yx() {return vec2<T>{this->data[1], this->data[0]};}
-	[[nodiscard]] inline vec2<T> yz() {return vec2<T>{this->data[1], this->data[2]};}
-	[[nodiscard]] inline vec2<T> yw() {return vec2<T>{this->data[1], this->data[3]};}
-	[[nodiscard]] inline vec2<T> zx() {return vec2<T>{this->data[2], this->data[0]};}
-	[[nodiscard]] inline vec2<T> zy() {return vec2<T>{this->data[2], this->data[1]};}
-	[[nodiscard]] inline vec2<T> zw() {return vec2<T>{this->data[2], this->data[3]};}
-	[[nodiscard]] inline vec2<T> wx() {return vec2<T>{this->data[3], this->data[0]};}
-	[[nodiscard]] inline vec2<T> wy() {return vec2<T>{this->data[3], this->data[1]};}
-	[[nodiscard]] inline vec2<T> wz() {return vec2<T>{this->data[3], this->data[2]};}
+	
 	[[nodiscard]] inline vec2<T> xx() const {return vec2<T>{this->data[0], this->data[0]};}
 	[[nodiscard]] inline vec2<T> yy() const {return vec2<T>{this->data[1], this->data[1]};}
 	[[nodiscard]] inline vec2<T> zz() const {return vec2<T>{this->data[2], this->data[2]};}
@@ -82,6 +69,15 @@ template<typename T> struct vec4
 		this->data[1] = other.data[1];
 		this->data[2] = other.data[2];
 		this->data[3] = other.data[3];
+	}
+	
+	template<uint64_t bits, typename U> constexpr explicit vec4<T>(vec4<fixed<bits, U>> const &other)
+	{
+		static_assert(std::is_floating_point<T>());
+		this->data[0] = (T)other.data[0];
+		this->data[1] = (T)other.data[1];
+		this->data[2] = (T)other.data[2];
+		this->data[3] = (T)other.data[3];
 	}
 	
 	/// Construct a v4 out of 4 values

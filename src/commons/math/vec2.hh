@@ -1,5 +1,7 @@
 #pragma once
 
+#include "fixed.hh"
+
 #include <ctgmath>
 #include <cstring>
 
@@ -7,8 +9,14 @@ template<typename T> struct vec2
 {
 	T data[2];
 	
-	[[nodiscard]] inline T &x() { return this->data[0]; }
-	[[nodiscard]] inline T &y() { return this->data[1]; }
+	[[nodiscard]] inline T &x()
+	{
+		return this->data[0];
+	}
+	[[nodiscard]] inline T &y()
+	{
+		return this->data[1];
+	}
 	[[nodiscard]] inline T const &x() const
 	{
 		return this->data[0];
@@ -18,23 +26,10 @@ template<typename T> struct vec2
 		return this->data[1];
 	}
 	
-	// 2-way Swizzling (sort of) 2 permutations
-	[[nodiscard]] inline vec2<T> xx()
-	{
-		return vec2<T>{this->data[0], this->data[0]};
-	}
-	[[nodiscard]] inline vec2<T> yy()
-	{
-		return vec2<T>{this->data[1], this->data[1]};
-	}
-	[[nodiscard]] inline vec2<T> xx() const
-	{
-		return vec2<T>{this->data[0], this->data[0]};
-	}
-	[[nodiscard]] inline vec2<T> yy() const
-	{
-		return vec2<T>{this->data[1], this->data[1]};
-	}
+	// 2-way Swizzling (sort of) 3 permutations
+	[[nodiscard]] inline vec2<T> xx() const {return vec2<T>{this->data[0], this->data[0]};}
+	[[nodiscard]] inline vec2<T> yy() const {return vec2<T>{this->data[1], this->data[1]};}
+	[[nodiscard]] inline vec2<T> yx() const {return vec2<T>{this->data[1], this->data[0]};}
 	
 	inline constexpr vec2<T>() = default;
 	
@@ -42,6 +37,13 @@ template<typename T> struct vec2
 	{
 		this->data[0] = other.data[0];
 		this->data[1] = other.data[1];
+	}
+	
+	template<uint64_t bits, typename U> constexpr explicit vec2<T>(vec2<fixed<bits, U>> const &other)
+	{
+		static_assert(std::is_floating_point<T>());
+		this->data[0] = (T)other.data[0];
+		this->data[1] = (T)other.data[1];
 	}
 	
 	constexpr inline vec2<T>(T x, T y)

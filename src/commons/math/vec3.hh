@@ -11,47 +11,23 @@ template<typename T> struct vec3
 	T data[3];
 	
 	/// Get a reference to one of the contained values
-	[[nodiscard]] inline T &x() { return this->data[0]; }
-	[[nodiscard]] inline T &y() { return this->data[1]; }
-	[[nodiscard]] inline T &z() { return this->data[2]; }
-	[[nodiscard]] inline T const &x() const { return this->data[0]; }
-	[[nodiscard]] inline T const &y() const { return this->data[1]; }
-	[[nodiscard]] inline T const &z() const { return this->data[2]; }
 	
-	[[nodiscard]] inline T &r() { return this->data[0]; }
-	[[nodiscard]] inline T &g() { return this->data[1]; }
-	[[nodiscard]] inline T &b() { return this->data[2]; }
-	[[nodiscard]] inline T const &r() const { return this->data[0]; }
-	[[nodiscard]] inline T const &g() const { return this->data[1]; }
-	[[nodiscard]] inline T const &b() const { return this->data[2]; }
+	[[nodiscard]] inline T &x() {return this->data[0];}
+	[[nodiscard]] inline T &y() {return this->data[1];}
+	[[nodiscard]] inline T &z() {return this->data[2];}
+	[[nodiscard]] inline T const &x() const {return this->data[0];}
+	[[nodiscard]] inline T const &y() const {return this->data[1];}
+	[[nodiscard]] inline T const &z() const {return this->data[2];}
+	
+	[[nodiscard]] inline T &r() {return this->data[0];}
+	[[nodiscard]] inline T &g() {return this->data[1];}
+	[[nodiscard]] inline T &b() {return this->data[2];}
+	[[nodiscard]] inline T const &r() const {return this->data[0];}
+	[[nodiscard]] inline T const &g() const {return this->data[1];}
+	[[nodiscard]] inline T const &b() const {return this->data[2];}
 	
 	// 3-way Swizzling (sort of), 26 permutations (excluded xyz)
-	[[nodiscard]] inline vec3<T> xxx() { return vec3<T>{this->data[0]};}
-	[[nodiscard]] inline vec3<T> yyy() { return vec3<T>{this->data[1]};}
-	[[nodiscard]] inline vec3<T> zzz() { return vec3<T>{this->data[2]};}
-	[[nodiscard]] inline vec3<T> zyx() { return vec3<T>{this->data[2], this->data[1], this->data[0]};}
-	[[nodiscard]] inline vec3<T> xxy() { return vec3<T>{this->data[0], this->data[0], this->data[1]};}
-	[[nodiscard]] inline vec3<T> xxz() { return vec3<T>{this->data[0], this->data[0], this->data[2]};}
-	[[nodiscard]] inline vec3<T> yyx() { return vec3<T>{this->data[1], this->data[1], this->data[0]};}
-	[[nodiscard]] inline vec3<T> yyz() { return vec3<T>{this->data[0], this->data[1], this->data[2]};}
-	[[nodiscard]] inline vec3<T> zzx() { return vec3<T>{this->data[2], this->data[2], this->data[0]};}
-	[[nodiscard]] inline vec3<T> zzy() { return vec3<T>{this->data[2], this->data[2], this->data[1]};}
-	[[nodiscard]] inline vec3<T> xyy() { return vec3<T>{this->data[0], this->data[1], this->data[1]};}
-	[[nodiscard]] inline vec3<T> xzz() { return vec3<T>{this->data[0], this->data[2], this->data[2]};}
-	[[nodiscard]] inline vec3<T> yxx() { return vec3<T>{this->data[1], this->data[0], this->data[0]};}
-	[[nodiscard]] inline vec3<T> yzz() { return vec3<T>{this->data[1], this->data[2], this->data[2]};}
-	[[nodiscard]] inline vec3<T> zxx() { return vec3<T>{this->data[2], this->data[0], this->data[0]};}
-	[[nodiscard]] inline vec3<T> zyy() { return vec3<T>{this->data[2], this->data[1], this->data[1]};}
-	[[nodiscard]] inline vec3<T> xyx() { return vec3<T>{this->data[0], this->data[1], this->data[0]};}
-	[[nodiscard]] inline vec3<T> xzx() { return vec3<T>{this->data[0], this->data[2], this->data[0]};}
-	[[nodiscard]] inline vec3<T> yxy() { return vec3<T>{this->data[1], this->data[0], this->data[1]};}
-	[[nodiscard]] inline vec3<T> yzy() { return vec3<T>{this->data[1], this->data[2], this->data[1]};}
-	[[nodiscard]] inline vec3<T> zxz() { return vec3<T>{this->data[2], this->data[0], this->data[2]};}
-	[[nodiscard]] inline vec3<T> zyz() { return vec3<T>{this->data[2], this->data[1], this->data[2]};}
-	[[nodiscard]] inline vec3<T> xzy() { return vec3<T>{this->data[0], this->data[2], this->data[1]};}
-	[[nodiscard]] inline vec3<T> yzx() { return vec3<T>{this->data[1], this->data[2], this->data[0]};}
-	[[nodiscard]] inline vec3<T> zxy() { return vec3<T>{this->data[2], this->data[0], this->data[1]};}
-	[[nodiscard]] inline vec3<T> yxz() { return vec3<T>{this->data[1], this->data[0], this->data[2]};}
+	
 	[[nodiscard]] inline vec3<T> xxx() const { return vec3<T>{this->data[0]};}
 	[[nodiscard]] inline vec3<T> yyy() const { return vec3<T>{this->data[1]};}
 	[[nodiscard]] inline vec3<T> zzz() const { return vec3<T>{this->data[2]};}
@@ -79,32 +55,6 @@ template<typename T> struct vec3
 	[[nodiscard]] inline vec3<T> zxy() const { return vec3<T>{this->data[2], this->data[0], this->data[1]};}
 	[[nodiscard]] inline vec3<T> yxz() const { return vec3<T>{this->data[1], this->data[0], this->data[2]};}
 	
-	[[nodiscard]] inline vec3<T> rrr() { return vec3<T>{this->data[0]};}
-	[[nodiscard]] inline vec3<T> ggg() { return vec3<T>{this->data[1]};}
-	[[nodiscard]] inline vec3<T> bbb() { return vec3<T>{this->data[2]};}
-	[[nodiscard]] inline vec3<T> bgr() { return vec3<T>{this->data[2], this->data[1], this->data[0]};}
-	[[nodiscard]] inline vec3<T> rrg() { return vec3<T>{this->data[0], this->data[0], this->data[1]};}
-	[[nodiscard]] inline vec3<T> rrb() { return vec3<T>{this->data[0], this->data[0], this->data[2]};}
-	[[nodiscard]] inline vec3<T> ggr() { return vec3<T>{this->data[1], this->data[1], this->data[0]};}
-	[[nodiscard]] inline vec3<T> ggb() { return vec3<T>{this->data[0], this->data[1], this->data[2]};}
-	[[nodiscard]] inline vec3<T> bbr() { return vec3<T>{this->data[2], this->data[2], this->data[0]};}
-	[[nodiscard]] inline vec3<T> bbg() { return vec3<T>{this->data[2], this->data[2], this->data[1]};}
-	[[nodiscard]] inline vec3<T> rgg() { return vec3<T>{this->data[0], this->data[1], this->data[1]};}
-	[[nodiscard]] inline vec3<T> rbb() { return vec3<T>{this->data[0], this->data[2], this->data[2]};}
-	[[nodiscard]] inline vec3<T> grr() { return vec3<T>{this->data[1], this->data[0], this->data[0]};}
-	[[nodiscard]] inline vec3<T> gbb() { return vec3<T>{this->data[1], this->data[2], this->data[2]};}
-	[[nodiscard]] inline vec3<T> brr() { return vec3<T>{this->data[2], this->data[0], this->data[0]};}
-	[[nodiscard]] inline vec3<T> bgg() { return vec3<T>{this->data[2], this->data[1], this->data[1]};}
-	[[nodiscard]] inline vec3<T> rgr() { return vec3<T>{this->data[0], this->data[1], this->data[0]};}
-	[[nodiscard]] inline vec3<T> rbr() { return vec3<T>{this->data[0], this->data[2], this->data[0]};}
-	[[nodiscard]] inline vec3<T> grg() { return vec3<T>{this->data[1], this->data[0], this->data[1]};}
-	[[nodiscard]] inline vec3<T> gbg() { return vec3<T>{this->data[1], this->data[2], this->data[1]};}
-	[[nodiscard]] inline vec3<T> brb() { return vec3<T>{this->data[2], this->data[0], this->data[2]};}
-	[[nodiscard]] inline vec3<T> bgb() { return vec3<T>{this->data[2], this->data[1], this->data[2]};}
-	[[nodiscard]] inline vec3<T> rbg() { return vec3<T>{this->data[0], this->data[2], this->data[1]};}
-	[[nodiscard]] inline vec3<T> gbr() { return vec3<T>{this->data[1], this->data[2], this->data[0]};}
-	[[nodiscard]] inline vec3<T> brg() { return vec3<T>{this->data[2], this->data[0], this->data[1]};}
-	[[nodiscard]] inline vec3<T> grb() { return vec3<T>{this->data[1], this->data[0], this->data[2]};}
 	[[nodiscard]] inline vec3<T> rrr() const { return vec3<T>{this->data[0]};}
 	[[nodiscard]] inline vec3<T> ggg() const { return vec3<T>{this->data[1]};}
 	[[nodiscard]] inline vec3<T> bbb() const { return vec3<T>{this->data[2]};}
@@ -133,15 +83,7 @@ template<typename T> struct vec3
 	[[nodiscard]] inline vec3<T> grb() const { return vec3<T>{this->data[1], this->data[0], this->data[2]};}
 	
 	// 2-way Swizzling (sort of), 9 permutations
-	[[nodiscard]] inline vec2<T> xx() { return vec2<T>{this->data[0], this->data[0]};}
-	[[nodiscard]] inline vec2<T> xy() { return vec2<T>{this->data[0], this->data[1]};}
-	[[nodiscard]] inline vec2<T> xz() { return vec2<T>{this->data[0], this->data[2]};}
-	[[nodiscard]] inline vec2<T> yy() { return vec2<T>{this->data[1], this->data[1]};}
-	[[nodiscard]] inline vec2<T> yx() { return vec2<T>{this->data[1], this->data[0]};}
-	[[nodiscard]] inline vec2<T> yz() { return vec2<T>{this->data[1], this->data[2]};}
-	[[nodiscard]] inline vec2<T> zz() { return vec2<T>{this->data[2], this->data[2]};}
-	[[nodiscard]] inline vec2<T> zx() { return vec2<T>{this->data[2], this->data[0]};}
-	[[nodiscard]] inline vec2<T> zy() { return vec2<T>{this->data[2], this->data[1]};}
+	
 	[[nodiscard]] inline vec2<T> xx() const { return vec2<T>{this->data[0], this->data[0]};}
 	[[nodiscard]] inline vec2<T> xy() const { return vec2<T>{this->data[0], this->data[1]};}
 	[[nodiscard]] inline vec2<T> xz() const { return vec2<T>{this->data[0], this->data[2]};}
@@ -159,6 +101,14 @@ template<typename T> struct vec3
 		this->data[0] = other.data[0];
 		this->data[1] = other.data[1];
 		this->data[2] = other.data[2];
+	}
+	
+	template<uint64_t bits, typename U> constexpr explicit vec3<T>(vec3<fixed<bits, U>> const &other)
+	{
+		static_assert(std::is_floating_point<T>());
+		this->data[0] = (T)other.data[0];
+		this->data[1] = (T)other.data[1];
+		this->data[2] = (T)other.data[2];
 	}
 	
 	/// Construct a v3 out of 3 values
