@@ -176,36 +176,36 @@ template <uint32_t bits, typename V> struct fixed //FIXME infinite recursion in 
 	template <typename T> constexpr fixed<bits, V> operator +(T other) const
 	{
 		static_assert(std::is_integral<T>() || std::is_floating_point<T>());
-		fixed<bits, T> out{};
-		out.val = this->val + (T)std::round(other * this->scale);
+		fixed<bits, V> out{};
+		out.val = this->val + (V)std::round(other * this->scale);
 		return out;
 	}
 	template <typename T> constexpr fixed<bits, V> operator -(T other) const
 	{
 		static_assert(std::is_integral<T>() || std::is_floating_point<T>());
-		fixed<bits, T> out{};
-		out.val = this->val - (T)std::round(other * this->scale);
+		fixed<bits, V> out{};
+		out.val = this->val - (V)std::round(other * this->scale);
 		return out;
 	}
 	template <typename T> constexpr fixed<bits, V> operator *(T other) const
 	{
 		static_assert(std::is_integral<T>() || std::is_floating_point<T>());
-		fixed<bits, T> out{};
+		fixed<bits, V> out{};
 		out.val = ((int128_t)this->val * (int128_t)std::round(other * this->scale)) / this->scale;
 		return out;
 	}
 	template <typename T> constexpr fixed<bits, V> operator /(T other) const
 	{
 		static_assert(std::is_integral<T>() || std::is_floating_point<T>());
-		fixed<bits, T> out{};
+		fixed<bits, V> out{};
 		out.val = ((int128_t)this->val * this->scale) / (int128_t)std::round(other * this->scale);
 		return out;
 	}
 	template <typename T> constexpr fixed<bits, V> operator %(T other) const
 	{
 		static_assert(std::is_integral<T>() || std::is_floating_point<T>());
-		fixed<bits, T> out{};
-		out.val = this->val % (T)std::round(other * this->scale);
+		fixed<bits, V> out{};
+		out.val = this->val % (V)std::round(other * this->scale);
 		return out;
 	}
 	
