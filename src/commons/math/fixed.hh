@@ -4,7 +4,7 @@
 #include <cmath>
 
 //Fixed point number
-template <uint32_t bits, typename V> struct fixed //FIXME infinite recursion in math operators
+template <uint32_t bits, typename V> struct fixed
 {
 	static_assert(!std::is_floating_point<V>() && bits <= sizeof(V) * 8);
 	
@@ -332,7 +332,7 @@ template <uint32_t bits, typename V> struct fixed //FIXME infinite recursion in 
 	}
 	
 private:
-	static constexpr uint64_t const scale = (uint64_t)1 << bits;
+	static constexpr uint128_t const scale = (uint128_t)1 << bits;
 	V val;
 };
 static_assert(std::is_pod<fixed<8, int32_t>>());
