@@ -8,7 +8,7 @@ elseif(APPLE)
 endif()
 
 project(commons)
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(SRC
 		src/commons/serialization.hh
 		src/buffer.cc src/commons/buffer.hh
