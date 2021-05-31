@@ -24,7 +24,7 @@ template<typename T> struct linesegment2D
 		return {-vec.y(), vec.x()};
 	}
 	
-	/// Find the point of intersection between this line and another
+	/*/// Find the point of intersection between this line and another
 	[[nodiscard]] inline bool isIntersecting(linesegment2D<T> const &other, vec2<T> &out)
 	{
 		T x1 = this->point1.x(), x2 = this->point2.x(), x3 = other.point1.x(), x4 = other.point2.x();
@@ -38,6 +38,27 @@ template<typename T> struct linesegment2D
 		if(y < std::min(y1, y2) || y > std::max(y1, y2) || y < std::min(y3, y4) || y > std::max(y3, y4)) return false;
 		out = {x, y};
 		return true;
+	}*/
+	
+	[[nodiscard]] inline bool isIntersecting(linesegment2D<T> const &other, vec2<T> &out)
+	{
+		float s1_x, s1_y, s2_x, s2_y;
+		s1_x = this->point2.x() - this->point1.x();
+		s1_y = this->point2.y() - this->point1.y();
+		s2_x = other.point2.x() - other.point1.x();
+		s2_y = other.point2.y() - other.point1.y();
+		
+		float s, t;
+		s = (-s1_y * (this->point1.x() - other.point1.x()) + s1_x * (this->point1.y() - other.point1.y())) / (-s2_x * s1_y + s1_x * s2_y);
+		t = ( s2_x * (this->point1.y() - other.point1.y()) - s2_y * (this->point1.x() - other.point1.x())) / (-s2_x * s1_y + s1_x * s2_y);
+		
+		if (s >= 0 && s <= 1 && t >= 0 && t <= 1)
+		{
+			out.x() = this->point1.x() + (t * s1_x);
+			out.y() = this->point1.y() + (t * s1_y);
+			return true;
+		}
+		return false;
 	}
 	
 	vec2<T> point1, point2;
@@ -109,7 +130,7 @@ template<typename T> struct aabb2D
 	/// AABB-line segment collision
 	[[nodiscard]] inline bool isIntersecting(linesegment2D<T> const &other, T &closestHit)
 	{
-		T hWidth = (this->maxY - this->minY) / (T)2, hHeight = (this->maxX - this->minX) / 2;
+		T hWidth = (this->maxX - this->minX) / (T)2, hHeight = (this->maxY - this->minY) / 2;
 		linesegment2D<T> top{vec2<T>{this->centerX - hWidth, this->centerY + hHeight}, vec2<T>{this->centerX + hWidth, this->centerY + hHeight}},
 		bottom{vec2<T>{this->centerX - hWidth, this->centerY - hHeight}, vec2<T>{this->centerX + hWidth, this->centerY - hHeight}},
 		left{vec2<T>{this->centerX - hWidth, this->centerY - hHeight}, vec2<T>{this->centerX - hWidth, this->centerY + hHeight}},
