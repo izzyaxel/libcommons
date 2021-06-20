@@ -68,6 +68,12 @@ Logger& Logger::operator<<(std::string const &val)
 	return *this;
 }
 
+Logger& Logger::operator<<(char val)
+{
+	this->tempBuf << val;
+	return *this;
+}
+
 void Logger::push()
 {
 	this->buf.push_back(this->tempBuf.str());

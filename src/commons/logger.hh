@@ -47,6 +47,7 @@ struct Logger
 	Logger& operator << (Sev val);
 	Logger& operator << (char const *val);
 	Logger& operator << (std::string const &val);
+	Logger& operator << (char val);
 	template <typename T> Logger& operator << (T val)
 	{
 		this->tempBuf << std::to_string(val);
