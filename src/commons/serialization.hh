@@ -19,7 +19,7 @@ struct Serializer
 		this->data.insert(this->data.end(), reinterpret_cast<uint8_t const *>(in.data()), reinterpret_cast<uint8_t const *>(in.data()) + in.size());
 	}
 	
-	template <typename T, typename = std::enable_if_t<std::is_pod<T>::value && !std::is_pointer<T>::value>> void write(T in)
+	template <typename T, typename = std::enable_if_t<std::is_standard_layout<T>::value && std::is_trivial<T>::value && !std::is_pointer<T>::value>> void write(T in)
 	{
 		this->data.insert(this->data.end(), reinterpret_cast<uint8_t const *>(&in), reinterpret_cast<uint8_t const *>(&in) + sizeof(T));
 	}
@@ -46,7 +46,7 @@ struct Serializer
 		this->read(reinterpret_cast<uint8_t *>(&out), containerSize);
 	}
 	
-	template <typename T, typename = std::enable_if_t<std::is_pod<T>::value && !std::is_pointer<T>::value>> void read(T &out)
+	template <typename T, typename = std::enable_if_t<std::is_standard_layout<T>::value && std::is_trivial<T>::value && !std::is_pointer<T>::value>> void read(T &out)
 	{
 		this->read(reinterpret_cast<uint8_t *>(&out), sizeof(T));
 	}

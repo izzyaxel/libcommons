@@ -428,4 +428,4 @@ template<typename T> struct vec3
 		printf("%s: %s\n", name.data(), this->toString().data());
 	}
 };
-static_assert(std::is_pod<vec3<int32_t>>());
+static_assert(std::is_standard_layout<vec3<int32_t>>() && std::is_trivial<vec3<int32_t>>());

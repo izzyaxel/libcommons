@@ -341,4 +341,4 @@ private:
 	static constexpr uint64_t const scale = (uint64_t)1 << bits;
 	V val;
 };
-static_assert(std::is_pod<fixed<8, int32_t>>());
+static_assert(std::is_standard_layout<fixed<8, int32_t>>() && std::is_trivial<fixed<8, int32_t>>());
