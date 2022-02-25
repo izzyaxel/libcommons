@@ -52,7 +52,7 @@ std::string removeMult(std::string const &input, std::vector<char> const &remove
 	return out;
 }
 
-std::vector<std::string> split(std::string const &input, char const &splitOn, bool const &removeMatches)
+std::vector<std::string> split(std::string const &input, char const &splitOn, bool const removeMatches)
 {
 	std::vector<std::string> out;
 	if(input.begin() == input.end()) return out;
@@ -72,7 +72,7 @@ std::vector<std::string> split(std::string const &input, char const &splitOn, bo
 	return out;
 }
 
-std::vector<std::string> splitMult(std::string const &input, std::vector<char> const &splitOn, bool const &removeMatches)
+std::vector<std::string> splitMult(std::string const &input, std::vector<char> const &splitOn, bool const removeMatches)
 {
 	std::vector<std::string> out{};
 	if(input.length() == 0) return out;
@@ -112,7 +112,7 @@ std::vector<std::string> splitMult(std::string const &input, std::vector<char> c
 	return out;
 }
 
-std::vector<std::string> splitSeq(std::string const &input, std::string const &splitOn)
+std::vector<std::string> splitSeq(std::string const &input, std::string const &splitOn, bool const removeMatches)
 {
 	std::vector<std::string> out{};
 	if(input.begin() == input.end()) return out;
@@ -124,7 +124,7 @@ std::vector<std::string> splitSeq(std::string const &input, std::string const &s
 			if(*iEnd != splitOn[i]) break;
 			if(i == splitOn.length() - 1)
 			{
-				out.emplace_back(iBegin, iEnd + 1);
+				out.emplace_back(iBegin, iEnd + 1 - (removeMatches ? splitOn.size() : 0));
 				iBegin = ++iEnd;
 				break;
 			}
@@ -136,7 +136,7 @@ std::vector<std::string> splitSeq(std::string const &input, std::string const &s
 	return out;
 }
 
-std::vector<std::string> splitSeqMult(std::string const &input, std::vector<std::string> const &splitOn)
+std::vector<std::string> splitSeqMult(std::string const &input, std::vector<std::string> const &splitOn, bool const removeMatches)
 {
 	std::vector<std::string> out{};
 	if(input.begin() == input.end()) return out;
@@ -151,7 +151,7 @@ std::vector<std::string> splitSeqMult(std::string const &input, std::vector<std:
 				if(*iEnd != token[i]) break; //if the current letters don't match, break out of the loop
 				if(i == token.length() - 1) //if we made it to the end of the word, it's a match, adjust for i starting at 0
 				{
-					out.emplace_back(iBegin, iEnd + 1); //add the word to the list
+					out.emplace_back(iBegin, iEnd + 1 - (removeMatches ? splitOn.size() : 0)); //add the word to the list
 					iBegin = ++iEnd; //and set the iterators to one letter after the word
 					break; //then end the current loop
 				}
@@ -160,7 +160,7 @@ std::vector<std::string> splitSeqMult(std::string const &input, std::vector<std:
 		}
 		iEnd++;
 	}
-	if(iBegin != iEnd) out.emplace_back(iBegin, iEnd); //Add any left over letters to the list
+	if(iBegin != iEnd) out.emplace_back(iBegin, iEnd); //Add any leftover letters to the list
 	return out;
 }
 

@@ -28,3 +28,9 @@ template<typename T> [[nodiscard]] inline vec3<T> mouseToWorld(int32_t clickX, i
 	clip /= clip[3];
 	return vec3<T>{clip};
 }
+
+/// Is the given value is within a range of the target value
+template <typename T> bool within(T val, T target, T range)
+{
+	return (val + range) <= (target + range) && (val - range) >= (target - range);
+}
