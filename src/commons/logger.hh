@@ -33,7 +33,7 @@ struct LoggerOptions
 	LogTarget target = LogTarget::STDOUT;
 	LogStamping stamping = LogStamping::NONE;
 	LogVerbosity verbosity = LogVerbosity::HIGH;
-	std::string logFilePath = "";
+	std::string logFilePath;
 	bool appendToLogFile = false, autoFlush = true;
 };
 
@@ -49,6 +49,8 @@ struct Logger
 	COMMONS_API Logger& operator << (char const *val);
 	COMMONS_API Logger& operator << (std::string const &val);
 	COMMONS_API Logger& operator << (char val);
+	COMMONS_API Logger& operator << (double val);
+	COMMONS_API Logger& operator << (float val);
 	template <typename T> Logger& operator << (T val)
 	{
 		this->tempBuf << std::to_string(val);
@@ -73,6 +75,8 @@ struct Logger
 	
 	COMMONS_API void setFileTarget(std::string const &filePath, bool append = false);
 	
+	COMMONS_API void setDecimalPlaces(uint8_t numDecimalPlaces);
+	
 	COMMONS_API void log(Severity severity, std::string const &message);
 	
 	COMMONS_API void flush();
@@ -85,4 +89,5 @@ private:
 	std::vector<std::string> buf;
 	std::stringstream tempBuf;
 	bool autoFlush = true;
+	uint8_t decimalPlaces= 6;
 };

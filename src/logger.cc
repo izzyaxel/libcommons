@@ -1,4 +1,5 @@
 #include "commons/logger.hh"
+#include "commons/stringtools.hh"
 
 #include <iomanip>
 
@@ -74,6 +75,40 @@ Logger& Logger::operator<<(char val)
 	return *this;
 }
 
+Logger& Logger::operator<<(double val)
+{
+	std::stringstream tmpSS;
+	tmpSS << val;
+	std::string tmpStr = tmpSS.str();
+	size_t periodLoc = tmpStr.find_last_of('.') + 1;
+	size_t numDec = tmpStr.size() - periodLoc;
+	if(this->decimalPlaces >= numDec)
+	{
+		this->tempBuf << val;
+		return *this;
+	}
+	tmpStr = subString(tmpStr, 0, periodLoc + this->decimalPlaces);
+	this->tempBuf << tmpStr;
+	return *this;
+}
+
+Logger& Logger::operator<<(float val)
+{
+	std::stringstream tmpSS;
+	tmpSS << val;
+	std::string tmpStr = tmpSS.str();
+	size_t periodLoc = tmpStr.find_last_of('.') + 1;
+	size_t numDec = tmpStr.size() - periodLoc;
+	if(this->decimalPlaces >= numDec)
+	{
+		this->tempBuf << val;
+		return *this;
+	}
+	tmpStr = subString(tmpStr, 0, periodLoc + this->decimalPlaces);
+	this->tempBuf << tmpStr;
+	return *this;
+}
+
 void Logger::push()
 {
 	this->buf.push_back(this->tempBuf.str());
@@ -107,6 +142,11 @@ void Logger::setFileTarget(std::string const &filePath, bool append)
 	}
 	this->out = fopen(filePath.data(), append ? "a" : "w");
 	if(!this->out) printf("Failed to start log file\n");
+}
+
+void Logger::setDecimalPlaces(uint8_t numDecimalPlaces)
+{
+	this->decimalPlaces = numDecimalPlaces;
 }
 
 void Logger::log(Sev severity, std::string const &message)
