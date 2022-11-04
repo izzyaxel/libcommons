@@ -14,20 +14,20 @@ enum struct SeekPos
 template <typename T> struct DataBuffer
 {
 	DataBuffer() = delete;
-	EXPORT inline explicit DataBuffer(std::vector<T> const &buffer)
+	COMMONSAPI inline explicit DataBuffer(std::vector<T> const &buffer)
 	{
 		size_t convSize = sizeof(T) * buffer.size();
 		uint8_t const *tmp = reinterpret_cast<uint8_t const *>(buffer.data());
 		this->buffer = {tmp, tmp + convSize};
 	}
-	EXPORT DataBuffer(T const *src, size_t size)
+	COMMONSAPI DataBuffer(T const *src, size_t size)
 	{
 		size_t convSize = sizeof(T) * size;
 		uint8_t const *tmp = reinterpret_cast<uint8_t const *>(src);
 		this->buffer = {tmp, tmp + convSize};
 	}
 	
-	EXPORT size_t read(void *dst, size_t amt)
+	COMMONSAPI size_t read(void *dst, size_t amt)
 	{
 		this->sanity();
 		if(this->pos == this->buffer.size()) return 0;
@@ -43,12 +43,12 @@ template <typename T> struct DataBuffer
 		return amt;
 	}
 	
-	EXPORT inline void rewind()
+	COMMONSAPI inline void rewind()
 	{
 		this->pos = 0;
 	}
 	
-	EXPORT inline bool seek(size_t amt, SeekPos seekPos)
+	COMMONSAPI inline bool seek(size_t amt, SeekPos seekPos)
 	{
 		switch(seekPos)
 		{
@@ -77,7 +77,7 @@ template <typename T> struct DataBuffer
 		return false;
 	}
 	
-	[[nodiscard]] EXPORT inline size_t tell()
+	[[nodiscard]] COMMONSAPI inline size_t tell()
 	{
 		return this->pos;
 	}

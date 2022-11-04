@@ -3,9 +3,9 @@
 #include <string>
 #include "export.hh"
 
-[[nodiscard]] EXPORT std::string getCWD();
+[[nodiscard]] COMMONSAPI std::string getCWD();
 
-[[nodiscard]] EXPORT std::string ptrToString(void *ptr);
+[[nodiscard]] COMMONSAPI std::string ptrToString(void *ptr);
 
 template <typename T> [[nodiscard]] T bound(T val, T lower, T upper)
 {

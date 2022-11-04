@@ -1,7 +1,7 @@
 #pragma once
 
 #if defined(WINDOWS) && defined(SHAREDBUILD)
-#define EXPORT __declspec(dllexport)
+#define COMMONSAPI __declspec(dllexport)
 #else
-#define EXPORT 
+#define COMMONSAPI 
 #endif

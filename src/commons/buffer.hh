@@ -8,36 +8,36 @@
 
 struct Buffer : public Serializable //TODO finish buffer
 {
-	EXPORT void serialize(Serializer &serializer) override;
-	EXPORT void deserialize(Serializer &serializer) override;
+	COMMONSAPI void serialize(Serializer &serializer) override;
+	COMMONSAPI void deserialize(Serializer &serializer) override;
 	
 	using iterator = uint8_t *;
 	using const_iterator = uint8_t const*;
 	
-	EXPORT Buffer();
-	EXPORT Buffer(const_iterator begin, const_iterator end);
-	EXPORT Buffer(Buffer const &other);
-	EXPORT Buffer(Buffer &&other);
-	EXPORT ~Buffer();
+	COMMONSAPI Buffer();
+	COMMONSAPI Buffer(const_iterator begin, const_iterator end);
+	COMMONSAPI Buffer(Buffer const &other);
+	COMMONSAPI Buffer(Buffer &&other);
+	COMMONSAPI ~Buffer();
 	
-	EXPORT Buffer& operator =(Buffer const &other);
-	EXPORT Buffer& operator =(Buffer &&other) ;
-	EXPORT bool operator ==(Buffer const &other);
+	COMMONSAPI Buffer& operator =(Buffer const &other);
+	COMMONSAPI Buffer& operator =(Buffer &&other) ;
+	COMMONSAPI bool operator ==(Buffer const &other);
 	
-	[[nodiscard]] EXPORT inline iterator begin() { return nullptr; } //TODO
-	[[nodiscard]] EXPORT inline iterator end() { return nullptr; }
-	[[nodiscard]] EXPORT inline const_iterator begin() const { return nullptr; }
-	[[nodiscard]] EXPORT inline const_iterator end() const { return nullptr; }
+	[[nodiscard]] COMMONSAPI inline iterator begin() { return nullptr; } //TODO
+	[[nodiscard]] COMMONSAPI inline iterator end() { return nullptr; }
+	[[nodiscard]] COMMONSAPI inline const_iterator begin() const { return nullptr; }
+	[[nodiscard]] COMMONSAPI inline const_iterator end() const { return nullptr; }
 	
-	EXPORT void write(std::vector<uint8_t> const &in);
-	EXPORT void write(uint8_t const *in, size_t size);
-	EXPORT void discard(size_t amt);
-	[[nodiscard]] EXPORT size_t size();
-	[[nodiscard]] EXPORT uint8_t const *data() const;
-	[[nodiscard]] EXPORT uint8_t *data();
-	EXPORT void push_back(uint8_t val);
-	EXPORT void resize(size_t size);
-	EXPORT void transferTo(Buffer &buffer);
+	COMMONSAPI void write(std::vector<uint8_t> const &in);
+	COMMONSAPI void write(uint8_t const *in, size_t size);
+	COMMONSAPI void discard(size_t amt);
+	[[nodiscard]] COMMONSAPI size_t size();
+	[[nodiscard]] COMMONSAPI uint8_t const *data() const;
+	[[nodiscard]] COMMONSAPI uint8_t *data();
+	COMMONSAPI void push_back(uint8_t val);
+	COMMONSAPI void resize(size_t size);
+	COMMONSAPI void transferTo(Buffer &buffer);
 	
 	private:
 	std::vector<uint8_t> buffer;

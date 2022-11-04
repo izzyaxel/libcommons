@@ -11,8 +11,8 @@
 
 struct ThreadPool
 {
-	EXPORT explicit ThreadPool(size_t poolSize = std::max(std::thread::hardware_concurrency() - 1u, 1u));
-	EXPORT ~ThreadPool();
+	COMMONSAPI explicit ThreadPool(size_t poolSize = std::max(std::thread::hardware_concurrency() - 1u, 1u));
+	COMMONSAPI ~ThreadPool();
 	
 	template <typename F, typename... Args> auto enqueue(F func, Args ... args) //Note: thread pool can't accept moved args yet because of buggy type deduction in C++
 	{

@@ -39,16 +39,16 @@ struct LoggerOptions
 
 struct Logger
 {
-	EXPORT ~Logger();
+	COMMONSAPI ~Logger();
 	
-	EXPORT std::string endl();
-	[[nodiscard]] EXPORT std::string timestamp();
+	COMMONSAPI std::string endl();
+	[[nodiscard]] COMMONSAPI std::string timestamp();
 	
 	//Writes into the temporary buffer to construct a log message, must then be pushed to the main buffer
-	EXPORT Logger& operator << (Sev val);
-	EXPORT Logger& operator << (char const *val);
-	EXPORT Logger& operator << (std::string const &val);
-	EXPORT Logger& operator << (char val);
+	COMMONSAPI Logger& operator << (Sev val);
+	COMMONSAPI Logger& operator << (char const *val);
+	COMMONSAPI Logger& operator << (std::string const &val);
+	COMMONSAPI Logger& operator << (char val);
 	template <typename T> Logger& operator << (T val)
 	{
 		this->tempBuf << std::to_string(val);
@@ -67,15 +67,15 @@ struct Logger
 	}
 	
 	/// Push the temporary buffer to the main buffer
-	EXPORT void push();
+	COMMONSAPI void push();
 	
-	EXPORT void setOptions(LoggerOptions const &options);
+	COMMONSAPI void setOptions(LoggerOptions const &options);
 	
-	EXPORT void setFileTarget(std::string const &filePath, bool append = false);
+	COMMONSAPI void setFileTarget(std::string const &filePath, bool append = false);
 	
-	EXPORT void log(Severity severity, std::string const &message);
+	COMMONSAPI void log(Severity severity, std::string const &message);
 	
-	EXPORT void flush();
+	COMMONSAPI void flush();
 
 private:
 	LogTarget target;

@@ -8,7 +8,7 @@
 
 struct Serializer
 {
-	EXPORT inline void writeString(std::string const &in)
+	COMMONSAPI inline void writeString(std::string const &in)
 	{
 		this->write<size_t>(in.size());
 		this->data.insert(this->data.end(), reinterpret_cast<uint8_t const *>(in.data()), reinterpret_cast<uint8_t const *>(in.data()) + in.size());
@@ -25,14 +25,14 @@ struct Serializer
 		this->data.insert(this->data.end(), reinterpret_cast<uint8_t const *>(&in), reinterpret_cast<uint8_t const *>(&in) + sizeof(T));
 	}
 	
-	EXPORT inline void read(uint8_t *dest, size_t size)
+	COMMONSAPI inline void read(uint8_t *dest, size_t size)
 	{
 		memcpy(dest, this->data.data() + this->readOffset, size);
 		this->readOffset += size;
 		this->_size -= size;
 	}
 	
-	EXPORT inline void readString(std::string &out)
+	COMMONSAPI inline void readString(std::string &out)
 	{
 		size_t stringSize = 0;
 		this->read<size_t>(stringSize);
@@ -52,12 +52,12 @@ struct Serializer
 		this->read(reinterpret_cast<uint8_t *>(&out), sizeof(T));
 	}
 	
-	[[nodiscard]] EXPORT inline size_t size()
+	[[nodiscard]] COMMONSAPI inline size_t size()
 	{
 		return this->_size;
 	}
 	
-	EXPORT inline void end()
+	COMMONSAPI inline void end()
 	{
 		this->readOffset = 0;
 		this->data.clear();
@@ -71,9 +71,9 @@ private:
 
 struct Serializable
 {
-	EXPORT virtual ~Serializable() = default;
-	EXPORT virtual void serialize(Serializer &serializer) = 0;
-	EXPORT virtual void deserialize(Serializer &serializer) = 0;
+	COMMONSAPI virtual ~Serializable() = default;
+	COMMONSAPI virtual void serialize(Serializer &serializer) = 0;
+	COMMONSAPI virtual void deserialize(Serializer &serializer) = 0;
 
 protected:
 	Serializable() = default;
