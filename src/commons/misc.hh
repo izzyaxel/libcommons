@@ -1,10 +1,11 @@
 #pragma once
 
 #include <string>
+#include "export.hh"
 
-[[nodiscard]] std::string getCWD();
+[[nodiscard]] EXPORT std::string getCWD();
 
-[[nodiscard]] std::string ptrToString(void *ptr);
+[[nodiscard]] EXPORT std::string ptrToString(void *ptr);
 
 template <typename T> [[nodiscard]] T bound(T val, T lower, T upper)
 {

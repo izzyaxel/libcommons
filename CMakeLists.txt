@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.12 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.23.2 FATAL_ERROR)
 if(WIN32 OR WIN64)
 	add_definitions(-DWINDOWS)
 elseif(UNIX)
@@ -33,9 +33,7 @@ set(SRC
 		src/commons/math/util.hh
 		src/commons/math/vec2.hh
 		src/commons/math/vec3.hh
-		src/commons/math/vec4.hh)
-if(WIN32 OR WIN64)
-	add_library(${PROJECT_NAME} STATIC ${SRC})
-elseif(UNIX)
-	add_library(${PROJECT_NAME} SHARED ${SRC})
-endif()
+		src/commons/math/vec4.hh src/commons/export.hh)
+
+add_definitions(-DSHAREDBUILD)
+add_library(${PROJECT_NAME} SHARED ${SRC})

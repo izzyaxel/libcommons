@@ -5,6 +5,7 @@
 #include <vector>
 #include <sstream>
 #include "math/fixed.hh"
+#include "export.hh"
 
 enum struct Severity
 {
@@ -38,16 +39,16 @@ struct LoggerOptions
 
 struct Logger
 {
-	~Logger();
+	EXPORT ~Logger();
 	
-	std::string endl();
-	[[nodiscard]] std::string timestamp();
+	EXPORT std::string endl();
+	[[nodiscard]] EXPORT std::string timestamp();
 	
 	//Writes into the temporary buffer to construct a log message, must then be pushed to the main buffer
-	Logger& operator << (Sev val);
-	Logger& operator << (char const *val);
-	Logger& operator << (std::string const &val);
-	Logger& operator << (char val);
+	EXPORT Logger& operator << (Sev val);
+	EXPORT Logger& operator << (char const *val);
+	EXPORT Logger& operator << (std::string const &val);
+	EXPORT Logger& operator << (char val);
 	template <typename T> Logger& operator << (T val)
 	{
 		this->tempBuf << std::to_string(val);
@@ -66,15 +67,15 @@ struct Logger
 	}
 	
 	/// Push the temporary buffer to the main buffer
-	void push();
+	EXPORT void push();
 	
-	void setOptions(LoggerOptions const &options);
+	EXPORT void setOptions(LoggerOptions const &options);
 	
-	void setFileTarget(std::string const &filePath, bool append = false);
+	EXPORT void setFileTarget(std::string const &filePath, bool append = false);
 	
-	void log(Severity severity, std::string const &message);
+	EXPORT void log(Severity severity, std::string const &message);
 	
-	void flush();
+	EXPORT void flush();
 
 private:
 	LogTarget target;

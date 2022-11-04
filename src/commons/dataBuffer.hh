@@ -3,6 +3,7 @@
 #include <vector>
 #include <cstdint>
 #include <cstring>
+#include "export.hh"
 
 enum struct SeekPos
 {
@@ -13,20 +14,20 @@ enum struct SeekPos
 template <typename T> struct DataBuffer
 {
 	DataBuffer() = delete;
-	inline explicit DataBuffer(std::vector<T> const &buffer)
+	EXPORT inline explicit DataBuffer(std::vector<T> const &buffer)
 	{
 		size_t convSize = sizeof(T) * buffer.size();
 		uint8_t const *tmp = reinterpret_cast<uint8_t const *>(buffer.data());
 		this->buffer = {tmp, tmp + convSize};
 	}
-	DataBuffer(T const *src, size_t size)
+	EXPORT DataBuffer(T const *src, size_t size)
 	{
 		size_t convSize = sizeof(T) * size;
 		uint8_t const *tmp = reinterpret_cast<uint8_t const *>(src);
 		this->buffer = {tmp, tmp + convSize};
 	}
 	
-	size_t read(void *dst, size_t amt)
+	EXPORT size_t read(void *dst, size_t amt)
 	{
 		this->sanity();
 		if(this->pos == this->buffer.size()) return 0;
@@ -42,12 +43,12 @@ template <typename T> struct DataBuffer
 		return amt;
 	}
 	
-	inline void rewind()
+	EXPORT inline void rewind()
 	{
 		this->pos = 0;
 	}
 	
-	inline bool seek(size_t amt, SeekPos seekPos)
+	EXPORT inline bool seek(size_t amt, SeekPos seekPos)
 	{
 		switch(seekPos)
 		{
@@ -76,7 +77,7 @@ template <typename T> struct DataBuffer
 		return false;
 	}
 	
-	[[nodiscard]] inline size_t tell()
+	[[nodiscard]] EXPORT inline size_t tell()
 	{
 		return this->pos;
 	}
