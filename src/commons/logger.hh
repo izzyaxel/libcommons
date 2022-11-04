@@ -39,16 +39,16 @@ struct LoggerOptions
 
 struct Logger
 {
-	COMMONSAPI ~Logger();
+	COMMONS_API ~Logger();
 	
-	COMMONSAPI std::string endl();
-	[[nodiscard]] COMMONSAPI std::string timestamp();
+	COMMONS_API std::string endl();
+	[[nodiscard]] COMMONS_API std::string timestamp();
 	
 	//Writes into the temporary buffer to construct a log message, must then be pushed to the main buffer
-	COMMONSAPI Logger& operator << (Sev val);
-	COMMONSAPI Logger& operator << (char const *val);
-	COMMONSAPI Logger& operator << (std::string const &val);
-	COMMONSAPI Logger& operator << (char val);
+	COMMONS_API Logger& operator << (Sev val);
+	COMMONS_API Logger& operator << (char const *val);
+	COMMONS_API Logger& operator << (std::string const &val);
+	COMMONS_API Logger& operator << (char val);
 	template <typename T> Logger& operator << (T val)
 	{
 		this->tempBuf << std::to_string(val);
@@ -67,15 +67,15 @@ struct Logger
 	}
 	
 	/// Push the temporary buffer to the main buffer
-	COMMONSAPI void push();
+	COMMONS_API void push();
 	
-	COMMONSAPI void setOptions(LoggerOptions const &options);
+	COMMONS_API void setOptions(LoggerOptions const &options);
 	
-	COMMONSAPI void setFileTarget(std::string const &filePath, bool append = false);
+	COMMONS_API void setFileTarget(std::string const &filePath, bool append = false);
 	
-	COMMONSAPI void log(Severity severity, std::string const &message);
+	COMMONS_API void log(Severity severity, std::string const &message);
 	
-	COMMONSAPI void flush();
+	COMMONS_API void flush();
 
 private:
 	LogTarget target;

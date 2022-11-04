@@ -14,20 +14,20 @@ enum struct SeekPos
 template <typename T> struct DataBuffer
 {
 	DataBuffer() = delete;
-	COMMONSAPI inline explicit DataBuffer(std::vector<T> const &buffer)
+	COMMONS_API inline explicit DataBuffer(std::vector<T> const &buffer)
 	{
 		size_t convSize = sizeof(T) * buffer.size();
 		uint8_t const *tmp = reinterpret_cast<uint8_t const *>(buffer.data());
 		this->buffer = {tmp, tmp + convSize};
 	}
-	COMMONSAPI DataBuffer(T const *src, size_t size)
+	COMMONS_API DataBuffer(T const *src, size_t size)
 	{
 		size_t convSize = sizeof(T) * size;
 		uint8_t const *tmp = reinterpret_cast<uint8_t const *>(src);
 		this->buffer = {tmp, tmp + convSize};
 	}
 	
-	COMMONSAPI size_t read(void *dst, size_t amt)
+	COMMONS_API size_t read(void *dst, size_t amt)
 	{
 		this->sanity();
 		if(this->pos == this->buffer.size()) return 0;
@@ -43,12 +43,12 @@ template <typename T> struct DataBuffer
 		return amt;
 	}
 	
-	COMMONSAPI inline void rewind()
+	COMMONS_API inline void rewind()
 	{
 		this->pos = 0;
 	}
 	
-	COMMONSAPI inline bool seek(size_t amt, SeekPos seekPos)
+	COMMONS_API inline bool seek(size_t amt, SeekPos seekPos)
 	{
 		switch(seekPos)
 		{
@@ -77,7 +77,7 @@ template <typename T> struct DataBuffer
 		return false;
 	}
 	
-	[[nodiscard]] COMMONSAPI inline size_t tell()
+	[[nodiscard]] COMMONS_API inline size_t tell()
 	{
 		return this->pos;
 	}

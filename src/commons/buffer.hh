@@ -8,36 +8,36 @@
 
 struct Buffer : public Serializable //TODO finish buffer
 {
-	COMMONSAPI void serialize(Serializer &serializer) override;
-	COMMONSAPI void deserialize(Serializer &serializer) override;
+	COMMONS_API void serialize(Serializer &serializer) override;
+	COMMONS_API void deserialize(Serializer &serializer) override;
 	
 	using iterator = uint8_t *;
 	using const_iterator = uint8_t const*;
 	
-	COMMONSAPI Buffer();
-	COMMONSAPI Buffer(const_iterator begin, const_iterator end);
-	COMMONSAPI Buffer(Buffer const &other);
-	COMMONSAPI Buffer(Buffer &&other);
-	COMMONSAPI ~Buffer();
+	COMMONS_API Buffer();
+	COMMONS_API Buffer(const_iterator begin, const_iterator end);
+	COMMONS_API Buffer(Buffer const &other);
+	COMMONS_API Buffer(Buffer &&other);
+	COMMONS_API ~Buffer();
 	
-	COMMONSAPI Buffer& operator =(Buffer const &other);
-	COMMONSAPI Buffer& operator =(Buffer &&other) ;
-	COMMONSAPI bool operator ==(Buffer const &other);
+	COMMONS_API Buffer& operator =(Buffer const &other);
+	COMMONS_API Buffer& operator =(Buffer &&other) ;
+	COMMONS_API bool operator ==(Buffer const &other);
 	
-	[[nodiscard]] COMMONSAPI inline iterator begin() { return nullptr; } //TODO
-	[[nodiscard]] COMMONSAPI inline iterator end() { return nullptr; }
-	[[nodiscard]] COMMONSAPI inline const_iterator begin() const { return nullptr; }
-	[[nodiscard]] COMMONSAPI inline const_iterator end() const { return nullptr; }
+	[[nodiscard]] COMMONS_API inline iterator begin() { return nullptr; } //TODO
+	[[nodiscard]] COMMONS_API inline iterator end() { return nullptr; }
+	[[nodiscard]] COMMONS_API inline const_iterator begin() const { return nullptr; }
+	[[nodiscard]] COMMONS_API inline const_iterator end() const { return nullptr; }
 	
-	COMMONSAPI void write(std::vector<uint8_t> const &in);
-	COMMONSAPI void write(uint8_t const *in, size_t size);
-	COMMONSAPI void discard(size_t amt);
-	[[nodiscard]] COMMONSAPI size_t size();
-	[[nodiscard]] COMMONSAPI uint8_t const *data() const;
-	[[nodiscard]] COMMONSAPI uint8_t *data();
-	COMMONSAPI void push_back(uint8_t val);
-	COMMONSAPI void resize(size_t size);
-	COMMONSAPI void transferTo(Buffer &buffer);
+	COMMONS_API void write(std::vector<uint8_t> const &in);
+	COMMONS_API void write(uint8_t const *in, size_t size);
+	COMMONS_API void discard(size_t amt);
+	[[nodiscard]] COMMONS_API size_t size();
+	[[nodiscard]] COMMONS_API uint8_t const *data() const;
+	[[nodiscard]] COMMONS_API uint8_t *data();
+	COMMONS_API void push_back(uint8_t val);
+	COMMONS_API void resize(size_t size);
+	COMMONS_API void transferTo(Buffer &buffer);
 	
 	private:
 	std::vector<uint8_t> buffer;
