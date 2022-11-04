@@ -87,7 +87,7 @@ Logger& Logger::operator<<(double val)
 		this->tempBuf << val;
 		return *this;
 	}
-	tmpStr = subString(tmpStr, 0, periodLoc + this->decimalPlaces);
+	tmpStr = subString(tmpStr, 0, tmpStr.size() - (periodLoc + this->decimalPlaces));
 	this->tempBuf << tmpStr;
 	return *this;
 }
@@ -104,7 +104,7 @@ Logger& Logger::operator<<(float val)
 		this->tempBuf << val;
 		return *this;
 	}
-	tmpStr = subString(tmpStr, 0, periodLoc + this->decimalPlaces);
+	tmpStr = subString(tmpStr, 0, tmpStr.size() - (periodLoc + this->decimalPlaces));
 	this->tempBuf << tmpStr;
 	return *this;
 }
