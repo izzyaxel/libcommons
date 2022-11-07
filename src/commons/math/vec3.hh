@@ -103,14 +103,6 @@ template<typename T> struct vec3
 		this->data[2] = other.data[2];
 	}
 	
-	template<uint64_t bits, typename U> constexpr explicit vec3<T>(vec3<fixed<bits, U>> const &other)
-	{
-		static_assert(std::is_floating_point<T>());
-		this->data[0] = (T)other.data[0];
-		this->data[1] = (T)other.data[1];
-		this->data[2] = (T)other.data[2];
-	}
-	
 	/// Construct a v3 out of 3 values
 	constexpr inline vec3<T>(T const &x, T const &y, T const &z)
 	{

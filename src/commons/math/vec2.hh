@@ -1,7 +1,5 @@
 #pragma once
 
-#include "fixed.hh"
-
 #include <ctgmath>
 #include <cstring>
 
@@ -37,13 +35,6 @@ template<typename T> struct vec2
 	{
 		this->data[0] = other.data[0];
 		this->data[1] = other.data[1];
-	}
-	
-	template<uint64_t bits, typename U> constexpr explicit vec2<T>(vec2<fixed<bits, U>> const &other)
-	{
-		static_assert(std::is_floating_point<T>());
-		this->data[0] = (T)other.data[0];
-		this->data[1] = (T)other.data[1];
 	}
 	
 	constexpr inline vec2<T>(T x, T y)

@@ -1,7 +1,5 @@
 #pragma once
 
-#include "fixed.hh"
-
 #include <ctgmath>
 #include <cstring>
 
@@ -69,15 +67,6 @@ template<typename T> struct vec4
 		this->data[1] = other.data[1];
 		this->data[2] = other.data[2];
 		this->data[3] = other.data[3];
-	}
-	
-	template<uint64_t bits, typename U> constexpr explicit vec4<T>(vec4<fixed<bits, U>> const &other)
-	{
-		static_assert(std::is_floating_point<T>());
-		this->data[0] = (T)other.data[0];
-		this->data[1] = (T)other.data[1];
-		this->data[2] = (T)other.data[2];
-		this->data[3] = (T)other.data[3];
 	}
 	
 	/// Construct a v4 out of 4 values

@@ -22,7 +22,6 @@ set(SRC
 		src/commons/dataBuffer.hh
 
 		src/commons/math/compound.hh
-		src/commons/math/fixed.hh
 		src/commons/math/general.hh
 		src/commons/math/glmconversion.hh
 		src/commons/math/interpolation.hh
