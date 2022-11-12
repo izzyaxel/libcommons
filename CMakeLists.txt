@@ -32,7 +32,8 @@ set(SRC
 		src/commons/math/util.hh
 		src/commons/math/vec2.hh
 		src/commons/math/vec3.hh
-		src/commons/math/vec4.hh src/commons/export.hh)
+		src/commons/math/vec4.hh
+		src/commons/export.hh)
 
-add_definitions(-DSHAREDBUILD)
-add_library(${PROJECT_NAME} SHARED ${SRC})
+add_definitions(-DSTATICBUILD)
+add_library(${PROJECT_NAME} STATIC ${SRC})
