@@ -1,6 +1,7 @@
 #pragma once
 
 #include <ctgmath>
+#include <cstdint>
 #include <cstring>
 
 template<typename T> struct vec2
