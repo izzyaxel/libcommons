@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include <cstdint>
 #include "export.hh"
 
 /// Quick and dirty way to read a text file into a string

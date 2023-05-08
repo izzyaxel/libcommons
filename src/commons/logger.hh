@@ -4,6 +4,7 @@
 #include <cstdio>
 #include <vector>
 #include <sstream>
+#include <cstdint>
 #include "export.hh"
 
 enum struct Severity

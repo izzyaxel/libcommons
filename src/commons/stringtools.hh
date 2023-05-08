@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include <cstdint>
 #include "export.hh"
 
 /// Check if the given string contains the given token
