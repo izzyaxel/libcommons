@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.23.2 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.26 FATAL_ERROR)
 if(WIN32 OR WIN64)
 	add_definitions(-DWINDOWS)
 elseif(UNIX)
@@ -8,7 +8,7 @@ elseif(APPLE)
 endif()
 
 project(commons)
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
 set(SRC
 		src/commons/serialization.hh
 		src/buffer.cc src/commons/buffer.hh
@@ -20,6 +20,7 @@ set(SRC
 		src/scheduling.cc src/commons/scheduling.hh
 		src/threadpool.cc src/commons/threadpool.hh
 		src/commons/dataBuffer.hh
+		src/random.cc src/commons/random.hh
 
 		src/commons/math/compound.hh
 		src/commons/math/general.hh
