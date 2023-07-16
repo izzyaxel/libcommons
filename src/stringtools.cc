@@ -174,3 +174,39 @@ std::string replaceAll(std::string const &input, char const &searchFor, char con
 	}
 	return out;
 }
+
+std::string replaceSeq(std::string const &input, std::string const &search, std::string const &replace)
+{
+	std::string out;
+	for(size_t i = 0; i < input.length(); i++)
+	{
+		char const &c = input[i];
+		if(c != search[0])
+		{
+			out += c;
+			continue;
+		}
+		else
+		{
+			bool match = true;
+			for(size_t j = 1; j < search.length(); j++) //See if there's a match
+			{
+				if(input[i + j] != search[j])
+				{
+					match = false;
+					break;
+				}
+			}
+			if(match)
+			{
+				out += replace;
+				i += search.length() - 1;
+			}
+			else
+			{
+				out += c;
+			}
+		}
+	}
+	return out;
+}

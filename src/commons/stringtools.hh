@@ -40,3 +40,6 @@
 
 /// Replace all instances of a character with another
 [[nodiscard]] COMMONS_API std::string replaceAll(std::string const &input, char const &searchFor, char const &replaceWith);
+
+/// Replace all sequences of characters with another
+[[nodiscard]] COMMONS_API std::string replaceSeq(std::string const &input, std::string const &search, std::string const &replace);
