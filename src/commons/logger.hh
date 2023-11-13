@@ -79,9 +79,9 @@ struct Logger
 	COMMONS_API void flush();
 
 private:
-	LogTarget target;
-	LogStamping stamping;
-	LogVerbosity verbosity;
+	LogTarget target = LogTarget::FILE;
+	LogStamping stamping = LogStamping::TIMESTAMPS;
+	LogVerbosity verbosity = LogVerbosity::HIGH;
 	FILE *out = nullptr;
 	std::vector<std::string> buf;
 	std::stringstream tempBuf;
