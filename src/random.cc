@@ -12,12 +12,12 @@
 uint64_t genSeed()
 {
   uint64_t out = 0;
-  #if defined(WINDOWS)
+#if defined(WINDOWS)
   if(!RtlGenRandom(&out, 8))
   {
     out = std::chrono::high_resolution_clock::now().time_since_epoch().count();
   }
-  #elif defined(OSX) || defined(LINUX)
+#elif defined(OSX) || defined(LINUX)
   FILE *urandFile = fopen("/dev/urandom", "rb");
     if(!urandFile)
     {
@@ -29,7 +29,7 @@ uint64_t genSeed()
       fread(&out, 8, 1, urandFile);
       fclose(urandFile);
     }
-  #endif
+#endif
   return out;
 }
 

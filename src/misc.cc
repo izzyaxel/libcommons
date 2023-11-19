@@ -14,22 +14,22 @@
 
 std::string getCWD()
 {
-	#if defined(WINDOWS)
-	wchar_t rawdir[2048];
-	GetModuleFileNameW(nullptr, rawdir, 2048);
-	std::string exeDir = std::wstring_convert<std::codecvt_utf8<wchar_t>>().to_bytes(std::wstring(rawdir));
-	exeDir = replaceAll(exeDir, '\\', '/');
-	return exeDir.substr(0, exeDir.find_last_of('/')) + "/";
-	#elif defined(LINUX)
-	char dir[2048];
-	getcwd(dir, 2048);
-	return std::string{dir} + "/";
-	#endif
+#if defined(WINDOWS)
+  wchar_t rawdir[2048];
+  GetModuleFileNameW(nullptr, rawdir, 2048);
+  std::string exeDir = std::wstring_convert<std::codecvt_utf8<wchar_t>>().to_bytes(std::wstring(rawdir));
+  exeDir = replaceAll(exeDir, '\\', '/');
+  return exeDir.substr(0, exeDir.find_last_of('/')) + "/";
+#elif defined(LINUX)
+  char dir[2048];
+  getcwd(dir, 2048);
+  return std::string{dir} + "/";
+#endif
 }
 
-std::string ptrToString(void *ptr)
+std::string ptrToString(void* ptr)
 {
-	std::stringstream ss {};
-	ss << ptr;
-	return ss.str();
+  std::stringstream ss{};
+  ss << ptr;
+  return ss.str();
 }
