@@ -37,7 +37,7 @@ template <typename T> [[nodiscard]] T lerp(T a, T b, T progress)
 
 //Vec2
 /// Lerp between 2 2-dimensional vectors
-template <typename T> [[nodiscard]] vec2<T> lerpV2(vec2<T> const& src, vec2<T> const& dest, float progress)
+template <typename T> [[nodiscard]] vec2<T> lerpV2(vec2<T> const &src, vec2<T> const &dest, float progress)
 {
   vec2<T> out;
   out[0] = progress * dest[0] + (1 - progress) * src[0];
@@ -46,37 +46,37 @@ template <typename T> [[nodiscard]] vec2<T> lerpV2(vec2<T> const& src, vec2<T> c
 }
 
 /// Ease out lerp: fast in slow out
-template <typename T> [[nodiscard]] vec2<T> eoerpV2(vec2<T> const& src, vec2<T> const& dest, float progress)
+template <typename T> [[nodiscard]] vec2<T> eoerpV2(vec2<T> const &src, vec2<T> const &dest, float progress)
 {
   return lerpV2(src, dest, (float)(std::sin(progress * pi<T> * (T)0.5)));
 }
 
 /// Ease in lerp: slow in fast out
-template <typename T> [[nodiscard]] vec2<T> eierpV2(vec2<T> const& src, vec2<T> const& dest, float progress)
+template <typename T> [[nodiscard]] vec2<T> eierpV2(vec2<T> const &src, vec2<T> const &dest, float progress)
 {
   return lerpV2(src, dest, (float)((T)1.0 - std::cos(progress * pi<T> * (T)0.5)));
 }
 
 /// Exponential ease out lerp: fast in slower out
-template <typename T> [[nodiscard]] vec2<T> exeoerpV2(vec2<T> const& src, vec2<T> const& dest, float progress)
+template <typename T> [[nodiscard]] vec2<T> exeoerpV2(vec2<T> const &src, vec2<T> const &dest, float progress)
 {
   return lerpV2(src, dest, (float)(std::sin((progress * progress) * pi<T> * (T)0.5)));
 }
 
 /// Exponential ease in lerp: slower in fast out
-template <typename T> [[nodiscard]] vec2<T> exeierpV2(vec2<T> const& src, vec2<T> const& dest, float progress)
+template <typename T> [[nodiscard]] vec2<T> exeierpV2(vec2<T> const &src, vec2<T> const &dest, float progress)
 {
   return lerpV2(src, dest, (float)((T)1.0 - std::cos((progress * progress) * pi<T> * (T)0.5)));
 }
 
 /// Smoothstep lerp: slow in slow out
-template <typename T> [[nodiscard]] vec2<T> serpV2(vec2<T> const& src, vec2<T> const& dest, float progress)
+template <typename T> [[nodiscard]] vec2<T> serpV2(vec2<T> const &src, vec2<T> const &dest, float progress)
 {
   return lerpV2(src, dest, (float)((progress * progress) * ((T)3.0 - ((T)2.0 * progress))));
 }
 
 /// Smootherstep lerp: slower in slower out
-template <typename T> [[nodiscard]] vec2<T> sserpV2(vec2<T> const& src, vec2<T> const& dest, float progress)
+template <typename T> [[nodiscard]] vec2<T> sserpV2(vec2<T> const &src, vec2<T> const &dest, float progress)
 {
   return lerpV2(src, dest, (float)(std::pow(progress, 3) * (progress * ((T)6.0 * progress - (T)15.0) + (T)10.0)));
 }
@@ -84,7 +84,7 @@ template <typename T> [[nodiscard]] vec2<T> sserpV2(vec2<T> const& src, vec2<T> 
 
 //Vec3
 /// Lerp between 2 3-dimensional vectors
-template <typename T> [[nodiscard]] vec3<T> lerpV3(vec3<T> const& src, vec3<T> const& dest, float progress)
+template <typename T> [[nodiscard]] vec3<T> lerpV3(vec3<T> const &src, vec3<T> const &dest, float progress)
 {
   vec3<T> out;
   out[0] = progress * dest[0] + ((T)1.0 - progress) * src[0];
@@ -94,37 +94,37 @@ template <typename T> [[nodiscard]] vec3<T> lerpV3(vec3<T> const& src, vec3<T> c
 }
 
 /// Ease out lerp: fast in slow out
-template <typename T> [[nodiscard]] vec3<T> eoerpV3(vec3<T> const& src, vec3<T> const& dest, float progress)
+template <typename T> [[nodiscard]] vec3<T> eoerpV3(vec3<T> const &src, vec3<T> const &dest, float progress)
 {
   return lerpV3(src, dest, (float)(std::sin(progress * pi<T> * (T)0.5)));
 }
 
 /// Ease in lerp: slow in fast out
-template <typename T> [[nodiscard]] vec3<T> eierpV3(vec3<T> const& src, vec3<T> const& dest, float progress)
+template <typename T> [[nodiscard]] vec3<T> eierpV3(vec3<T> const &src, vec3<T> const &dest, float progress)
 {
   return lerpV3(src, dest, (float)((T)1.0 - std::cos(progress * pi<T> * (T)0.5)));
 }
 
 /// Exponential ease out lerp: fast in slower out
-template <typename T> [[nodiscard]] vec3<T> exeoerpV3(vec3<T> const& src, vec3<T> const& dest, float progress)
+template <typename T> [[nodiscard]] vec3<T> exeoerpV3(vec3<T> const &src, vec3<T> const &dest, float progress)
 {
   return lerpV3(src, dest, (float)(std::sin((progress * progress) * pi<T> * (T)0.5)));
 }
 
 /// Exponential ease in lerp slower in fast out
-template <typename T> [[nodiscard]] vec3<T> exeierpV3(vec3<T> const& src, vec3<T> const& dest, float progress)
+template <typename T> [[nodiscard]] vec3<T> exeierpV3(vec3<T> const &src, vec3<T> const &dest, float progress)
 {
   return lerpV3(src, dest, (float)((T)1.0 - std::cos((progress * progress) * pi<T> * (T)0.5)));
 }
 
 /// Smoothstep lerp: slow in slow out
-template <typename T> [[nodiscard]] vec3<T> serpV3(vec3<T> const& src, vec3<T> const& dest, float progress)
+template <typename T> [[nodiscard]] vec3<T> serpV3(vec3<T> const &src, vec3<T> const &dest, float progress)
 {
   return lerpV3(src, dest, (float)((progress * progress) * ((T)3.0 - ((T)2.0 * progress))));
 }
 
 /// Smootherstep lerp: slower in slower out
-template <typename T> [[nodiscard]] vec3<T> sserpV3(vec3<T> const& src, vec3<T> const& dest, float progress)
+template <typename T> [[nodiscard]] vec3<T> sserpV3(vec3<T> const &src, vec3<T> const &dest, float progress)
 {
   return lerpV3(src, dest, (float)(std::pow(progress, 3) * (progress * ((T)6.0 * progress - (T)15.0) + (T)10.0)));
 }
@@ -132,7 +132,7 @@ template <typename T> [[nodiscard]] vec3<T> sserpV3(vec3<T> const& src, vec3<T> 
 
 //Vec4
 /// Lerp between 2 4-dimensional vectors
-template <typename T> [[nodiscard]] vec4<T> lerpV4(vec4<T> const& src, vec4<T> const& dest, float progress)
+template <typename T> [[nodiscard]] vec4<T> lerpV4(vec4<T> const &src, vec4<T> const &dest, float progress)
 {
   vec4<T> out;
   out[0] = progress * dest[0] + (1 - progress) * src[0];
@@ -143,44 +143,44 @@ template <typename T> [[nodiscard]] vec4<T> lerpV4(vec4<T> const& src, vec4<T> c
 }
 
 /// Ease out lerp: fast in slow out
-template <typename T> [[nodiscard]] vec4<T> eoerpV4(vec4<T> const& src, vec4<T> const& dest, float progress)
+template <typename T> [[nodiscard]] vec4<T> eoerpV4(vec4<T> const &src, vec4<T> const &dest, float progress)
 {
   return lerpV4(src, dest, (float)(std::sin(progress * pi<T> * (T)0.5)));
 }
 
 /// Ease in lerp: slow in fast out
-template <typename T> [[nodiscard]] vec4<T> eierpV4(vec4<T> const& src, vec4<T> const& dest, float progress)
+template <typename T> [[nodiscard]] vec4<T> eierpV4(vec4<T> const &src, vec4<T> const &dest, float progress)
 {
   return lerpV4(src, dest, (float)((T)1.0 - std::cos(progress * pi<T> * (T)0.5)));
 }
 
 /// Exponential ease out lerp: fast in slower out
-template <typename T> [[nodiscard]] vec4<T> exeoerpV4(vec4<T> const& src, vec4<T> const& dest, float progress)
+template <typename T> [[nodiscard]] vec4<T> exeoerpV4(vec4<T> const &src, vec4<T> const &dest, float progress)
 {
   return lerpV4(src, dest, (float)(std::sin((progress * progress) * pi<T> * (T)0.5)));
 }
 
 /// Exponential ease in lerp: slower in fast out
-template <typename T> [[nodiscard]] vec4<T> exeierpV4(vec4<T> const& src, vec4<T> const& dest, float progress)
+template <typename T> [[nodiscard]] vec4<T> exeierpV4(vec4<T> const &src, vec4<T> const &dest, float progress)
 {
   return lerpV4(src, dest, (float)((T)1.0 - std::cos((progress * progress) * pi<T> * (T)0.5)));
 }
 
 /// Smoothstep lerp: slow in slow out
-template <typename T> [[nodiscard]] vec4<T> serpV4(vec4<T> const& src, vec4<T> const& dest, float progress)
+template <typename T> [[nodiscard]] vec4<T> serpV4(vec4<T> const &src, vec4<T> const &dest, float progress)
 {
   return lerpV4(src, dest, (float)((progress * progress) * ((T)3.0 - ((T)2.0 * progress))));
 }
 
 /// Smootherstep lerp: slower in slower out
-template <typename T> [[nodiscard]] vec4<T> sserpV4(vec4<T> const& src, vec4<T> const& dest, float progress)
+template <typename T> [[nodiscard]] vec4<T> sserpV4(vec4<T> const &src, vec4<T> const &dest, float progress)
 {
   return lerpV4(src, dest, (float)(std::pow(progress, 3) * (progress * ((T)6.0 * progress - (T)15.0) + (T)10.0)));
 }
 
 //Quat
 /// Quaternion spherical linear interpolation
-template <typename T> [[nodiscard]] quat<T> slerpQuat(quat<T> const& A, quat<T> const& B, T value)
+template <typename T> [[nodiscard]] quat<T> slerpQuat(quat<T> const &A, quat<T> const &B, T value)
 {
   T dot = A[0] * B[0] + A[1] * B[1] + A[2] * B[2] + A[3] * B[3];
   if(dot > 1) dot = 1;

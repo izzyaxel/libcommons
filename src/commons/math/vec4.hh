@@ -92,7 +92,7 @@ template <typename T> struct vec4
 
   constexpr vec4<T>() = default;
 
-  template <typename U> constexpr explicit vec4<T>(vec4<U> const& other)
+  template <typename U> constexpr explicit vec4<T>(vec4<U> const &other)
   {
     this->data[0] = other.data[0];
     this->data[1] = other.data[1];
@@ -109,7 +109,7 @@ template <typename T> struct vec4
     this->data[3] = w;
   }
 
-  constexpr explicit vec4<T>(T const& scalar)
+  constexpr explicit vec4<T>(T const &scalar)
   {
     this->data[0] = scalar;
     this->data[1] = scalar;
@@ -117,7 +117,7 @@ template <typename T> struct vec4
     this->data[3] = scalar;
   }
 
-  constexpr vec4<T>(vec2<T> const& first, vec2<T> const& second)
+  constexpr vec4<T>(vec2<T> const &first, vec2<T> const &second)
   {
     this->data[0] = first.x();
     this->data[1] = first.y();
@@ -125,7 +125,7 @@ template <typename T> struct vec4
     this->data[3] = second.y();
   }
 
-  constexpr vec4<T>(vec2<T> const& first, T const& second, T const& third)
+  constexpr vec4<T>(vec2<T> const &first, T const &second, T const &third)
   {
     this->data[0] = first.x();
     this->data[1] = first.y();
@@ -133,7 +133,7 @@ template <typename T> struct vec4
     this->data[3] = third;
   }
 
-  constexpr vec4<T>(vec3<T> const& first, T const& second)
+  constexpr vec4<T>(vec3<T> const &first, T const &second)
   {
     this->data[0] = first.x();
     this->data[1] = first.y();
@@ -153,38 +153,39 @@ template <typename T> struct vec4
   }
 
   /// Compare equality with another v4
-  bool operator==(vec4<T> const& other) const
+  bool operator==(vec4<T> const &other) const
   {
     return this->data[0] == other[0] && this->data[1] == other[1] && this->data[2] == other[2] && this->data[3] == other[3];
   }
 
   /// Compare inequality with another v4
-  bool operator!=(vec4<T> const& other) const
+  bool operator!=(vec4<T> const &other) const
   {
     return this->data[0] != other[0] || this->data[1] != other[1] || this->data[2] != other[2] || this->data[3] != other[3];
   }
 
   /// Add this v4 to another
-  vec4<T> operator+(vec4<T> const& other) const
+  vec4<T> operator+(vec4<T> const &other) const
   {
-    return vec4<T>{this->data[0] + other[0], this->data[1] + other[1], this->data[2] + other[2], this->data[3] + other[3]
+    return vec4<T>{
+      this->data[0] + other[0], this->data[1] + other[1], this->data[2] + other[2], this->data[3] + other[3]
     };
   }
 
   /// Add a scalar number to this v4
-  vec4<T> operator+(T const& scalar) const
+  vec4<T> operator+(T const &scalar) const
   {
     return vec4<T>{(T)(this->data[0] + scalar), (T)(this->data[1] + scalar), (T)(this->data[2] + scalar), (T)(this->data[3] + scalar)};
   }
 
   /// Subtract this v4 from another
-  vec4<T> operator-(vec4<T> const& other) const
+  vec4<T> operator-(vec4<T> const &other) const
   {
     return vec4<T>{this->data[0] - other[0], this->data[1] - other[1], this->data[2] - other[2], this->data[3] - other[3]};
   }
 
   /// Subtract a scalar number from this v4
-  vec4<T> operator-(T const& scalar) const
+  vec4<T> operator-(T const &scalar) const
   {
     return vec4<T>{(T)(this->data[0] - scalar), (T)(this->data[1] - scalar), (T)(this->data[2] - scalar), (T)(this->data[3] - scalar)};
   }
@@ -196,7 +197,7 @@ template <typename T> struct vec4
   }
 
   /// Multiply this v4 with another
-  vec4<T> operator*(vec4<T> const& other) const
+  vec4<T> operator*(vec4<T> const &other) const
   {
     return vec4<T>{this->data[0] * other[0], this->data[1] * other[1], this->data[2] * other[2], this->data[3] * other[3]};
   }
@@ -207,7 +208,7 @@ template <typename T> struct vec4
     return vec4<T>{(T)(this->data[0] * scalar), (T)(this->data[1] * scalar), (T)(this->data[2] * scalar), (T)(this->data[3] * scalar)};
   }
 
-  vec4<T> operator*(mat4x4<T> const& mat)
+  vec4<T> operator*(mat4x4<T> const &mat)
   {
     return vec4<T>{
       this->data[0] * mat[0][0] + this->data[1] * mat[0][1] + this->data[2] * mat[0][2] + this->data[3] * mat[0][3],
@@ -218,19 +219,19 @@ template <typename T> struct vec4
   }
 
   /// Divide this v4 by another
-  vec4<T> operator/(vec4<T> const& other) const
+  vec4<T> operator/(vec4<T> const &other) const
   {
     return vec4<T>{this->data[0] / other[0], this->data[1] / other[1], this->data[2] / other[2], this->data[3] / other[3]};
   }
 
   /// Divide this v4 by a scalar number
-  vec4<T> operator/(T const& scalar) const
+  vec4<T> operator/(T const &scalar) const
   {
     return vec4<T>{(T)(this->data[0] / scalar), (T)(this->data[1] / scalar), (T)(this->data[2] / scalar), (T)(this->data[3] / scalar)};
   }
 
   /// Compound add this v4 to another
-  vec4<T> operator+=(vec4<T> const& other)
+  vec4<T> operator+=(vec4<T> const &other)
   {
     this->data[0] += other[0];
     this->data[1] += other[1];
@@ -240,7 +241,7 @@ template <typename T> struct vec4
   }
 
   /// Compound subtract this v4 from another
-  vec4<T> operator-=(vec4<T> const& other)
+  vec4<T> operator-=(vec4<T> const &other)
   {
     this->data[0] -= other[0];
     this->data[1] -= other[1];
@@ -250,7 +251,7 @@ template <typename T> struct vec4
   }
 
   /// Compound multiply this v4 with another
-  vec4<T> operator*=(vec4<T> const& other)
+  vec4<T> operator*=(vec4<T> const &other)
   {
     this->data[0] *= other[0];
     this->data[1] *= other[1];
@@ -260,7 +261,7 @@ template <typename T> struct vec4
   }
 
   /// Compound divide this v4 by another
-  vec4<T> operator/=(vec4<T> const& other)
+  vec4<T> operator/=(vec4<T> const &other)
   {
     this->data[0] /= other[0];
     this->data[1] /= other[1];
@@ -372,7 +373,7 @@ template <typename T> struct vec4
   }
 
   /// Get the dot product of this v4 and another
-  [[nodiscard]] T dot(vec4<T> const& b) const
+  [[nodiscard]] T dot(vec4<T> const &b) const
   {
     return this->data[3] * b.w + this->data[0] * b.x + this->data[1] * b.y + this->data[2] * b.z;
   }
@@ -420,7 +421,7 @@ template <typename T> struct vec4
   }
 
   /// Print this v4 with printf
-  void print(std::string const& name) const
+  void print(std::string const &name) const
   {
     printf("%s: %s\n", name.data(), this->toString().data());
   }

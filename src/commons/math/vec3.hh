@@ -164,7 +164,7 @@ template <typename T> struct vec3
 
   constexpr vec3<T>() = default;
 
-  template <typename U> constexpr explicit vec3<T>(vec3<U> const& other)
+  template <typename U> constexpr explicit vec3<T>(vec3<U> const &other)
   {
     this->data[0] = other.data[0];
     this->data[1] = other.data[1];
@@ -172,21 +172,21 @@ template <typename T> struct vec3
   }
 
   /// Construct a v3 out of 3 values
-  constexpr vec3<T>(T const& x, T const& y, T const& z)
+  constexpr vec3<T>(T const &x, T const &y, T const &z)
   {
     this->data[0] = x;
     this->data[1] = y;
     this->data[2] = z;
   }
 
-  constexpr explicit vec3<T>(T const& scalar)
+  constexpr explicit vec3<T>(T const &scalar)
   {
     this->data[0] = scalar;
     this->data[1] = scalar;
     this->data[2] = scalar;
   }
 
-  constexpr vec3<T>(vec2<T> const& first, T const& second)
+  constexpr vec3<T>(vec2<T> const &first, T const &second)
   {
     this->data[0] = first.x();
     this->data[1] = first.y();
@@ -194,7 +194,7 @@ template <typename T> struct vec3
   }
 
   /// Truncate a v4 to a v3
-  constexpr explicit vec3<T>(vec4<T> const& trunc)
+  constexpr explicit vec3<T>(vec4<T> const &trunc)
   {
     this->data[0] = trunc.x();
     this->data[1] = trunc.y();
@@ -213,37 +213,37 @@ template <typename T> struct vec3
   }
 
   /// Compare equality with another v3
-  bool operator==(vec3<T> const& other) const
+  bool operator==(vec3<T> const &other) const
   {
     return this->data[0] == other[0] && this->data[1] == other[1] && this->data[2] == other[2];
   }
 
   /// Compare inequality with another v3
-  bool operator!=(vec3<T> const& other) const
+  bool operator!=(vec3<T> const &other) const
   {
     return this->data[0] != other[0] || this->data[1] != other[1] || this->data[2] != other[2];
   }
 
   /// Add this v3 to another
-  vec3<T> operator+(vec3<T> const& other) const
+  vec3<T> operator+(vec3<T> const &other) const
   {
     return vec3<T>{this->data[0] + other[0], this->data[1] + other[1], this->data[2] + other[2]};
   }
 
   /// Add a scalar number to this v3
-  vec3<T> operator+(T const& scalar) const
+  vec3<T> operator+(T const &scalar) const
   {
     return vec3<T>{(T)(this->data[0] + scalar), (T)(this->data[1] + scalar), (T)(this->data[2] + scalar)};
   }
 
   /// Subtract this v3 from another
-  vec3<T> operator-(vec3<T> const& other) const
+  vec3<T> operator-(vec3<T> const &other) const
   {
     return vec3<T>{this->data[0] - other[0], this->data[1] - other[1], this->data[2] - other[2]};
   }
 
   /// Subtract a scalar number from this v3
-  vec3<T> operator-(T const& scalar) const
+  vec3<T> operator-(T const &scalar) const
   {
     return vec3<T>{(T)(this->data[0] - scalar), (T)(this->data[1] - scalar), (T)(this->data[2] - scalar)};
   }
@@ -255,7 +255,7 @@ template <typename T> struct vec3
   }
 
   /// Multiply this v3 with another
-  vec3<T> operator*(vec3<T> const& other) const
+  vec3<T> operator*(vec3<T> const &other) const
   {
     return vec3<T>{this->data[0] * other[0], this->data[1] * other[1], this->data[2] * other[2]};
   }
@@ -266,7 +266,7 @@ template <typename T> struct vec3
     return vec3<T>{(T)(this->data[0] * scalar), (T)(this->data[1] * scalar), (T)(this->data[2] * scalar)};
   }
 
-  vec3<T> operator*(quat<T> const& in)
+  vec3<T> operator*(quat<T> const &in)
   {
     vec3<T> q{in[0], in[1], in[2]};
     vec3<T> w1 = this->cross(q) * (T)(2);
@@ -274,19 +274,19 @@ template <typename T> struct vec3
   }
 
   /// Divide this v3 by another
-  vec3<T> operator/(vec3<T> const& other) const
+  vec3<T> operator/(vec3<T> const &other) const
   {
     return vec3<T>{this->data[0] / other[0], this->data[1] / other[1], this->data[2] / other[2]};
   }
 
   /// Divide this v3 by a scalar number
-  vec3<T> operator/(T const& scalar) const
+  vec3<T> operator/(T const &scalar) const
   {
     return vec3<T>{(T)(this->data[0] / scalar), (T)(this->data[1] / scalar), (T)(this->data[2] / scalar)};
   }
 
   /// Compound add this v3 to another
-  vec3<T> operator+=(vec3<T> const& other)
+  vec3<T> operator+=(vec3<T> const &other)
   {
     this->data[0] += other[0];
     this->data[1] += other[1];
@@ -295,7 +295,7 @@ template <typename T> struct vec3
   }
 
   /// Compound subtract this v3 from another
-  vec3<T> operator-=(vec3<T> const& other)
+  vec3<T> operator-=(vec3<T> const &other)
   {
     this->data[0] -= other[0];
     this->data[1] -= other[1];
@@ -304,7 +304,7 @@ template <typename T> struct vec3
   }
 
   /// Compound multiply this v3 with another
-  vec3<T> operator*=(vec3<T> const& other)
+  vec3<T> operator*=(vec3<T> const &other)
   {
     this->data[0] *= other[0];
     this->data[1] *= other[1];
@@ -313,7 +313,7 @@ template <typename T> struct vec3
   }
 
   /// Compound divide this v3 by another
-  vec3<T> operator/=(vec3<T> const& other)
+  vec3<T> operator/=(vec3<T> const &other)
   {
     this->data[0] /= other[0];
     this->data[1] /= other[1];
@@ -360,7 +360,7 @@ template <typename T> struct vec3
   }
 
   /// Set all values individually
-  void set(T const& x, T const& y, T const& z)
+  void set(T const &x, T const &y, T const &z)
   {
     this->data[0] = x;
     this->data[1] = y;
@@ -368,7 +368,7 @@ template <typename T> struct vec3
   }
 
   /// Set all values to one given value
-  void setAll(T const& value)
+  void setAll(T const &value)
   {
     this->set(value, value, value);
   }
@@ -415,13 +415,13 @@ template <typename T> struct vec3
   }
 
   /// Get the dot product of this v3 and another
-  [[nodiscard]] T dot(vec3<T> const& b) const
+  [[nodiscard]] T dot(vec3<T> const &b) const
   {
     return this->data[0] * b[0] + this->data[1] * b[1] + this->data[2] * b[2];
   }
 
   /// Get the cross product of this v3 and another
-  [[nodiscard]] vec3<T> cross(vec3<T> const& b) const
+  [[nodiscard]] vec3<T> cross(vec3<T> const &b) const
   {
     vec3<T> out;
     out[0] = this->data[1] * b[2] - this->data[2] * b[1];
@@ -485,7 +485,7 @@ template <typename T> struct vec3
   }
 
   /// Print this v3 with printf
-  void print(std::string const& name) const
+  void print(std::string const &name) const
   {
     printf("%s: %s\n", name.data(), this->toString().data());
   }

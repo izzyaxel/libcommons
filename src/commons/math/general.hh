@@ -31,7 +31,7 @@ template <typename T> [[nodiscard]] T radToDeg(T radian)
   return radian / (pi<T> / (T)180);
 }
 
-template <typename T> [[nodiscard]] T distance(vec2<T> const& a, vec2<T> const& b)
+template <typename T> [[nodiscard]] T distance(vec2<T> const &a, vec2<T> const &b)
 {
   return (T)std::sqrt(std::pow(b.x() - a.x(), 2) + std::pow(b.y() - a.y(), 2));
 }
@@ -55,7 +55,7 @@ template <typename T> struct PascalTriangle
 protected:
   void generateRow()
   {
-    auto& lastRow = rows.back();
+    auto &lastRow = rows.back();
     std::vector<T> newRow{(T)1};
     newRow.resize(rows.size());
     for(size_t i = 1; i < rows.size(); i++) newRow[i] = lastRow[i - 1] + lastRow[i];

@@ -57,7 +57,7 @@ template <typename T> struct vec2
 
   constexpr vec2<T>() = default;
 
-  template <typename U> constexpr explicit vec2<T>(vec2<U> const& other)
+  template <typename U> constexpr explicit vec2<T>(vec2<U> const &other)
   {
     this->data[0] = other.data[0];
     this->data[1] = other.data[1];
@@ -69,7 +69,7 @@ template <typename T> struct vec2
     this->data[1] = y;
   }
 
-  constexpr explicit vec2<T>(T const& scalar)
+  constexpr explicit vec2<T>(T const &scalar)
   {
     this->data[0] = scalar;
     this->data[1] = scalar;
@@ -85,32 +85,32 @@ template <typename T> struct vec2
     return this->data[index];
   }
 
-  bool operator==(vec2<T> const& other) const
+  bool operator==(vec2<T> const &other) const
   {
     return this->data[0] == other[0] && this->data[1] == other[1];
   }
 
-  bool operator!=(vec2<T> const& other) const
+  bool operator!=(vec2<T> const &other) const
   {
     return this->data[0] != other[0] || this->data[1] != other[1];
   }
 
-  vec2<T> operator+(vec2<T> const& other) const
+  vec2<T> operator+(vec2<T> const &other) const
   {
     return vec2<T>{this->data[0] + other[0], this->data[1] + other[1]};
   }
 
-  vec2<T> operator+(T const& scalar) const
+  vec2<T> operator+(T const &scalar) const
   {
     return vec2<T>{(T)(this->data[0] + scalar), (T)(this->data[1] + scalar)};
   }
 
-  vec2<T> operator-(vec2<T> const& other) const
+  vec2<T> operator-(vec2<T> const &other) const
   {
     return vec2<T>{this->data[0] - other[0], this->data[1] - other[1]};
   }
 
-  vec2<T> operator-(T const& scalar) const
+  vec2<T> operator-(T const &scalar) const
   {
     return vec2<T>{(T)(this->data[0] - scalar), (T)(this->data[1] - scalar)};
   }
@@ -120,7 +120,7 @@ template <typename T> struct vec2
     return vec2<T>{-this->data[0], -this->data[1]};
   }
 
-  vec2<T> operator*(vec2<T> const& other) const
+  vec2<T> operator*(vec2<T> const &other) const
   {
     return vec2<T>{this->data[0] * other[0], this->data[1] * other[1]};
   }
@@ -130,38 +130,38 @@ template <typename T> struct vec2
     return vec2<T>{(T)(this->data[0] * scalar), (T)(this->data[1] * scalar)};
   }
 
-  vec2<T> operator/(vec2<T> const& other) const
+  vec2<T> operator/(vec2<T> const &other) const
   {
     return vec2<T>{this->data[0] / other[0], this->data[1] / other[1]};
   }
 
-  vec2<T> operator/(T const& scalar) const
+  vec2<T> operator/(T const &scalar) const
   {
     return vec2<T>{(T)(this->data[0] / scalar), (T)(this->data[1] / scalar)};
   }
 
-  vec2<T>& operator+=(vec2<T> const& other)
+  vec2<T>& operator+=(vec2<T> const &other)
   {
     this->data[0] += other[0];
     this->data[1] += other[1];
     return *this;
   }
 
-  vec2<T>& operator-=(vec2<T> const& other)
+  vec2<T>& operator-=(vec2<T> const &other)
   {
     this->data[0] -= other[0];
     this->data[1] -= other[1];
     return *this;
   }
 
-  vec2<T>& operator*=(vec2<T> const& other)
+  vec2<T>& operator*=(vec2<T> const &other)
   {
     this->data[0] *= other[0];
     this->data[1] *= other[1];
     return *this;
   }
 
-  vec2<T>& operator/=(vec2<T> const& other)
+  vec2<T>& operator/=(vec2<T> const &other)
   {
     this->data[0] /= other[0];
     this->data[1] /= other[1];
@@ -243,7 +243,7 @@ template <typename T> struct vec2
     return std::sqrt(this->data[0] * this->data[0] + this->data[1] * this->data[1]);
   }
 
-  [[nodiscard]] T dot(vec2<T> const& b) const
+  [[nodiscard]] T dot(vec2<T> const &b) const
   {
     return this->data[0] * b.x + this->data[1] * b.y;
   }
@@ -281,7 +281,7 @@ template <typename T> struct vec2
     return out;
   }
 
-  void print(std::string const& name) const
+  void print(std::string const &name) const
   {
     printf("%s: %s\n", name.data(), this->toString().data());
   }

@@ -17,7 +17,7 @@ template <typename T> struct DataBuffer
 {
   DataBuffer() = delete;
 
-  COMMONS_API explicit DataBuffer(std::vector<T> const& buffer)
+  COMMONS_API explicit DataBuffer(std::vector<T> const &buffer)
   {
     size_t convSize = sizeof(T) * buffer.size();
     uint8_t const* tmp = reinterpret_cast<uint8_t const*>(buffer.data());
