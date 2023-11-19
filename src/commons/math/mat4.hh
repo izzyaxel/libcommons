@@ -89,7 +89,7 @@ template <typename T> struct mat4x4
   }
 
   /// Copy constructor
-  mat4x4<T>(mat4x4<T> const &other)
+  inline mat4x4<T>(mat4x4<T> const &other)
   {
     memcpy(&this->data[0][0], &other[0][0], sizeof(other.data));
   }
