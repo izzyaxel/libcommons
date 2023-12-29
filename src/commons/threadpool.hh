@@ -41,9 +41,15 @@ private:
 
   template <typename P> struct Task : public TaskBase
   {
+    explicit Task(P &&pkg) : pkg{std::forward<P&&>(pkg)}
+    {}
+    
+    void execute() override
+    {
+      pkg();
+    }
+    
     P pkg;
-    explicit Task(P &&pkg) : pkg{std::forward<P&&>(pkg)}{}
-    void execute() override { pkg(); }
   };
 
   std::queue<std::unique_ptr<TaskBase>> taskQueue;

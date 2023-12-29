@@ -36,11 +36,11 @@ uint64_t genSeed()
 Random::Random()
 {
   Seed seed = this->generateSeed();
-  this->p_mt32.seed(seed);
-  this->p_mt64.seed(seed);
+  this->mt32.seed(seed);
+  this->mt64.seed(seed);
 }
 
-Random::Seed Random::generateSeed()
+Random::Seed Random::generateSeed() const
 {
   return genSeed();
 }
@@ -49,11 +49,11 @@ uint32_t Random::nextUInt32(uint32_t min, uint32_t max)
 {
   if(min == 0 && max == 0)
   {
-    return this->p_mt32();
+    return this->mt32();
   }
   else
   {
-    return std::bind(std::uniform_int_distribution<uint32_t>(min, max), this->p_mt32)();
+    return std::bind(std::uniform_int_distribution<uint32_t>(min, max), this->mt32)();
   }
 }
 
@@ -61,11 +61,11 @@ int32_t Random::nextInt32(int32_t min, int32_t max)
 {
   if(min == 0 && max == 0)
   {
-    return std::bind(std::uniform_int_distribution<int32_t>(std::numeric_limits<int32_t>::min(), std::numeric_limits<int32_t>::max()), this->p_mt32)();
+    return std::bind(std::uniform_int_distribution<int32_t>(std::numeric_limits<int32_t>::min(), std::numeric_limits<int32_t>::max()), this->mt32)();
   }
   else
   {
-    return std::bind(std::uniform_int_distribution<uint32_t>(min, max), this->p_mt32)();
+    return std::bind(std::uniform_int_distribution<uint32_t>(min, max), this->mt32)();
   }
 }
 
@@ -73,11 +73,11 @@ uint64_t Random::nextUInt64(uint64_t min, uint64_t max)
 {
   if(min == 0 && max == 0)
   {
-    return this->p_mt64();
+    return this->mt64();
   }
   else
   {
-    return std::bind(std::uniform_int_distribution<uint64_t>(min, max), this->p_mt64)();
+    return std::bind(std::uniform_int_distribution<uint64_t>(min, max), this->mt64)();
   }
 }
 
@@ -85,22 +85,22 @@ uint64_t Random::nextInt64(int64_t min, int64_t max)
 {
   if(min == 0 && max == 0)
   {
-    return std::bind(std::uniform_int_distribution<int64_t>(std::numeric_limits<int64_t>::min(), std::numeric_limits<int64_t>::max()), this->p_mt64)();
+    return std::bind(std::uniform_int_distribution<int64_t>(std::numeric_limits<int64_t>::min(), std::numeric_limits<int64_t>::max()), this->mt64)();
   }
   else
   {
-    return std::bind(std::uniform_int_distribution<uint64_t>(min, max), this->p_mt64)();
+    return std::bind(std::uniform_int_distribution<uint64_t>(min, max), this->mt64)();
   }
 }
 
 float Random::nextFloat()
 {
-  return std::bind(std::uniform_real_distribution<float>(0, 1), this->p_mt32)();
+  return std::bind(std::uniform_real_distribution<float>(0, 1), this->mt32)();
 }
 
 double Random::nextDouble()
 {
-  return std::bind(std::uniform_real_distribution<double>(0, 1), this->p_mt64)();
+  return std::bind(std::uniform_real_distribution<double>(0, 1), this->mt64)();
 }
 
 uint32_t FastRandom::nextUint32()
@@ -114,14 +114,14 @@ float FastRandom::nextFloat()
   return (float)rng / (float)std::numeric_limits<uint32_t>::max();
 }
 
-uint32_t FastRandom::pcgHash()
+uint32_t FastRandom::pcgHash() const
 {
   uint32_t state = genSeed() * 747796405u + 2891336453u;
   uint32_t word = ((state >> ((state >> 28u) + 4u) * 277803737u));
   return (word >> 22u) ^ word;
 }
 
-uint32_t FastRandom::pcgHashIterative(uint32_t &seed)
+uint32_t FastRandom::pcgHashIterative(uint32_t &seed) const
 {
   uint32_t state = seed * 747796405u + 2891336453u;
   uint32_t word = ((state >> ((state >> 28u) + 4u) * 277803737u));

@@ -14,7 +14,7 @@ struct Random
 
   /// Get a cryptographically secure seed value
   /// \return The seed value
-  Seed generateSeed();
+  Seed generateSeed() const;
 
   /// Generate a non-deterministic random 32-bit unsigned integer value
   /// If min and max are left at 0, the full range is used
@@ -53,8 +53,8 @@ struct Random
   double nextDouble();
 
 private:
-  std::mt19937 p_mt32;
-  std::mt19937_64 p_mt64;
+  std::mt19937 mt32;
+  std::mt19937_64 mt64;
 };
 
 /// PCG hash based random number generator
@@ -66,7 +66,7 @@ struct FastRandom
   float nextFloat();
 
 private:
-  uint32_t pcgHash();
+  uint32_t pcgHash() const;
 
-  uint32_t pcgHashIterative(uint32_t &seed);
+  uint32_t pcgHashIterative(uint32_t &seed) const;
 };

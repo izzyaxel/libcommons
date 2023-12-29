@@ -13,6 +13,7 @@
 enum struct Severity
 {
   INFO,
+  WARNING,
   ERR,
   FATAL,
 };
@@ -38,7 +39,7 @@ enum struct LogVerbosity
   NONE,
   LOW,
   MED,
-  HIGH //low: fatal, med: fatal and err, high: fatal, err, and info
+  HIGH //low: fatal, med: fatal warning and err, high: fatal warning err and info
 };
 
 struct LoggerOptions
