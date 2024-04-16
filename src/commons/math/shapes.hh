@@ -170,7 +170,7 @@ struct aabb2D
   }
 
   /// AABB-aabb collision
-  [[nodiscard]] bool isIntersecting(aabb2D const& other)
+  [[nodiscard]] bool isIntersecting(aabb2D const& other) const
   {
     return (this->minX < other.maxX) != (this->maxX < other.minX) && (this->minY < other.maxY) != (this->maxY < other.
       minY);
@@ -202,7 +202,7 @@ struct aabb2D
   }
 
   /// Predict an intersection with another AABB
-  [[nodiscard]] bool predictIntersection(T xOffset, T yOffset, aabb2D const& other)
+  [[nodiscard]] bool predictIntersection(T xOffset, T yOffset, aabb2D const& other) const
   {
     return (this->minX + xOffset < other.maxX) != (this->maxX + xOffset < other.minX) && (this->minY + yOffset < other.
       maxY) != (this->maxY + yOffset < other.minY);
