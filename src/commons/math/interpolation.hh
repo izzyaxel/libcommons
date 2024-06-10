@@ -26,6 +26,16 @@ template <typename T> [[nodiscard]] T loglerp(T a, T b, T progress)
   return a * std::pow(b / a, progress);
 }
 
+/// Framerate independent linear interpolation
+/// \param a Start point, this will be updated with the interpolated value
+/// \param b End point
+/// \param decay Exponential decay value, hold constant for each 'a' (ex. range: 1 - 25)
+/// \param deltaTime Time since the last frame occurred
+template <typename T, typename U> void deltalerp(T& a, T b, U decay, T deltaTime)
+{
+  a = b + (a - b) * std::exp(-decay * deltaTime);
+}
+
 /// Standard linear interpolation
 /// \param a Start
 /// \param b End
