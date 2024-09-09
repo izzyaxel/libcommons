@@ -89,7 +89,7 @@ template <typename T> struct mat4x4
   }
 
   /// Copy constructor
-  inline mat4x4(mat4x4 const &other)
+  mat4x4(mat4x4 const &other)
   {
     memcpy(&this->data[0][0], &other[0][0], sizeof(other.data));
   }
@@ -360,7 +360,7 @@ template <typename T> struct mat4x4
   }
 };
 
-template <typename T> [[nodiscard]] mat4x4 translateMat(vec3<T> const &in)
+template <typename T> [[nodiscard]] mat4x4<T> translateMat(vec3<T> const &in)
 {
   mat4x4<T> out{};
   out[3][0] = in[0];
@@ -369,13 +369,13 @@ template <typename T> [[nodiscard]] mat4x4 translateMat(vec3<T> const &in)
   return out;
 }
 
-template <typename T> [[nodiscard]] mat4x4 rotateMat(quat<T> const &in)
+template <typename T> [[nodiscard]] mat4x4<T> rotateMat(quat<T> const &in)
 {
   return mat4x4{in};
 }
 
 /// Convert a vec3 scale into a mat4x4 representation
-template <typename T> [[nodiscard]] mat4x4 scaleMat(vec3<T> const &scale)
+template <typename T> [[nodiscard]] mat4x4<T> scaleMat(vec3<T> const &scale)
 {
   mat4x4<T> out{};
   out[0][0] = scale[0];
@@ -384,7 +384,7 @@ template <typename T> [[nodiscard]] mat4x4 scaleMat(vec3<T> const &scale)
   return out;
 }
 
-template <typename T> [[nodiscard]] mat4x4 scaleMat(T scalar)
+template <typename T> [[nodiscard]] mat4x4<T> scaleMat(T scalar)
 {
   mat4x4<T> out;
   out[0][0] = scalar;
@@ -393,7 +393,7 @@ template <typename T> [[nodiscard]] mat4x4 scaleMat(T scalar)
   return out;
 }
 
-template <typename T> [[nodiscard]] mat4x4 modelMatrix(vec3<T> const &position, quat<T> const &rotation,
+template <typename T> [[nodiscard]] mat4x4<T> modelMatrix(vec3<T> const &position, quat<T> const &rotation,
                                                           vec3<T> const &scale)
 {
   mat4x4 t = translateMat(position);
@@ -402,7 +402,7 @@ template <typename T> [[nodiscard]] mat4x4 modelMatrix(vec3<T> const &position, 
   return s * r * t;
 }
 
-template <typename T> [[nodiscard]] mat4x4 modelMatrixText(vec3<T> const &position, quat<T> const &rotation,
+template <typename T> [[nodiscard]] mat4x4<T> modelMatrixText(vec3<T> const &position, quat<T> const &rotation,
                                                               vec3<T> const &scale)
 {
   mat4x4 t = translateMat(position);
@@ -411,7 +411,7 @@ template <typename T> [[nodiscard]] mat4x4 modelMatrixText(vec3<T> const &positi
   return s * t * r;
 }
 
-template <typename T> [[nodiscard]] mat4x4 modelMatrix(vec3<T> const &position, vec3<T> const &origin,
+template <typename T> [[nodiscard]] mat4x4<T> modelMatrix(vec3<T> const &position, vec3<T> const &origin,
                                                           quat<T> const &rotation, vec3<T> const &scale)
 {
   mat4x4 tOffset = translateMat(origin);
@@ -421,7 +421,7 @@ template <typename T> [[nodiscard]] mat4x4 modelMatrix(vec3<T> const &position, 
   return s * tOffset * r * t;
 }
 
-template <typename T> [[nodiscard]] mat4x4 viewMatrix(quat<T> const &cameraRotation,
+template <typename T> [[nodiscard]] mat4x4<T> viewMatrix(quat<T> const &cameraRotation,
                                                          vec3<T> const &cameraPosition)
 {
   mat4x4 rot = mat4x4{cameraRotation.inverse()};
@@ -429,11 +429,11 @@ template <typename T> [[nodiscard]] mat4x4 viewMatrix(quat<T> const &cameraRotat
   return trans * rot;
 }
 
-template <typename T> [[nodiscard]] mat4x4 perspectiveProjectionMatrix(
+template <typename T> [[nodiscard]] mat4x4<T> perspectiveProjectionMatrix(
   T fov, T nearPlane, T farPlane, uint32_t width, uint32_t height)
 {
   T halfFOV = (T)1 / std::tan((T)0.5 * degToRad(fov));
-  mat4x4 out{};
+  mat4x4<T> out{};
   out[0][0] = halfFOV * ((T)height / (T)width);
   out[1][1] = halfFOV;
   out[2][2] = (farPlane + nearPlane) / (farPlane - nearPlane);
@@ -443,10 +443,10 @@ template <typename T> [[nodiscard]] mat4x4 perspectiveProjectionMatrix(
   return out;
 }
 
-template <typename T> [[nodiscard]] mat4x4 orthoProjectionMatrix(
+template <typename T> [[nodiscard]] mat4x4<T> orthoProjectionMatrix(
   T left, T right, T top, T bottom, T zNear, T zFar)
 {
-  mat4x4 out{};
+  mat4x4<T> out{};
   out[0][0] = (T)2 / (right - left);
   out[1][1] = (T)2 / (top - bottom);
   out[2][2] = -(T)2 / (zFar - zNear);
@@ -456,8 +456,8 @@ template <typename T> [[nodiscard]] mat4x4 orthoProjectionMatrix(
   return out;
 }
 
-template <typename T> [[nodiscard]] mat4x4 modelViewProjectionMatrix(
-  mat4x4 const &model, mat4x4 const &view, mat4x4 const &projection)
+template <typename T> [[nodiscard]] mat4x4<T> modelViewProjectionMatrix(
+  mat4x4<T> const &model, mat4x4<T> const &view, mat4x4<T> const &projection)
 {
   return model * view * projection;
 }
