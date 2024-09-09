@@ -49,13 +49,13 @@ template <typename T> struct vec2
   }
 
   // 2-way Swizzling (sort of) 3 permutations
-  [[nodiscard]] vec2 xx() const { return vec2<T>{this->data[0], this->data[0]}; }
+  [[nodiscard]] vec2 xx() const { return vec2{this->data[0], this->data[0]}; }
 
-  [[nodiscard]] vec2 yy() const { return vec2<T>{this->data[1], this->data[1]}; }
+  [[nodiscard]] vec2 yy() const { return vec2{this->data[1], this->data[1]}; }
 
-  [[nodiscard]] vec2 yx() const { return vec2<T>{this->data[1], this->data[0]}; }
+  [[nodiscard]] vec2 yx() const { return vec2{this->data[1], this->data[0]}; }
 
-  constexpr vec2<T>() = default;
+  constexpr vec2() = default;
 
   template <typename U> constexpr explicit vec2(vec2<U> const &other)
   {
@@ -177,7 +177,7 @@ template <typename T> struct vec2
 
   vec2 const operator++(int)
   {
-    vec2<T> out = *this;
+    vec2 out = *this;
     (void)this->data[0]++;
     (void)this->data[1]++;
     return out;
