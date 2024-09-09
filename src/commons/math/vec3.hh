@@ -38,109 +38,109 @@ template <typename T> struct vec3
 
   // 3-way Swizzling (sort of), 26 permutations (excluded xyz)
 
-  [[nodiscard]] vec3<T> xxx() const { return vec3<T>{this->data[0]}; }
+  [[nodiscard]] vec3 xxx() const { return vec3{this->data[0]}; }
 
-  [[nodiscard]] vec3<T> yyy() const { return vec3<T>{this->data[1]}; }
+  [[nodiscard]] vec3 yyy() const { return vec3{this->data[1]}; }
 
-  [[nodiscard]] vec3<T> zzz() const { return vec3<T>{this->data[2]}; }
+  [[nodiscard]] vec3 zzz() const { return vec3{this->data[2]}; }
 
-  [[nodiscard]] vec3<T> zyx() const { return vec3<T>{this->data[2], this->data[1], this->data[0]}; }
+  [[nodiscard]] vec3 zyx() const { return vec3{this->data[2], this->data[1], this->data[0]}; }
 
-  [[nodiscard]] vec3<T> xxy() const { return vec3<T>{this->data[0], this->data[0], this->data[1]}; }
+  [[nodiscard]] vec3 xxy() const { return vec3{this->data[0], this->data[0], this->data[1]}; }
 
-  [[nodiscard]] vec3<T> xxz() const { return vec3<T>{this->data[0], this->data[0], this->data[2]}; }
+  [[nodiscard]] vec3 xxz() const { return vec3{this->data[0], this->data[0], this->data[2]}; }
 
-  [[nodiscard]] vec3<T> yyx() const { return vec3<T>{this->data[1], this->data[1], this->data[0]}; }
+  [[nodiscard]] vec3 yyx() const { return vec3{this->data[1], this->data[1], this->data[0]}; }
 
-  [[nodiscard]] vec3<T> yyz() const { return vec3<T>{this->data[0], this->data[1], this->data[2]}; }
+  [[nodiscard]] vec3 yyz() const { return vec3{this->data[0], this->data[1], this->data[2]}; }
 
-  [[nodiscard]] vec3<T> zzx() const { return vec3<T>{this->data[2], this->data[2], this->data[0]}; }
+  [[nodiscard]] vec3 zzx() const { return vec3{this->data[2], this->data[2], this->data[0]}; }
 
-  [[nodiscard]] vec3<T> zzy() const { return vec3<T>{this->data[2], this->data[2], this->data[1]}; }
+  [[nodiscard]] vec3 zzy() const { return vec3{this->data[2], this->data[2], this->data[1]}; }
 
-  [[nodiscard]] vec3<T> xyy() const { return vec3<T>{this->data[0], this->data[1], this->data[1]}; }
+  [[nodiscard]] vec3 xyy() const { return vec3{this->data[0], this->data[1], this->data[1]}; }
 
-  [[nodiscard]] vec3<T> xzz() const { return vec3<T>{this->data[0], this->data[2], this->data[2]}; }
+  [[nodiscard]] vec3 xzz() const { return vec3{this->data[0], this->data[2], this->data[2]}; }
 
-  [[nodiscard]] vec3<T> yxx() const { return vec3<T>{this->data[1], this->data[0], this->data[0]}; }
+  [[nodiscard]] vec3 yxx() const { return vec3{this->data[1], this->data[0], this->data[0]}; }
 
-  [[nodiscard]] vec3<T> yzz() const { return vec3<T>{this->data[1], this->data[2], this->data[2]}; }
+  [[nodiscard]] vec3 yzz() const { return vec3{this->data[1], this->data[2], this->data[2]}; }
 
-  [[nodiscard]] vec3<T> zxx() const { return vec3<T>{this->data[2], this->data[0], this->data[0]}; }
+  [[nodiscard]] vec3 zxx() const { return vec3{this->data[2], this->data[0], this->data[0]}; }
 
-  [[nodiscard]] vec3<T> zyy() const { return vec3<T>{this->data[2], this->data[1], this->data[1]}; }
+  [[nodiscard]] vec3 zyy() const { return vec3{this->data[2], this->data[1], this->data[1]}; }
 
-  [[nodiscard]] vec3<T> xyx() const { return vec3<T>{this->data[0], this->data[1], this->data[0]}; }
+  [[nodiscard]] vec3 xyx() const { return vec3{this->data[0], this->data[1], this->data[0]}; }
 
-  [[nodiscard]] vec3<T> xzx() const { return vec3<T>{this->data[0], this->data[2], this->data[0]}; }
+  [[nodiscard]] vec3 xzx() const { return vec3{this->data[0], this->data[2], this->data[0]}; }
 
-  [[nodiscard]] vec3<T> yxy() const { return vec3<T>{this->data[1], this->data[0], this->data[1]}; }
+  [[nodiscard]] vec3 yxy() const { return vec3{this->data[1], this->data[0], this->data[1]}; }
 
-  [[nodiscard]] vec3<T> yzy() const { return vec3<T>{this->data[1], this->data[2], this->data[1]}; }
+  [[nodiscard]] vec3 yzy() const { return vec3{this->data[1], this->data[2], this->data[1]}; }
 
-  [[nodiscard]] vec3<T> zxz() const { return vec3<T>{this->data[2], this->data[0], this->data[2]}; }
+  [[nodiscard]] vec3 zxz() const { return vec3{this->data[2], this->data[0], this->data[2]}; }
 
-  [[nodiscard]] vec3<T> zyz() const { return vec3<T>{this->data[2], this->data[1], this->data[2]}; }
+  [[nodiscard]] vec3 zyz() const { return vec3{this->data[2], this->data[1], this->data[2]}; }
 
-  [[nodiscard]] vec3<T> xzy() const { return vec3<T>{this->data[0], this->data[2], this->data[1]}; }
+  [[nodiscard]] vec3 xzy() const { return vec3{this->data[0], this->data[2], this->data[1]}; }
 
-  [[nodiscard]] vec3<T> yzx() const { return vec3<T>{this->data[1], this->data[2], this->data[0]}; }
+  [[nodiscard]] vec3 yzx() const { return vec3{this->data[1], this->data[2], this->data[0]}; }
 
-  [[nodiscard]] vec3<T> zxy() const { return vec3<T>{this->data[2], this->data[0], this->data[1]}; }
+  [[nodiscard]] vec3 zxy() const { return vec3{this->data[2], this->data[0], this->data[1]}; }
 
-  [[nodiscard]] vec3<T> yxz() const { return vec3<T>{this->data[1], this->data[0], this->data[2]}; }
+  [[nodiscard]] vec3 yxz() const { return vec3{this->data[1], this->data[0], this->data[2]}; }
 
-  [[nodiscard]] vec3<T> rrr() const { return vec3<T>{this->data[0]}; }
+  [[nodiscard]] vec3 rrr() const { return vec3{this->data[0]}; }
 
-  [[nodiscard]] vec3<T> ggg() const { return vec3<T>{this->data[1]}; }
+  [[nodiscard]] vec3 ggg() const { return vec3{this->data[1]}; }
 
-  [[nodiscard]] vec3<T> bbb() const { return vec3<T>{this->data[2]}; }
+  [[nodiscard]] vec3 bbb() const { return vec3{this->data[2]}; }
 
-  [[nodiscard]] vec3<T> bgr() const { return vec3<T>{this->data[2], this->data[1], this->data[0]}; }
+  [[nodiscard]] vec3 bgr() const { return vec3{this->data[2], this->data[1], this->data[0]}; }
 
-  [[nodiscard]] vec3<T> rrg() const { return vec3<T>{this->data[0], this->data[0], this->data[1]}; }
+  [[nodiscard]] vec3 rrg() const { return vec3{this->data[0], this->data[0], this->data[1]}; }
 
-  [[nodiscard]] vec3<T> rrb() const { return vec3<T>{this->data[0], this->data[0], this->data[2]}; }
+  [[nodiscard]] vec3 rrb() const { return vec3{this->data[0], this->data[0], this->data[2]}; }
 
-  [[nodiscard]] vec3<T> ggr() const { return vec3<T>{this->data[1], this->data[1], this->data[0]}; }
+  [[nodiscard]] vec3 ggr() const { return vec3{this->data[1], this->data[1], this->data[0]}; }
 
-  [[nodiscard]] vec3<T> ggb() const { return vec3<T>{this->data[0], this->data[1], this->data[2]}; }
+  [[nodiscard]] vec3 ggb() const { return vec3{this->data[0], this->data[1], this->data[2]}; }
 
-  [[nodiscard]] vec3<T> bbr() const { return vec3<T>{this->data[2], this->data[2], this->data[0]}; }
+  [[nodiscard]] vec3 bbr() const { return vec3{this->data[2], this->data[2], this->data[0]}; }
 
-  [[nodiscard]] vec3<T> bbg() const { return vec3<T>{this->data[2], this->data[2], this->data[1]}; }
+  [[nodiscard]] vec3 bbg() const { return vec3{this->data[2], this->data[2], this->data[1]}; }
 
-  [[nodiscard]] vec3<T> rgg() const { return vec3<T>{this->data[0], this->data[1], this->data[1]}; }
+  [[nodiscard]] vec3 rgg() const { return vec3{this->data[0], this->data[1], this->data[1]}; }
 
-  [[nodiscard]] vec3<T> rbb() const { return vec3<T>{this->data[0], this->data[2], this->data[2]}; }
+  [[nodiscard]] vec3 rbb() const { return vec3{this->data[0], this->data[2], this->data[2]}; }
 
-  [[nodiscard]] vec3<T> grr() const { return vec3<T>{this->data[1], this->data[0], this->data[0]}; }
+  [[nodiscard]] vec3 grr() const { return vec3{this->data[1], this->data[0], this->data[0]}; }
 
-  [[nodiscard]] vec3<T> gbb() const { return vec3<T>{this->data[1], this->data[2], this->data[2]}; }
+  [[nodiscard]] vec3 gbb() const { return vec3{this->data[1], this->data[2], this->data[2]}; }
 
-  [[nodiscard]] vec3<T> brr() const { return vec3<T>{this->data[2], this->data[0], this->data[0]}; }
+  [[nodiscard]] vec3 brr() const { return vec3{this->data[2], this->data[0], this->data[0]}; }
 
-  [[nodiscard]] vec3<T> bgg() const { return vec3<T>{this->data[2], this->data[1], this->data[1]}; }
+  [[nodiscard]] vec3 bgg() const { return vec3{this->data[2], this->data[1], this->data[1]}; }
 
-  [[nodiscard]] vec3<T> rgr() const { return vec3<T>{this->data[0], this->data[1], this->data[0]}; }
+  [[nodiscard]] vec3 rgr() const { return vec3{this->data[0], this->data[1], this->data[0]}; }
 
-  [[nodiscard]] vec3<T> rbr() const { return vec3<T>{this->data[0], this->data[2], this->data[0]}; }
+  [[nodiscard]] vec3 rbr() const { return vec3{this->data[0], this->data[2], this->data[0]}; }
 
-  [[nodiscard]] vec3<T> grg() const { return vec3<T>{this->data[1], this->data[0], this->data[1]}; }
+  [[nodiscard]] vec3 grg() const { return vec3{this->data[1], this->data[0], this->data[1]}; }
 
-  [[nodiscard]] vec3<T> gbg() const { return vec3<T>{this->data[1], this->data[2], this->data[1]}; }
+  [[nodiscard]] vec3 gbg() const { return vec3{this->data[1], this->data[2], this->data[1]}; }
 
-  [[nodiscard]] vec3<T> brb() const { return vec3<T>{this->data[2], this->data[0], this->data[2]}; }
+  [[nodiscard]] vec3 brb() const { return vec3{this->data[2], this->data[0], this->data[2]}; }
 
-  [[nodiscard]] vec3<T> bgb() const { return vec3<T>{this->data[2], this->data[1], this->data[2]}; }
+  [[nodiscard]] vec3 bgb() const { return vec3{this->data[2], this->data[1], this->data[2]}; }
 
-  [[nodiscard]] vec3<T> rbg() const { return vec3<T>{this->data[0], this->data[2], this->data[1]}; }
+  [[nodiscard]] vec3 rbg() const { return vec3{this->data[0], this->data[2], this->data[1]}; }
 
-  [[nodiscard]] vec3<T> gbr() const { return vec3<T>{this->data[1], this->data[2], this->data[0]}; }
+  [[nodiscard]] vec3 gbr() const { return vec3{this->data[1], this->data[2], this->data[0]}; }
 
-  [[nodiscard]] vec3<T> brg() const { return vec3<T>{this->data[2], this->data[0], this->data[1]}; }
+  [[nodiscard]] vec3 brg() const { return vec3{this->data[2], this->data[0], this->data[1]}; }
 
-  [[nodiscard]] vec3<T> grb() const { return vec3<T>{this->data[1], this->data[0], this->data[2]}; }
+  [[nodiscard]] vec3 grb() const { return vec3{this->data[1], this->data[0], this->data[2]}; }
 
   // 2-way Swizzling (sort of), 9 permutations
 
@@ -162,9 +162,9 @@ template <typename T> struct vec3
 
   [[nodiscard]] vec2<T> zy() const { return vec2<T>{this->data[2], this->data[1]}; }
 
-  constexpr vec3<T>() = default;
+  constexpr vec3() = default;
 
-  template <typename U> constexpr explicit vec3<T>(vec3<U> const &other)
+  template <typename U> constexpr explicit vec3(vec3<U> const &other)
   {
     this->data[0] = other.data[0];
     this->data[1] = other.data[1];
@@ -172,21 +172,21 @@ template <typename T> struct vec3
   }
 
   /// Construct a v3 out of 3 values
-  constexpr vec3<T>(T const &x, T const &y, T const &z)
+  constexpr vec3(T const &x, T const &y, T const &z)
   {
     this->data[0] = x;
     this->data[1] = y;
     this->data[2] = z;
   }
 
-  constexpr explicit vec3<T>(T const &scalar)
+  constexpr explicit vec3(T const &scalar)
   {
     this->data[0] = scalar;
     this->data[1] = scalar;
     this->data[2] = scalar;
   }
 
-  constexpr vec3<T>(vec2<T> const &first, T const &second)
+  constexpr vec3(vec2<T> const &first, T const &second)
   {
     this->data[0] = first.x();
     this->data[1] = first.y();
@@ -194,7 +194,7 @@ template <typename T> struct vec3
   }
 
   /// Truncate a v4 to a v3
-  constexpr explicit vec3<T>(vec4<T> const &trunc)
+  constexpr explicit vec3(vec4<T> const &trunc)
   {
     this->data[0] = trunc.x();
     this->data[1] = trunc.y();
@@ -213,80 +213,80 @@ template <typename T> struct vec3
   }
 
   /// Compare equality with another v3
-  bool operator==(vec3<T> const &other) const
+  bool operator==(vec3 const &other) const
   {
     return this->data[0] == other[0] && this->data[1] == other[1] && this->data[2] == other[2];
   }
 
   /// Compare inequality with another v3
-  bool operator!=(vec3<T> const &other) const
+  bool operator!=(vec3 const &other) const
   {
     return this->data[0] != other[0] || this->data[1] != other[1] || this->data[2] != other[2];
   }
 
   /// Add this v3 to another
-  vec3<T> operator+(vec3<T> const &other) const
+  vec3 operator+(vec3 const &other) const
   {
-    return vec3<T>{this->data[0] + other[0], this->data[1] + other[1], this->data[2] + other[2]};
+    return vec3{this->data[0] + other[0], this->data[1] + other[1], this->data[2] + other[2]};
   }
 
   /// Add a scalar number to this v3
-  vec3<T> operator+(T const &scalar) const
+  vec3 operator+(T const &scalar) const
   {
-    return vec3<T>{(T)(this->data[0] + scalar), (T)(this->data[1] + scalar), (T)(this->data[2] + scalar)};
+    return vec3{(T)(this->data[0] + scalar), (T)(this->data[1] + scalar), (T)(this->data[2] + scalar)};
   }
 
   /// Subtract this v3 from another
-  vec3<T> operator-(vec3<T> const &other) const
+  vec3 operator-(vec3 const &other) const
   {
-    return vec3<T>{this->data[0] - other[0], this->data[1] - other[1], this->data[2] - other[2]};
+    return vec3{this->data[0] - other[0], this->data[1] - other[1], this->data[2] - other[2]};
   }
 
   /// Subtract a scalar number from this v3
-  vec3<T> operator-(T const &scalar) const
+  vec3 operator-(T const &scalar) const
   {
-    return vec3<T>{(T)(this->data[0] - scalar), (T)(this->data[1] - scalar), (T)(this->data[2] - scalar)};
+    return vec3{(T)(this->data[0] - scalar), (T)(this->data[1] - scalar), (T)(this->data[2] - scalar)};
   }
 
   /// Negate this v3
-  vec3<T> operator-() const
+  vec3 operator-() const
   {
-    return vec3<T>{-this->data[0], -this->data[1], -this->data[2]};
+    return vec3{-this->data[0], -this->data[1], -this->data[2]};
   }
 
   /// Multiply this v3 with another
-  vec3<T> operator*(vec3<T> const &other) const
+  vec3 operator*(vec3 const &other) const
   {
-    return vec3<T>{this->data[0] * other[0], this->data[1] * other[1], this->data[2] * other[2]};
+    return vec3{this->data[0] * other[0], this->data[1] * other[1], this->data[2] * other[2]};
   }
 
   /// Multiply this v3 by a scalar number
-  vec3<T> operator*(T scalar) const
+  vec3 operator*(T scalar) const
   {
-    return vec3<T>{(T)(this->data[0] * scalar), (T)(this->data[1] * scalar), (T)(this->data[2] * scalar)};
+    return vec3{(T)(this->data[0] * scalar), (T)(this->data[1] * scalar), (T)(this->data[2] * scalar)};
   }
 
-  vec3<T> operator*(quat<T> const &in)
+  vec3 operator*(quat<T> const &in)
   {
-    vec3<T> q{in[0], in[1], in[2]};
-    vec3<T> w1 = this->cross(q) * (T)(2);
+    vec3 q{in[0], in[1], in[2]};
+    vec3 w1 = this->cross(q) * (T)(2);
     return *this + w1 * in[3] + w1.cross(q);
   }
 
   /// Divide this v3 by another
-  vec3<T> operator/(vec3<T> const &other) const
+  vec3 operator/(vec3 const &other) const
   {
-    return vec3<T>{this->data[0] / other[0], this->data[1] / other[1], this->data[2] / other[2]};
+    return vec3{this->data[0] / other[0], this->data[1] / other[1], this->data[2] / other[2]};
   }
 
   /// Divide this v3 by a scalar number
-  vec3<T> operator/(T const &scalar) const
+  vec3 operator/(T const &scalar) const
   {
-    return vec3<T>{(T)(this->data[0] / scalar), (T)(this->data[1] / scalar), (T)(this->data[2] / scalar)};
+    return vec3{(T)(this->data[0] / scalar), (T)(this->data[1] / scalar), (T)(this->data[2] / scalar)};
   }
 
   /// Compound add this v3 to another
-  vec3<T> operator+=(vec3<T> const &other)
+  vec3 operator+=(vec3 const &other)
   {
     this->data[0] += other[0];
     this->data[1] += other[1];
@@ -295,7 +295,7 @@ template <typename T> struct vec3
   }
 
   /// Compound subtract this v3 from another
-  vec3<T> operator-=(vec3<T> const &other)
+  vec3 operator-=(vec3 const &other)
   {
     this->data[0] -= other[0];
     this->data[1] -= other[1];
@@ -304,7 +304,7 @@ template <typename T> struct vec3
   }
 
   /// Compound multiply this v3 with another
-  vec3<T> operator*=(vec3<T> const &other)
+  vec3 operator*=(vec3 const &other)
   {
     this->data[0] *= other[0];
     this->data[1] *= other[1];
@@ -313,7 +313,7 @@ template <typename T> struct vec3
   }
 
   /// Compound divide this v3 by another
-  vec3<T> operator/=(vec3<T> const &other)
+  vec3 operator/=(vec3 const &other)
   {
     this->data[0] /= other[0];
     this->data[1] /= other[1];
@@ -322,7 +322,7 @@ template <typename T> struct vec3
   }
 
   /// Increment all values in this v3 (prefix)
-  vec3<T>& operator++()
+  vec3& operator++()
   {
     (void)this->data[0]++;
     (void)this->data[1]++;
@@ -331,9 +331,9 @@ template <typename T> struct vec3
   }
 
   /// Increment all values in this v3 (postfix)
-  vec3<T> const operator++(int)
+  vec3 const operator++(int)
   {
-    vec3<T> out = *this;
+    vec3 out = *this;
     (void)this->data[0]++;
     (void)this->data[1]++;
     (void)this->data[2]++;
@@ -341,7 +341,7 @@ template <typename T> struct vec3
   }
 
   /// Decrement all values in this v3 (prefix)
-  vec3<T>& operator--()
+  vec3& operator--()
   {
     (void)this->data[0]--;
     (void)this->data[1]--;
@@ -350,9 +350,9 @@ template <typename T> struct vec3
   }
 
   /// Decrement all values in this v3 (postfix)
-  vec3<T> const operator--(int)
+  vec3 const operator--(int)
   {
-    vec3<T> out = *this;
+    vec3 out = *this;
     (void)this->data[0]--;
     (void)this->data[1]--;
     (void)this->data[2]--;
@@ -403,9 +403,9 @@ template <typename T> struct vec3
   }
 
   /// Get an inverted v3
-  [[nodiscard]] vec3<T> inverse() const
+  [[nodiscard]] vec3 inverse() const
   {
-    return vec3<T>{-this->data[0], -this->data[1], -this->data[2]};
+    return vec3{-this->data[0], -this->data[1], -this->data[2]};
   }
 
   /// Get the magnitude of this v3
@@ -415,15 +415,15 @@ template <typename T> struct vec3
   }
 
   /// Get the dot product of this v3 and another
-  [[nodiscard]] T dot(vec3<T> const &b) const
+  [[nodiscard]] T dot(vec3 const &b) const
   {
     return this->data[0] * b[0] + this->data[1] * b[1] + this->data[2] * b[2];
   }
 
   /// Get the cross product of this v3 and another
-  [[nodiscard]] vec3<T> cross(vec3<T> const &b) const
+  [[nodiscard]] vec3 cross(vec3 const &b) const
   {
-    vec3<T> out;
+    vec3 out;
     out[0] = this->data[1] * b[2] - this->data[2] * b[1];
     out[1] = this->data[2] * b[0] - this->data[0] * b[2];
     out[2] = this->data[0] * b[1] - this->data[1] * b[0];
@@ -440,9 +440,9 @@ template <typename T> struct vec3
   }
 
   /// Get a normalized v3
-  [[nodiscard]] vec3<T> normalized() const
+  [[nodiscard]] vec3 normalized() const
   {
-    vec3<T> out;
+    vec3 out;
     T length = this->mag();
     out[0] = this->data[0] / length;
     out[1] = this->data[1] / length;
@@ -451,9 +451,9 @@ template <typename T> struct vec3
   }
 
   /// Create a yaw/pitch/roll rotation from relative mouse movement values
-  [[nodiscard]] static vec3<T> rotateFromMouseEuler(T xrel, T yrel, T lookSensitivity)
+  [[nodiscard]] static vec3 rotateFromMouseEuler(T xrel, T yrel, T lookSensitivity)
   {
-    vec3<T> out{};
+    vec3 out{};
     out[0] = -yrel * lookSensitivity;
     out[1] = -xrel * lookSensitivity;
     out[2] = 0;
