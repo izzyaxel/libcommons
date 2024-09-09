@@ -362,7 +362,7 @@ template <typename T> struct mat4x4
 
 template <typename T> [[nodiscard]] mat4x4 translateMat(vec3<T> const &in)
 {
-  mat4x4 out{};
+  mat4x4<T> out{};
   out[3][0] = in[0];
   out[3][1] = in[1];
   out[3][2] = in[2];
@@ -377,7 +377,7 @@ template <typename T> [[nodiscard]] mat4x4 rotateMat(quat<T> const &in)
 /// Convert a vec3 scale into a mat4x4 representation
 template <typename T> [[nodiscard]] mat4x4 scaleMat(vec3<T> const &scale)
 {
-  mat4x4 out{};
+  mat4x4<T> out{};
   out[0][0] = scale[0];
   out[1][1] = scale[1];
   out[2][2] = scale[2];
@@ -386,7 +386,7 @@ template <typename T> [[nodiscard]] mat4x4 scaleMat(vec3<T> const &scale)
 
 template <typename T> [[nodiscard]] mat4x4 scaleMat(T scalar)
 {
-  mat4x4 out;
+  mat4x4<T> out;
   out[0][0] = scalar;
   out[1][1] = scalar;
   out[2][2] = scalar;
