@@ -1,5 +1,7 @@
 #pragma once
 
+#include "vec2.hh"
+
 #include <ctgmath>
 #include <cstdint>
 #include <cstring>
