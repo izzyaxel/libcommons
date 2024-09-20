@@ -22,12 +22,11 @@ std::string getCWD()
   return exeDir.substr(0, exeDir.find_last_of('/')) + "/";
 #elif defined(LINUX)
   char dir[2048];
-  getcwd(dir, 2048);
-  return std::string{dir} + "/";
+  return getcwd(dir, 2048) == nullptr ? "" : std::string{dir} + "/";
 #endif
 }
 
-std::string ptrToString(void* ptr)
+std::string ptrToString(const void* ptr)
 {
   std::stringstream ss{};
   ss << ptr;

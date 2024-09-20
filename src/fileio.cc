@@ -28,11 +28,11 @@ std::vector<uint8_t> readFile(std::string const &filePath)
     return {};
   }
   fseek(in, SEEK_END, SEEK_SET);
-  size_t len = (size_t)ftell(in);
+  const size_t len = (size_t)ftell(in);
   rewind(in);
   std::vector<uint8_t> data;
   data.resize(len);
-  fread(data.data(), 1, len, in);
+  (void)fread(data.data(), 1, len, in);
   fclose(in);
   return data;
 }
@@ -42,7 +42,7 @@ void createDirectory(std::string const &folderPath)
 #if defined(WINDOWS)
   CreateDirectory(folderPath.data(), nullptr);
 #elif defined(LINUX) || defined(OSX)
-	mkdir(folderPath.data(), 0755);
+  mkdir(folderPath.data(), 0755);
 #endif
 }
 

@@ -22,11 +22,10 @@ uint64_t genSeed()
     if(!urandFile)
     {
       out = std::chrono::high_resolution_clock::now().time_since_epoch().count();
-      fclose(urandFile);
     }
     else
     {
-      fread(&out, 8, 1, urandFile);
+      (void)fread(&out, 8, 1, urandFile);
       fclose(urandFile);
     }
 #endif
