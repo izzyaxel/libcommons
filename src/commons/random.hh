@@ -14,7 +14,7 @@ struct Random
 
   /// Get a cryptographically secure seed value
   /// \return The seed value
-  Seed generateSeed() const;
+  [[nodiscard]] Seed generateSeed() const;
 
   /// Generate a non-deterministic random 32-bit unsigned integer value
   /// If min and max are left at 0, the full range is used
@@ -61,12 +61,12 @@ private:
 /// Not the best distribution, limited type output, but fast
 struct FastRandom
 {
-  uint32_t nextUint32();
+  [[nodiscard]] uint32_t nextUint32() const;
 
-  float nextFloat();
+  [[nodiscard]] float nextFloat() const;
 
 private:
-  uint32_t pcgHash() const;
+  [[nodiscard]] uint32_t pcgHash() const;
 
-  uint32_t pcgHashIterative(uint32_t &seed) const;
+  [[nodiscard]] uint32_t pcgHashIterative(const uint32_t &seed) const;
 };

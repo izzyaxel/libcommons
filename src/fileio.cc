@@ -32,7 +32,7 @@ std::vector<uint8_t> readFile(std::string const &filePath)
   rewind(in);
   std::vector<uint8_t> data;
   data.resize(len);
-  (void)fread(data.data(), 1, len, in);
+  size_t r = fread(data.data(), 1, len, in);
   fclose(in);
   return data;
 }

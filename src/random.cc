@@ -25,7 +25,7 @@ uint64_t genSeed()
     }
     else
     {
-      (void)fread(&out, 8, 1, urandFile);
+      size_t r = fread(&out, 8, 1, urandFile);
       fclose(urandFile);
     }
 #endif
@@ -34,7 +34,7 @@ uint64_t genSeed()
 
 Random::Random()
 {
-  Seed seed = this->generateSeed();
+  const Seed seed = this->generateSeed();
   this->mt32.seed(seed);
   this->mt64.seed(seed);
 }
@@ -102,14 +102,14 @@ double Random::nextDouble()
   return std::bind(std::uniform_real_distribution<double>(0, 1), this->mt64)();
 }
 
-uint32_t FastRandom::nextUint32()
+uint32_t FastRandom::nextUint32() const
 {
   return this->pcgHash();
 }
 
-float FastRandom::nextFloat()
+float FastRandom::nextFloat() const
 {
-  uint64_t rng = this->pcgHash();
+  const uint64_t rng = this->pcgHash();
   return (float)rng / (float)std::numeric_limits<uint32_t>::max();
 }
 
@@ -120,7 +120,7 @@ uint32_t FastRandom::pcgHash() const
   return (word >> 22u) ^ word;
 }
 
-uint32_t FastRandom::pcgHashIterative(uint32_t &seed) const
+uint32_t FastRandom::pcgHashIterative(const uint32_t &seed) const
 {
   uint32_t state = seed * 747796405u + 2891336453u;
   uint32_t word = ((state >> ((state >> 28u) + 4u) * 277803737u));
