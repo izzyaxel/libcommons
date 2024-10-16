@@ -1,6 +1,16 @@
 #include "commons/dataBuffer.hh"
 
-template <typename T> size_t DataBuffer<T>::read(void* dst, const size_t amt)
+DataBuffer::DataBuffer(std::vector<uint8_t> buffer)
+{
+  this->buffer = std::move(buffer);
+}
+  
+DataBuffer::DataBuffer(const uint8_t* src, const size_t size)
+{
+  this->buffer = {src, src + size};
+}
+
+size_t DataBuffer::read(void* dst, const size_t amt)
 {
   this->sanity();
   if(this->pos == this->buffer.size()) return 0;
@@ -15,13 +25,13 @@ template <typename T> size_t DataBuffer<T>::read(void* dst, const size_t amt)
   this->pos += amt;
   return amt;
 }
-
-template <typename T> void DataBuffer<T>::rewind()
+  
+void DataBuffer::rewind()
 {
   this->pos = 0;
 }
-
-template <typename T> bool DataBuffer<T>::seek(const size_t amt, const SeekPos seekPos)
+  
+bool DataBuffer::seek(const size_t amt, const SeekPos seekPos)
 {
   switch(seekPos)
   {
@@ -45,7 +55,7 @@ template <typename T> bool DataBuffer<T>::seek(const size_t amt, const SeekPos s
     }
     case SeekPos::END:
     {
-      if(this->buffer.size() - amt >= 0)
+      if((long long int)this->buffer.size() - (long long int)amt >= 0)
       {
         this->pos = this->buffer.size() - amt;
         return true;
@@ -55,13 +65,16 @@ template <typename T> bool DataBuffer<T>::seek(const size_t amt, const SeekPos s
   }
   return false;
 }
-
-template <typename T> size_t DataBuffer<T>::tell() const
+  
+size_t DataBuffer::tell() const
 {
   return this->pos;
 }
 
-template <typename T> void DataBuffer<T>::sanity()
+void DataBuffer::sanity()
 {
-  if(this->pos > this->buffer.size()) this->pos = this->buffer.size();
+  if(this->pos > this->buffer.size())
+  {
+    this->pos = this->buffer.size();
+  }
 }
