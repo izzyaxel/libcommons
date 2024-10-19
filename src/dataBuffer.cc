@@ -71,7 +71,7 @@ size_t DataBuffer::tell() const
   return this->pos;
 }
 
-uint8_t* DataBuffer::data() const
+uint8_t* DataBuffer::data()
 {
   return this->buffer.data();
 }
