@@ -23,6 +23,7 @@ struct DataBuffer
   COMMONS_API void rewind();
   COMMONS_API bool seek(size_t amt, SeekPos seekPos);
   [[nodiscard]] COMMONS_API size_t tell() const;
+  [[nodiscard]] COMMONS_API bool eof() const;
   [[nodiscard]] COMMONS_API uint8_t* data();
 
   private:

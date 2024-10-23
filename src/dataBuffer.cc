@@ -76,6 +76,11 @@ uint8_t* DataBuffer::data()
   return this->buffer.data();
 }
 
+bool DataBuffer::eof() const
+{
+  return this->pos == this->buffer.size();
+}
+
 void DataBuffer::sanity()
 {
   if(this->pos > this->buffer.size())
