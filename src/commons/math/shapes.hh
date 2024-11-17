@@ -105,6 +105,26 @@ struct aabb2D
     this->minY = this->centerY - halfY;
     this->maxY = this->centerY + halfY;
   }
+  
+  [[nodiscard]] vec2<T> upperLeft()
+  {
+    return {this->minX, this->maxY};
+  }
+
+  [[nodiscard]] vec2<T> upperRight()
+  {
+    return {this->maxX, this->maxY};
+  }
+
+  [[nodiscard]] vec2<T> lowerLeft()
+  {
+    return {this->minX, this->minY};
+  }
+
+  [[nodiscard]] vec2<T> lowerRight()
+  {
+    return {this->maxX, this->minY};
+  }
 
   /// Reconstruct this AABB
   void construct(T minX, T maxX, T minY, T maxY)
