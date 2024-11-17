@@ -106,22 +106,22 @@ struct aabb2D
     this->maxY = this->centerY + halfY;
   }
   
-  [[nodiscard]] vec2<T> upperLeft()
+  [[nodiscard]] vec2<T> upperLeft() const
   {
     return {this->minX, this->maxY};
   }
 
-  [[nodiscard]] vec2<T> upperRight()
+  [[nodiscard]] vec2<T> upperRight() const
   {
     return {this->maxX, this->maxY};
   }
 
-  [[nodiscard]] vec2<T> lowerLeft()
+  [[nodiscard]] vec2<T> lowerLeft() const
   {
     return {this->minX, this->minY};
   }
 
-  [[nodiscard]] vec2<T> lowerRight()
+  [[nodiscard]] vec2<T> lowerRight() const
   {
     return {this->maxX, this->minY};
   }
