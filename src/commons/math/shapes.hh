@@ -126,6 +126,16 @@ struct aabb2D
     return {this->maxX, this->minY};
   }
 
+  [[nodiscard]] T width() const
+  {
+    return this->maxX - this->minX;
+  }
+
+  [[nodiscard]] T height() const
+  {
+    return this->maxY - this->minY;
+  }
+
   /// Reconstruct this AABB
   void construct(T minX, T maxX, T minY, T maxY)
   {
