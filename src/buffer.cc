@@ -26,7 +26,7 @@ Buffer::Buffer(const Buffer& other)
   
 }
 
-Buffer::Buffer(Buffer&& other)
+Buffer::Buffer(Buffer&& other) noexcept
 {
   
 }
@@ -36,7 +36,7 @@ Buffer& Buffer::operator=(const Buffer& other)
   return *this;
 }
 
-Buffer& Buffer::operator=(Buffer&& other)
+Buffer& Buffer::operator=(Buffer&& other) noexcept
 {
   return *this;
 }
