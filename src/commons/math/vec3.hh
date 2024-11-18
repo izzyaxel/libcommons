@@ -2,10 +2,14 @@
 
 #include "vec2.hh"
 
-template <typename T> struct vec4;
-template <typename T> struct quat;
+template <typename T>
+struct vec4;
 
-template <typename T> struct vec3
+template <typename T>
+struct quat;
+
+template <typename T>
+struct vec3
 {
   /// X Y Z
   T data[3];
@@ -18,11 +22,11 @@ template <typename T> struct vec3
 
   [[nodiscard]] T& z() { return this->data[2]; }
 
-  [[nodiscard]] T const& x() const { return this->data[0]; }
+  [[nodiscard]] const T& x() const { return this->data[0]; }
 
-  [[nodiscard]] T const& y() const { return this->data[1]; }
+  [[nodiscard]] const T& y() const { return this->data[1]; }
 
-  [[nodiscard]] T const& z() const { return this->data[2]; }
+  [[nodiscard]] const T& z() const { return this->data[2]; }
 
   [[nodiscard]] T& r() { return this->data[0]; }
 
@@ -30,11 +34,11 @@ template <typename T> struct vec3
 
   [[nodiscard]] T& b() { return this->data[2]; }
 
-  [[nodiscard]] T const& r() const { return this->data[0]; }
+  [[nodiscard]] const T& r() const { return this->data[0]; }
 
-  [[nodiscard]] T const& g() const { return this->data[1]; }
+  [[nodiscard]] const T& g() const { return this->data[1]; }
 
-  [[nodiscard]] T const& b() const { return this->data[2]; }
+  [[nodiscard]] const T& b() const { return this->data[2]; }
 
   // 3-way Swizzling (sort of), 26 permutations (excluded xyz)
 
@@ -164,7 +168,8 @@ template <typename T> struct vec3
 
   constexpr vec3() = default;
 
-  template <typename U> constexpr explicit vec3(vec3<U> const &other)
+  template <typename U>
+  constexpr explicit vec3(const vec3<U>& other)
   {
     this->data[0] = other.data[0];
     this->data[1] = other.data[1];
@@ -172,21 +177,21 @@ template <typename T> struct vec3
   }
 
   /// Construct a v3 out of 3 values
-  constexpr vec3(T const &x, T const &y, T const &z)
+  constexpr vec3(const T x, const T y, const T z)
   {
     this->data[0] = x;
     this->data[1] = y;
     this->data[2] = z;
   }
 
-  constexpr explicit vec3(T const &scalar)
+  constexpr explicit vec3(const T scalar)
   {
     this->data[0] = scalar;
     this->data[1] = scalar;
     this->data[2] = scalar;
   }
 
-  constexpr vec3(vec2<T> const &first, T const &second)
+  constexpr vec3(const vec2<T>& first, const T & second)
   {
     this->data[0] = first.x();
     this->data[1] = first.y();
@@ -194,7 +199,7 @@ template <typename T> struct vec3
   }
 
   /// Truncate a v4 to a v3
-  constexpr explicit vec3(vec4<T> const &trunc)
+  constexpr explicit vec3(const vec4<T>& trunc)
   {
     this->data[0] = trunc.x();
     this->data[1] = trunc.y();
@@ -202,30 +207,30 @@ template <typename T> struct vec3
   }
 
   /// Subscript operator
-  T& operator[](size_t index)
+  T& operator[](const size_t index)
   {
     return this->data[index];
   }
 
-  T const& operator[](size_t index) const
+  T const& operator[](const size_t index) const
   {
     return this->data[index];
   }
 
   /// Compare equality with another v3
-  bool operator==(vec3 const &other) const
+  bool operator==(const vec3& other) const
   {
     return this->data[0] == other[0] && this->data[1] == other[1] && this->data[2] == other[2];
   }
 
   /// Compare inequality with another v3
-  bool operator!=(vec3 const &other) const
+  bool operator!=(const vec3& other) const
   {
     return this->data[0] != other[0] || this->data[1] != other[1] || this->data[2] != other[2];
   }
 
   /// Add this v3 to another
-  vec3 operator+(vec3 const &other) const
+  vec3 operator+(const vec3& other) const
   {
     return vec3{this->data[0] + other[0], this->data[1] + other[1], this->data[2] + other[2]};
   }
@@ -237,13 +242,13 @@ template <typename T> struct vec3
   }
 
   /// Subtract this v3 from another
-  vec3 operator-(vec3 const &other) const
+  vec3 operator-(const vec3& other) const
   {
     return vec3{this->data[0] - other[0], this->data[1] - other[1], this->data[2] - other[2]};
   }
 
   /// Subtract a scalar number from this v3
-  vec3 operator-(T const &scalar) const
+  vec3 operator-(const T scalar) const
   {
     return vec3{(T)(this->data[0] - scalar), (T)(this->data[1] - scalar), (T)(this->data[2] - scalar)};
   }
@@ -255,18 +260,18 @@ template <typename T> struct vec3
   }
 
   /// Multiply this v3 with another
-  vec3 operator*(vec3 const &other) const
+  vec3 operator*(const vec3& other) const
   {
     return vec3{this->data[0] * other[0], this->data[1] * other[1], this->data[2] * other[2]};
   }
 
   /// Multiply this v3 by a scalar number
-  vec3 operator*(T scalar) const
+  vec3 operator*(const T scalar) const
   {
     return vec3{(T)(this->data[0] * scalar), (T)(this->data[1] * scalar), (T)(this->data[2] * scalar)};
   }
 
-  vec3 operator*(quat<T> const &in)
+  vec3 operator*(const quat<T>& in)
   {
     vec3 q{in[0], in[1], in[2]};
     vec3 w1 = this->cross(q) * (T)(2);
@@ -274,19 +279,19 @@ template <typename T> struct vec3
   }
 
   /// Divide this v3 by another
-  vec3 operator/(vec3 const &other) const
+  vec3 operator/(const vec3& other) const
   {
     return vec3{this->data[0] / other[0], this->data[1] / other[1], this->data[2] / other[2]};
   }
 
   /// Divide this v3 by a scalar number
-  vec3 operator/(T const &scalar) const
+  vec3 operator/(const T scalar) const
   {
     return vec3{(T)(this->data[0] / scalar), (T)(this->data[1] / scalar), (T)(this->data[2] / scalar)};
   }
 
   /// Compound add this v3 to another
-  vec3 operator+=(vec3 const &other)
+  vec3 operator+=(const vec3& other)
   {
     this->data[0] += other[0];
     this->data[1] += other[1];
@@ -295,7 +300,7 @@ template <typename T> struct vec3
   }
 
   /// Compound subtract this v3 from another
-  vec3 operator-=(vec3 const &other)
+  vec3 operator-=(const vec3& other)
   {
     this->data[0] -= other[0];
     this->data[1] -= other[1];
@@ -304,7 +309,7 @@ template <typename T> struct vec3
   }
 
   /// Compound multiply this v3 with another
-  vec3 operator*=(vec3 const &other)
+  vec3 operator*=(const vec3& other)
   {
     this->data[0] *= other[0];
     this->data[1] *= other[1];
@@ -313,7 +318,7 @@ template <typename T> struct vec3
   }
 
   /// Compound divide this v3 by another
-  vec3 operator/=(vec3 const &other)
+  vec3 operator/=(const vec3& other)
   {
     this->data[0] /= other[0];
     this->data[1] /= other[1];
@@ -331,7 +336,7 @@ template <typename T> struct vec3
   }
 
   /// Increment all values in this v3 (postfix)
-  vec3 const operator++(int)
+  vec3 operator++(int)
   {
     vec3 out = *this;
     (void)this->data[0]++;
@@ -350,7 +355,7 @@ template <typename T> struct vec3
   }
 
   /// Decrement all values in this v3 (postfix)
-  vec3 const operator--(int)
+  vec3 operator--(int)
   {
     vec3 out = *this;
     (void)this->data[0]--;
@@ -360,7 +365,7 @@ template <typename T> struct vec3
   }
 
   /// Set all values individually
-  void set(T const &x, T const &y, T const &z)
+  void set(const T x, const T y, const T z)
   {
     this->data[0] = x;
     this->data[1] = y;
@@ -368,7 +373,7 @@ template <typename T> struct vec3
   }
 
   /// Set all values to one given value
-  void setAll(T const &value)
+  void setAll(const T value)
   {
     this->set(value, value, value);
   }
@@ -415,13 +420,13 @@ template <typename T> struct vec3
   }
 
   /// Get the dot product of this v3 and another
-  [[nodiscard]] T dot(vec3 const &b) const
+  [[nodiscard]] T dot(const vec3& b) const
   {
     return this->data[0] * b[0] + this->data[1] * b[1] + this->data[2] * b[2];
   }
 
   /// Get the cross product of this v3 and another
-  [[nodiscard]] vec3 cross(vec3 const &b) const
+  [[nodiscard]] vec3 cross(const vec3& b) const
   {
     vec3 out;
     out[0] = this->data[1] * b[2] - this->data[2] * b[1];
@@ -451,7 +456,7 @@ template <typename T> struct vec3
   }
 
   /// Create a yaw/pitch/roll rotation from relative mouse movement values
-  [[nodiscard]] static vec3 rotateFromMouseEuler(T xrel, T yrel, T lookSensitivity)
+  [[nodiscard]] static vec3 rotateFromMouseEuler(const T xrel, const T yrel, const T lookSensitivity)
   {
     vec3 out{};
     out[0] = -yrel * lookSensitivity;
@@ -466,7 +471,7 @@ template <typename T> struct vec3
     return std::abs(this->data[0]) + std::abs(this->data[1]) + std::abs(this->data[2]) == 1;
   }
 
-  [[nodiscard]] size_t size() const
+  [[nodiscard]] static size_t size()
   {
     return 3;
   }
@@ -485,7 +490,7 @@ template <typename T> struct vec3
   }
 
   /// Print this v3 with printf
-  void print(std::string const &name) const
+  void print(const std::string& name) const
   {
     printf("%s: %s\n", name.data(), this->toString().data());
   }

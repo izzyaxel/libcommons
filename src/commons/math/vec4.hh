@@ -6,12 +6,20 @@
 #include <cstdint>
 #include <cstring>
 
-template <typename T> struct vec2;
-template <typename T> struct vec3;
-template <typename T> struct quat;
-template <typename T> struct mat4x4;
+template <typename T>
+struct vec2;
 
-template <typename T> struct vec4
+template <typename T>
+struct vec3;
+
+template <typename T>
+struct quat;
+
+template <typename T>
+struct mat4x4;
+
+template <typename T>
+struct vec4
 {
   /// X Y Z W
   T data[4];
@@ -94,7 +102,8 @@ template <typename T> struct vec4
 
   constexpr vec4() = default;
 
-  template <typename U> constexpr explicit vec4(vec4<U> const &other)
+  template <typename U>
+  constexpr explicit vec4(const vec4<U>& other)
   {
     this->data[0] = other.data[0];
     this->data[1] = other.data[1];
@@ -103,7 +112,7 @@ template <typename T> struct vec4
   }
 
   /// Construct a v4 out of 4 values
-  constexpr vec4(T x, T y, T z, T w)
+  constexpr vec4(const T x, const T y, const T z, const T w)
   {
     this->data[0] = x;
     this->data[1] = y;
@@ -111,7 +120,7 @@ template <typename T> struct vec4
     this->data[3] = w;
   }
 
-  constexpr explicit vec4(T const &scalar)
+  constexpr explicit vec4(const T scalar)
   {
     this->data[0] = scalar;
     this->data[1] = scalar;
@@ -119,7 +128,7 @@ template <typename T> struct vec4
     this->data[3] = scalar;
   }
 
-  constexpr vec4(vec2<T> const &first, vec2<T> const &second)
+  constexpr vec4(const vec2<T>& first, const vec2<T>& second)
   {
     this->data[0] = first.x();
     this->data[1] = first.y();
@@ -127,7 +136,7 @@ template <typename T> struct vec4
     this->data[3] = second.y();
   }
 
-  constexpr vec4(vec2<T> const &first, T const &second, T const &third)
+  constexpr vec4(const vec2<T>& first, const T second, const T third)
   {
     this->data[0] = first.x();
     this->data[1] = first.y();
@@ -135,7 +144,7 @@ template <typename T> struct vec4
     this->data[3] = third;
   }
 
-  constexpr vec4(vec3<T> const &first, T const &second)
+  constexpr vec4(const vec3<T>& first, const T second)
   {
     this->data[0] = first.x();
     this->data[1] = first.y();
@@ -144,30 +153,30 @@ template <typename T> struct vec4
   }
 
   /// Subscript operator
-  T& operator[](size_t index)
+  T& operator[](const size_t index)
   {
     return this->data[index];
   }
 
-  T const& operator[](size_t index) const
+  T const& operator[](const size_t index) const
   {
     return this->data[index];
   }
 
   /// Compare equality with another v4
-  bool operator==(vec4 const &other) const
+  bool operator==(const vec4& other) const
   {
     return this->data[0] == other[0] && this->data[1] == other[1] && this->data[2] == other[2] && this->data[3] == other[3];
   }
 
   /// Compare inequality with another v4
-  bool operator!=(vec4 const &other) const
+  bool operator!=(const vec4& other) const
   {
     return this->data[0] != other[0] || this->data[1] != other[1] || this->data[2] != other[2] || this->data[3] != other[3];
   }
 
   /// Add this v4 to another
-  vec4 operator+(vec4 const &other) const
+  vec4 operator+(const vec4& other) const
   {
     return vec4{
       this->data[0] + other[0], this->data[1] + other[1], this->data[2] + other[2], this->data[3] + other[3]
@@ -175,19 +184,19 @@ template <typename T> struct vec4
   }
 
   /// Add a scalar number to this v4
-  vec4 operator+(T const &scalar) const
+  vec4 operator+(const T scalar) const
   {
     return vec4{(T)(this->data[0] + scalar), (T)(this->data[1] + scalar), (T)(this->data[2] + scalar), (T)(this->data[3] + scalar)};
   }
 
   /// Subtract this v4 from another
-  vec4 operator-(vec4 const &other) const
+  vec4 operator-(const vec4& other) const
   {
     return vec4{this->data[0] - other[0], this->data[1] - other[1], this->data[2] - other[2], this->data[3] - other[3]};
   }
 
   /// Subtract a scalar number from this v4
-  vec4 operator-(T const &scalar) const
+  vec4 operator-(const T& scalar) const
   {
     return vec4{(T)(this->data[0] - scalar), (T)(this->data[1] - scalar), (T)(this->data[2] - scalar), (T)(this->data[3] - scalar)};
   }
@@ -199,18 +208,18 @@ template <typename T> struct vec4
   }
 
   /// Multiply this v4 with another
-  vec4 operator*(vec4 const &other) const
+  vec4 operator*(const vec4& other) const
   {
     return vec4{this->data[0] * other[0], this->data[1] * other[1], this->data[2] * other[2], this->data[3] * other[3]};
   }
 
   /// Multiply this v4 by a scalar number
-  vec4 operator*(T scalar) const
+  vec4 operator*(const T scalar) const
   {
     return vec4{(T)(this->data[0] * scalar), (T)(this->data[1] * scalar), (T)(this->data[2] * scalar), (T)(this->data[3] * scalar)};
   }
 
-  vec4 operator*(mat4x4<T> const &mat)
+  vec4 operator*(const mat4x4<T>& mat)
   {
     return vec4{
       this->data[0] * mat[0][0] + this->data[1] * mat[0][1] + this->data[2] * mat[0][2] + this->data[3] * mat[0][3],
@@ -221,19 +230,19 @@ template <typename T> struct vec4
   }
 
   /// Divide this v4 by another
-  vec4 operator/(vec4 const &other) const
+  vec4 operator/(const vec4& other) const
   {
     return vec4{this->data[0] / other[0], this->data[1] / other[1], this->data[2] / other[2], this->data[3] / other[3]};
   }
 
   /// Divide this v4 by a scalar number
-  vec4 operator/(T const &scalar) const
+  vec4 operator/(const T& scalar) const
   {
     return vec4{(T)(this->data[0] / scalar), (T)(this->data[1] / scalar), (T)(this->data[2] / scalar), (T)(this->data[3] / scalar)};
   }
 
   /// Compound add this v4 to another
-  vec4 operator+=(vec4 const &other)
+  vec4 operator+=(const vec4& other)
   {
     this->data[0] += other[0];
     this->data[1] += other[1];
@@ -243,7 +252,7 @@ template <typename T> struct vec4
   }
 
   /// Compound subtract this v4 from another
-  vec4 operator-=(vec4 const &other)
+  vec4 operator-=(const vec4& other)
   {
     this->data[0] -= other[0];
     this->data[1] -= other[1];
@@ -253,7 +262,7 @@ template <typename T> struct vec4
   }
 
   /// Compound multiply this v4 with another
-  vec4 operator*=(vec4 const &other)
+  vec4 operator*=(const vec4& other)
   {
     this->data[0] *= other[0];
     this->data[1] *= other[1];
@@ -263,7 +272,7 @@ template <typename T> struct vec4
   }
 
   /// Compound divide this v4 by another
-  vec4 operator/=(vec4 const &other)
+  vec4 operator/=(const vec4& other)
   {
     this->data[0] /= other[0];
     this->data[1] /= other[1];
@@ -283,7 +292,7 @@ template <typename T> struct vec4
   }
 
   /// Increment all values in this v4 (postfix)
-  vec4 const operator++(int)
+  vec4 operator++(int)
   {
     vec4 out = *this;
     (void)this->data[0]++;
@@ -304,7 +313,7 @@ template <typename T> struct vec4
   }
 
   /// Decrement all values in this v4 (postfix)
-  vec4 const operator--(int)
+  vec4 operator--(int)
   {
     vec4 out = *this;
     (void)this->data[0]--;
@@ -402,7 +411,12 @@ template <typename T> struct vec4
     return out;
   }
 
-  [[nodiscard]] size_t size() const
+  [[nodiscard]] static vec4 viewport(const T left, const T right, const T top, const T bottom)
+  {
+    return {left, right, top, bottom};
+  }
+
+  [[nodiscard]] static size_t size()
   {
     return 4;
   }
@@ -423,7 +437,7 @@ template <typename T> struct vec4
   }
 
   /// Print this v4 with printf
-  void print(std::string const &name) const
+  void print(const std::string& name) const
   {
     printf("%s: %s\n", name.data(), this->toString().data());
   }

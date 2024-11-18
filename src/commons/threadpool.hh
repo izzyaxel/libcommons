@@ -15,7 +15,8 @@ struct ThreadPool
 
   COMMONS_API ~ThreadPool();
 
-  template <typename F, typename... Args> auto enqueue(F func, Args... args) //Note: thread pool can't accept moved args yet because of buggy type deduction in C++
+  //TODO FIXME Note: thread pool can't accept moved args yet because of buggy type deduction in C++
+  template <typename F, typename... Args> auto enqueue(const F func, const Args... args)
   {
     auto invokeBinding = std::bind(std::forward<F>(func), std::forward<Args>(args)...);
     using invokePkg = std::packaged_task<std::invoke_result_t<decltype(invokeBinding)>()>;
@@ -36,12 +37,13 @@ private:
 
   struct TaskBase
   {
+    virtual ~TaskBase() = default;
     virtual void execute() = 0;
   };
 
-  template <typename P> struct Task : public TaskBase
+  template <typename P> struct Task final : TaskBase
   {
-    explicit Task(P &&pkg) : pkg{std::forward<P&&>(pkg)}
+    explicit Task(P&& pkg) : pkg{std::forward<P&&>(pkg)}
     {}
     
     void execute() override

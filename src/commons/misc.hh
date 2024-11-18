@@ -7,7 +7,7 @@
 
 [[nodiscard]] COMMONS_API std::string ptrToString(void* ptr);
 
-template <typename T> [[nodiscard]] T bound(T val, T lower, T upper)
+template <typename T> [[nodiscard]] T bound(const T val, const T lower, const T upper)
 {
   if(val < lower) return lower;
   if(val > upper) return upper;

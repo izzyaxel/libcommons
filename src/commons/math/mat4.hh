@@ -5,10 +5,14 @@
 
 #include <ctgmath>
 
-template <typename T> struct quat;
-template <typename T> struct vec4;
+template <typename T>
+struct quat;
 
-template <typename T> struct mat4x4
+template <typename T>
+struct vec4;
+
+template <typename T>
+struct mat4x4
 {
   /// X Y Z W on each row, init to identity, row dominant
   T data[4][4]{
@@ -21,7 +25,8 @@ template <typename T> struct mat4x4
   constexpr mat4x4() = default;
 
   /// Specialization conversion constructor
-  template <typename U> constexpr explicit mat4x4(mat4x4<U> const &other)
+  template <typename U>
+  constexpr explicit mat4x4(const mat4x4<U>& other)
   {
     this->data[0][0] = other.data[0][0];
     this->data[0][1] = other.data[0][1];
@@ -41,10 +46,10 @@ template <typename T> struct mat4x4
     this->data[3][3] = other.data[3][3];
   }
 
-  constexpr mat4x4(T x1In, T y1In, T z1In, T w1In,
-                      T x2In, T y2In, T z2In, T w2In,
-                      T x3In, T y3In, T z3In, T w3In,
-                      T x4In, T y4In, T z4In, T w4In)
+  constexpr mat4x4(const T x1In, const T y1In, const T z1In, const T w1In,
+                   const T x2In, const T y2In, const T z2In, const T w2In,
+                   const T x3In, const T y3In, const T z3In, const T w3In,
+                   const T x4In, const T y4In, const T z4In, const T w4In)
   {
     this->data[0][0] = x1In;
     this->data[1][0] = y1In;
@@ -65,7 +70,7 @@ template <typename T> struct mat4x4
   }
 
   /// Convert a quaternion to a 4x4 matrix
-  constexpr explicit mat4x4(quat<T> const &in)
+  constexpr explicit mat4x4(const quat<T>& in)
   {
     T sqx = in.data[0] * in.data[0];
     T sqy = in.data[1] * in.data[1];
@@ -89,20 +94,24 @@ template <typename T> struct mat4x4
   }
 
   /// Copy constructor
-  mat4x4(mat4x4 const &other)
+  mat4x4(const mat4x4& other)
   {
     memcpy(&this->data[0][0], &other[0][0], sizeof(other.data));
   }
 
   /// Copy assignment operator
-  mat4x4& operator=(mat4x4 const &other)
+  mat4x4& operator=(const mat4x4& other)
   {
+    if(this == &other)
+    {
+      return *this;
+    }
     memcpy(&this->data[0][0], &other[0][0], sizeof(other.data));
     return *this;
   }
 
   /// Subscript operators
-  T* operator[](size_t index)
+  T* operator[](const size_t index)
   {
     return this->data[index];
   }
@@ -113,7 +122,7 @@ template <typename T> struct mat4x4
   }
 
   /// Compare equality with another mat4x4
-  bool operator==(mat4x4 const &other) const
+  bool operator==(const mat4x4& other) const
   {
     return this->data[0][0] == other[0][0] && this->data[1][0] == other[1][0] && this->data[2][0] == other[2][0] && this->data[3][0] == other[3][0] &&
            this->data[0][1] == other[0][1] && this->data[1][1] == other[1][1] && this->data[2][1] == other[2][1] && this->data[3][1] == other[3][1] &&
@@ -122,7 +131,7 @@ template <typename T> struct mat4x4
   }
 
   /// Compare inequality with another mat4x4
-  bool operator!=(mat4x4 const &other) const
+  bool operator!=(const mat4x4& other) const
   {
     return this->data[0][0] != other[0][0] || this->data[1][0] != other[1][0] || this->data[2][0] != other[2][0] || this->data[3][0] != other[3][0] ||
            this->data[0][1] != other[0][1] || this->data[1][1] != other[1][1] || this->data[2][1] != other[2][1] || this->data[3][1] != other[3][1] ||
@@ -131,7 +140,7 @@ template <typename T> struct mat4x4
   }
 
   /// Multiply this 4x4 matrix by another
-  mat4x4 operator*(mat4x4 const &other) const
+  mat4x4 operator*(const mat4x4& other) const
   {
     mat4x4 out;
     out[0][0] = this->data[0][0] * other[0][0] + this->data[0][1] * other[1][0] + this->data[0][2] * other[2][0] + this->data[0][3] * other[3][0];
@@ -153,7 +162,7 @@ template <typename T> struct mat4x4
     return out;
   }
 
-  vec4<T> operator*(vec4<T> const &vec)
+  vec4<T> operator*(const vec4<T>& vec)
   {
     return vec4<T>{
       vec[0] * this->data[0][0] + vec[1] * this->data[1][0] + vec[2] * this->data[2][0] + vec[3] * this->data[3][0],
@@ -354,13 +363,14 @@ template <typename T> struct mat4x4
   }
 
   /// Print this mat4x4 with printf
-  void print(std::string const &name) const
+  void print(const std::string& name) const
   {
     printf("%s: %s\n", name.data(), this->toString().data());
   }
 };
 
-template <typename T> [[nodiscard]] mat4x4<T> translateMat(vec3<T> const &in)
+template <typename T>
+[[nodiscard]] mat4x4<T> translateMat(const vec3<T>& in)
 {
   mat4x4<T> out{};
   out[3][0] = in[0];
@@ -369,13 +379,15 @@ template <typename T> [[nodiscard]] mat4x4<T> translateMat(vec3<T> const &in)
   return out;
 }
 
-template <typename T> [[nodiscard]] mat4x4<T> rotateMat(quat<T> const &in)
+template <typename T>
+[[nodiscard]] mat4x4<T> rotateMat(const quat<T>& in)
 {
   return mat4x4{in};
 }
 
 /// Convert a vec3 scale into a mat4x4 representation
-template <typename T> [[nodiscard]] mat4x4<T> scaleMat(vec3<T> const &scale)
+template <typename T>
+[[nodiscard]] mat4x4<T> scaleMat(const vec3<T>& scale)
 {
   mat4x4<T> out{};
   out[0][0] = scale[0];
@@ -384,7 +396,8 @@ template <typename T> [[nodiscard]] mat4x4<T> scaleMat(vec3<T> const &scale)
   return out;
 }
 
-template <typename T> [[nodiscard]] mat4x4<T> scaleMat(T scalar)
+template <typename T>
+[[nodiscard]] mat4x4<T> scaleMat(const T scalar)
 {
   mat4x4<T> out;
   out[0][0] = scalar;
@@ -393,8 +406,8 @@ template <typename T> [[nodiscard]] mat4x4<T> scaleMat(T scalar)
   return out;
 }
 
-template <typename T> [[nodiscard]] mat4x4<T> modelMatrix(vec3<T> const &position, quat<T> const &rotation,
-                                                          vec3<T> const &scale)
+template <typename T>
+[[nodiscard]] mat4x4<T> modelMatrix(const vec3<T>& position, const quat<T>& rotation, const vec3<T>& scale)
 {
   mat4x4 t = translateMat(position);
   mat4x4 r = rotateMat(rotation);
@@ -402,8 +415,8 @@ template <typename T> [[nodiscard]] mat4x4<T> modelMatrix(vec3<T> const &positio
   return s * r * t;
 }
 
-template <typename T> [[nodiscard]] mat4x4<T> modelMatrixText(vec3<T> const &position, quat<T> const &rotation,
-                                                              vec3<T> const &scale)
+template <typename T>
+[[nodiscard]] mat4x4<T> modelMatrixText(const vec3<T>& position, const quat<T>& rotation, const vec3<T>& scale)
 {
   mat4x4 t = translateMat(position);
   mat4x4 r = rotateMat(rotation);
@@ -411,8 +424,8 @@ template <typename T> [[nodiscard]] mat4x4<T> modelMatrixText(vec3<T> const &pos
   return s * t * r;
 }
 
-template <typename T> [[nodiscard]] mat4x4<T> modelMatrix(vec3<T> const &position, vec3<T> const &origin,
-                                                          quat<T> const &rotation, vec3<T> const &scale)
+template <typename T>
+[[nodiscard]] mat4x4<T> modelMatrix(const vec3<T>& position, const vec3<T>& origin, const quat<T>& rotation, const vec3<T>& scale)
 {
   mat4x4 tOffset = translateMat(origin);
   mat4x4 r = rotateMat(rotation);
@@ -421,16 +434,16 @@ template <typename T> [[nodiscard]] mat4x4<T> modelMatrix(vec3<T> const &positio
   return s * tOffset * r * t;
 }
 
-template <typename T> [[nodiscard]] mat4x4<T> viewMatrix(quat<T> const &cameraRotation,
-                                                         vec3<T> const &cameraPosition)
+template <typename T>
+[[nodiscard]] mat4x4<T> viewMatrix(const quat<T>& cameraRotation, const vec3<T>& cameraPosition)
 {
   mat4x4 rot = mat4x4{cameraRotation.inverse()};
   mat4x4 trans = translateMat(cameraPosition.inverse());
   return trans * rot;
 }
 
-template <typename T> [[nodiscard]] mat4x4<T> perspectiveProjectionMatrix(
-  T fov, T nearPlane, T farPlane, uint32_t width, uint32_t height)
+template <typename T>
+[[nodiscard]] mat4x4<T> perspectiveProjectionMatrix(const T fov, const T nearPlane, const T farPlane, const uint32_t width, const uint32_t height)
 {
   T halfFOV = (T)1 / std::tan((T)0.5 * degToRad(fov));
   mat4x4<T> out{};
@@ -443,8 +456,8 @@ template <typename T> [[nodiscard]] mat4x4<T> perspectiveProjectionMatrix(
   return out;
 }
 
-template <typename T> [[nodiscard]] mat4x4<T> orthoProjectionMatrix(
-  T left, T right, T top, T bottom, T zNear, T zFar)
+template <typename T>
+[[nodiscard]] mat4x4<T> orthoProjectionMatrix(const T left, const T right, const T top, const T bottom, const T zNear, const T zFar)
 {
   mat4x4<T> out{};
   out[0][0] = (T)2 / (right - left);
@@ -456,8 +469,8 @@ template <typename T> [[nodiscard]] mat4x4<T> orthoProjectionMatrix(
   return out;
 }
 
-template <typename T> [[nodiscard]] mat4x4<T> modelViewProjectionMatrix(
-  mat4x4<T> const &model, mat4x4<T> const &view, mat4x4<T> const &projection)
+template <typename T>
+[[nodiscard]] mat4x4<T> modelViewProjectionMatrix(const mat4x4<T>& model, const mat4x4<T>& view, const mat4x4<T>& projection)
 {
   return model * view * projection;
 }

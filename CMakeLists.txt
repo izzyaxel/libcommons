@@ -39,10 +39,13 @@ endif()
 project(commons)
 set(CMAKE_CXX_STANDARD 23)
 set(SRC
+    src/commons/export.hh
+
+    src/commons/events.hh
     src/commons/serialization.hh
+    
     src/buffer.cc
     src/commons/buffer.hh
-    src/commons/events.hh
     src/misc.cc
     src/commons/misc.hh
     src/stringtools.cc
@@ -60,19 +63,21 @@ set(SRC
     src/random.cc
     src/commons/random.hh
 
-    src/commons/math/compound.hh
     src/commons/math/general.hh
+    src/commons/math/util.hh
     src/commons/math/glmconversion.hh
     src/commons/math/interpolation.hh
-    src/commons/math/mat3.hh
-    src/commons/math/mat4.hh
-    src/commons/math/quaternion.hh
-    src/commons/math/shapes.hh
-    src/commons/math/util.hh
+    src/commons/math/compound.hh
     src/commons/math/vec2.hh
     src/commons/math/vec3.hh
     src/commons/math/vec4.hh
-    src/commons/export.hh)
+    src/commons/math/circle.hh
+    src/commons/math/aabb2D.hh
+    src/commons/math/aabb3D.hh
+    src/commons/math/mat3.hh
+    src/commons/math/mat4.hh
+    src/commons/math/quaternion.hh
+    src/commons/math/linesegment2D.hh)
 
 add_definitions(-DSTATICBUILD)
 add_library(${PROJECT_NAME} STATIC ${SRC})

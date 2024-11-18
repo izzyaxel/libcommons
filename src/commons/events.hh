@@ -27,7 +27,7 @@ template <typename... Ts> struct EventBus
   /// Register an event handler
   /// \tparam Event The type of event to register
   /// \param event The event callback and data
-  template <typename Event> void registerEventHandler(Event const &event)
+  template <typename Event> void registerEventHandler(const Event& event)
   {
     std::get<std::vector<Event>>(this->registrars).push_back(event);
   }

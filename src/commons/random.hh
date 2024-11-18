@@ -62,11 +62,9 @@ private:
 struct FastRandom
 {
   [[nodiscard]] uint32_t nextUint32() const;
-
   [[nodiscard]] float nextFloat() const;
 
 private:
   [[nodiscard]] uint32_t pcgHash() const;
-
-  [[nodiscard]] uint32_t pcgHashIterative(const uint32_t &seed) const;
+  [[nodiscard]] uint32_t pcgHashIterative(const uint32_t& seed) const;
 };

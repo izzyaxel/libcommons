@@ -1,6 +1,6 @@
 #include "commons/threadpool.hh"
 
-ThreadPool::ThreadPool(size_t poolSize)
+ThreadPool::ThreadPool(const size_t poolSize)
 {
   for(size_t i = 0; i < poolSize; i++) this->threads.emplace_back(&ThreadPool::threadRun, this);
 }
@@ -23,7 +23,7 @@ void ThreadPool::threadRun()
     {
       std::unique_lock lock{this->queueMutex};
       if(this->taskQueue.empty()) continue;
-      auto task = std::move(this->taskQueue.front());
+      const auto task = std::move(this->taskQueue.front());
       this->taskQueue.pop();
       lock.unlock();
       task->execute();

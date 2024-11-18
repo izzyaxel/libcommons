@@ -6,49 +6,56 @@
 #include <ctgmath>
 
 /// PI constant
-template <typename T> T constexpr pi = (T)3.141592653589793238462643383279502884197169399375105820974944592307816406286208998628034825342117067982148086513282306647093844609550582231725359408128481117450284102701938521105559644622948954930381964428810975665933446128475648233786783165271201909145649L;
+template <typename T>
+T constexpr pi = (T)3.141592653589793238462643383279502884197169399375105820974944592307816406286208998628034825342117067982148086513282306647093844609550582231725359408128481117450284102701938521105559644622948954930381964428810975665933446128475648233786783165271201909145649L;
 
-template <typename T> [[nodiscard]] int32_t sign(T in)
+template <typename T>
+[[nodiscard]] int32_t sign(T in)
 {
   return (in > (T)0) - (in < (T)0);
 }
 
 /// Find a point along a sine wave between a min and max value
-template <typename T> [[nodiscard]] T boundedSine(T max, T min, T time)
+template <typename T>
+[[nodiscard]] T boundedSine(T max, T min, T time)
 {
   return ((max - min) * std::sin(time) + max + min) / (T)2;
 }
 
 /// Convert a degree angle into a radian angle
-template <typename T> [[nodiscard]] T degToRad(T degree)
+template <typename T>
+[[nodiscard]] T degToRad(T degree)
 {
   return degree * (pi<T> / (T)180);
 }
 
 /// Convert a radian angle into a degree angle
-template <typename T> [[nodiscard]] T radToDeg(T radian)
+template <typename T>
+[[nodiscard]] T radToDeg(T radian)
 {
   return radian / (pi<T> / (T)180);
 }
 
-template <typename T> [[nodiscard]] T distance(vec2<T> const &a, vec2<T> const &b)
+template <typename T>
+[[nodiscard]] T distance(const vec2<T>& a, const vec2<T>& b)
 {
   return (T)std::sqrt(std::pow(b.x() - a.x(), 2) + std::pow(b.y() - a.y(), 2));
 }
 
 /// A pascal triangle, typically used for finding weights, eg for blurring algorithms
-template <typename T> struct PascalTriangle
+template <typename T>
+struct PascalTriangle
 {
   std::vector<std::vector<T>> rows{{1}};
 
-  explicit PascalTriangle(size_t rows)
+  explicit PascalTriangle(const size_t rows)
   {
     for(size_t i = 1; i < rows + 1; i++) generateRow();
   }
 
   [[nodiscard]] std::vector<T> const& row(size_t row)
   {
-    for(size_t i = rows.size(); i < row + 1; i++) generateRow();
+    for(size_t i = rows.size(); i < row + 1; ++i) generateRow();
     return rows[row];
   }
 

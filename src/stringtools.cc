@@ -1,17 +1,17 @@
 #include "commons/stringtools.hh"
 
-bool contains(std::string const &input, std::string const &searchToken)
+bool contains(const std::string& input, const std::string& searchToken)
 {
   return input.find(searchToken) != std::string::npos;
 }
 
-bool startsWith(std::string const &input, std::string const &searchToken)
+bool startsWith(const std::string& input, const std::string& searchToken)
 {
   for(size_t i = 0; i < searchToken.length(); i++) if(input[i] != searchToken[i]) return false;
   return true;
 }
 
-bool endsWith(std::string const &input, std::string const &searchToken)
+bool endsWith(const std::string& input, const std::string& searchToken)
 {
   if(searchToken.length() > input.length()) return false;
   size_t j = searchToken.length() - 1;
@@ -23,12 +23,12 @@ bool endsWith(std::string const &input, std::string const &searchToken)
   return true;
 }
 
-std::string subString(std::string const &input, uint32_t const &distFromStart, uint32_t const &distFromEnd)
+std::string subString(const std::string& input, const uint32_t distFromStart, const uint32_t distFromEnd)
 {
   return std::string{input.begin() + distFromStart, input.end() - distFromEnd};
 }
 
-std::string trim(std::string const &input)
+std::string trim(const std::string& input)
 {
   std::string::const_iterator begin = input.begin(), end = input.end();
   while(*begin == ' ') (void)begin++;
@@ -36,7 +36,7 @@ std::string trim(std::string const &input)
   return std::string{begin, end};
 }
 
-std::string remove(std::string const &input, char const &remove)
+std::string remove(const std::string& input, const char remove)
 {
   std::string out = input;
   size_t loc = 0;
@@ -44,15 +44,21 @@ std::string remove(std::string const &input, char const &remove)
   return out;
 }
 
-std::string removeMult(std::string const &input, std::vector<char> const &remove)
+std::string removeMult(const std::string& input, const std::vector<char>& remove)
 {
   std::string out = input;
   size_t loc = 0;
-  for(auto const &token : remove) while((loc = out.find(token)) != std::string::npos) out.replace(loc, 1, "");
+  for(const auto& token : remove)
+  {
+    while((loc = out.find(token)) != std::string::npos)
+    {
+      out.replace(loc, 1, "");
+    }
+  }
   return out;
 }
 
-std::vector<std::string> split(std::string const &input, char const &splitOn, bool const removeMatches)
+std::vector<std::string> split(const std::string& input, const char splitOn, const bool removeMatches)
 {
   std::vector<std::string> out;
   if(input.begin() == input.end()) return out;
@@ -72,33 +78,52 @@ std::vector<std::string> split(std::string const &input, char const &splitOn, bo
   return out;
 }
 
-std::vector<std::string> splitMult(std::string const &input, std::vector<char> const &splitOn, bool const removeMatches)
+std::vector<std::string> splitMult(const std::string& input, const std::vector<char>& splitOn, const bool removeMatches)
 {
   std::vector<std::string> out{};
-  if(input.empty()) return out;
+  if(input.empty())
+  {
+    return out;
+  }
+  
   std::string::const_iterator iBegin = input.begin(), iEnd = iBegin;
+  if(iEnd == input.end())
+  {
+    return out;
+  }
+  
   bool matchFound = false;
   do
   {
     matchFound = false;
-    for(auto const &token : splitOn)
+    for(const auto& token : splitOn)
     {
       if(*iEnd == token)
       {
-        if(iBegin != iEnd) out.emplace_back(iBegin, removeMatches ? iEnd : iEnd + 1);
+        if(iBegin != iEnd)
+        {
+          out.emplace_back(iBegin, removeMatches ? iEnd : iEnd + 1);
+        }
         iBegin = ++iEnd;
-        if(iEnd >= input.end()) break;
+        if(iEnd >= input.end())
+        {
+          break;
+        }
         matchFound = true;
         break;
       }
     }
-    if(!matchFound) iEnd++;
+    if(!matchFound)
+    {
+      iEnd++;
+    }
   }
   while(iEnd < input.end());
+  
   matchFound = false;
   if(iBegin != iEnd)
   {
-    for(auto const &token : splitOn)
+    for(const auto& token : splitOn)
     {
       if(*iEnd == token)
       {
@@ -107,12 +132,15 @@ std::vector<std::string> splitMult(std::string const &input, std::vector<char> c
         break;
       }
     }
-    if(!matchFound) out.emplace_back(iBegin, iEnd);
+    if(!matchFound)
+    {
+      out.emplace_back(iBegin, iEnd);
+    }
   }
   return out;
 }
 
-std::vector<std::string> splitSeq(std::string const &input, std::string const &splitOn, bool const removeMatches)
+std::vector<std::string> splitSeq(const std::string& input, const std::string& splitOn, bool const removeMatches)
 {
   std::vector<std::string> out{};
   if(input.begin() == input.end()) return out;
@@ -136,14 +164,14 @@ std::vector<std::string> splitSeq(std::string const &input, std::string const &s
   return out;
 }
 
-std::vector<std::string> splitSeqMult(std::string const &input, std::vector<std::string> const &splitOn, bool const removeMatches)
+std::vector<std::string> splitSeqMult(const std::string& input, const std::vector<std::string>& splitOn, bool const removeMatches)
 {
   std::vector<std::string> out{};
   if(input.begin() == input.end()) return out;
   std::string::const_iterator iEnd = input.begin(), iBegin = iEnd;
   while(iEnd < input.end())
   {
-    for(auto const &token : splitOn) //for each word to split on
+    for(const auto& token : splitOn) //for each word to split on
     {
       if(iEnd + token.length() > input.end()) continue; //if what we have left is longer than the length of the word we're checking it can't be a match, go to the next word
       for(size_t i = 0; i < token.length(); i++)        //for each letter of the word
@@ -164,7 +192,7 @@ std::vector<std::string> splitSeqMult(std::string const &input, std::vector<std:
   return out;
 }
 
-std::string replaceAll(std::string const &input, char const &searchFor, char const &replaceWith)
+std::string replaceAll(const std::string& input, const char searchFor, const char replaceWith)
 {
   std::string out;
   for(auto &character : input)
@@ -175,12 +203,12 @@ std::string replaceAll(std::string const &input, char const &searchFor, char con
   return out;
 }
 
-std::string replaceSeq(std::string const &input, std::string const &search, std::string const &replace)
+std::string replaceSeq(const std::string& input, const std::string& search, const std::string& replace)
 {
   std::string out;
   for(size_t i = 0; i < input.length(); i++)
   {
-    char const &c = input[i];
+    const char& c = input[i];
     if(c != search[0])
     {
       out += c;

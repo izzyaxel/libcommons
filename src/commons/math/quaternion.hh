@@ -3,9 +3,11 @@
 #include "vec4.hh"
 #include "general.hh"
 
-template <typename T> struct mat4x4;
+template <typename T>
+struct mat4x4;
 
-template <typename T> struct quat
+template <typename T>
+struct quat
 {
   /// X Y Z W, init to identity
   T data[4]{0, 0, 0, 1};
@@ -53,7 +55,7 @@ template <typename T> struct quat
 
   constexpr quat() = default;
 
-  template <typename Q> constexpr explicit quat(quat<Q> const &other)
+  template <typename Q> constexpr explicit quat(const quat<Q>& other)
   {
     this->data[0] = other[0];
     this->data[1] = other[1];
@@ -62,7 +64,7 @@ template <typename T> struct quat
   }
 
   /// Construct a quaternion out of given values
-  constexpr quat(T xIn, T yIn, T zIn, T wIn)
+  constexpr quat(const T xIn, const T yIn, const T zIn, const T wIn)
   {
     this->data[0] = xIn;
     this->data[1] = yIn;
@@ -71,7 +73,7 @@ template <typename T> struct quat
   }
 
   /// Convert a 4x4 matrix to a quaternion (this discards all non-rotation/orientation data)
-  constexpr explicit quat(mat4x4<T> const &in)
+  constexpr explicit quat(const mat4x4<T>& in)
   {
     T trace = in[0][0] + in[1][1] + in[2][2];
     if(trace > 0)
@@ -109,43 +111,47 @@ template <typename T> struct quat
   }
 
   /// Copy constructor
-  quat(quat const &other)
+  quat(const quat& other)
   {
     memcpy(&this->data[0], &other.data[0], sizeof(other.data));
   }
 
   /// Copy assignment operator
-  quat& operator=(quat const &other)
+  quat& operator=(const quat& other)
   {
+    if(this == &other)
+    {
+      return *this;
+    }
     memcpy(&this->data[0], &other.data[0], sizeof(other.data));
     return *this;
   }
 
   /// Subscript operators
-  T& operator[](size_t index)
+  T& operator[](const size_t index)
   {
     return this->data[index];
   }
 
-  T const& operator[](size_t index) const
+  T const& operator[](const size_t index) const
   {
     return this->data[index];
   }
 
   /// Compare equality of two quaternions
-  bool operator==(quat const &other) const
+  bool operator==(const quat& other) const
   {
     return this->data[0] == other[0] && this->data[1] == other[1] && this->data[2] == other[2] && this->data[3] == other[3];
   }
 
   /// Compare inequality of two quaternions
-  bool operator!=(quat const &other) const
+  bool operator!=(const quat& other) const
   {
     return this->data[0] != other[0] || this->data[1] != other[1] || this->data[2] != other[2] || this->data[3] != other[3];
   }
 
   /// Multiply/compose this quaternion by/with another
-  quat operator*(quat const &other) const
+  quat operator*(const quat& other) const
   {
     return quat{
       (this->data[0] * other[3] + this->data[1] * other[2] - this->data[2] * other[1] + this->data[3] * other[0]),
@@ -156,7 +162,7 @@ template <typename T> struct quat
   }
 
   /// Multiply this quaternion by a 3-dimensional vector
-  vec3<T> operator*(vec3<T> const &other) const
+  vec3<T> operator*(const vec3<T>& other) const
   {
     vec3<T> q = {this->data[0], this->data[1], this->data[2]};
     vec3<T> c = other.cross(q);
@@ -165,7 +171,7 @@ template <typename T> struct quat
   }
 
   /// Multiply this quaternion and another
-  quat& operator*=(quat const &other)
+  quat& operator*=(const quat& other)
   {
     *this = other * *this;
     return *this;
@@ -209,7 +215,7 @@ template <typename T> struct quat
   }
 
   /// Get the dot product of this and another quaternion
-  [[nodiscard]] T dot(quat const &other) const
+  [[nodiscard]] T dot(const quat& other) const
   {
     return this->data[3] * other[3] + this->data[0] * other[0] + this->data[1] * other[1] + this->data[2] * other[2];
   }
@@ -241,7 +247,7 @@ template <typename T> struct quat
 
   /// Convert euler angles to a quaternion rotation
   /// \param euler {roll, pitch, yaw} in radians
-  [[nodiscard]] static quat fromEuler(vec3<T> const &euler)
+  [[nodiscard]] static quat fromEuler(const vec3<T>& euler)
   {
     quat out;
     double half = 0.5;
@@ -262,9 +268,9 @@ template <typename T> struct quat
 
   [[nodiscard]] vec4<T> toAxial() const
   {
-    float angle, divisor, x, y, z;
-    angle = (T)2 * std::acos(this->w());
-    divisor = std::sqrt(1 - (this->w() * this->w()));
+    float x, y, z;
+    float angle = (T)2 * std::acos(this->w());
+    float divisor = std::sqrt(1 - (this->w() * this->w()));
     if(divisor < 0.001f)
     {
       x = this->x();
@@ -280,7 +286,7 @@ template <typename T> struct quat
     return vec4<T>(x, y, z, angle);
   }
 
-  void fromAxial(vec4<T> const &in)
+  void fromAxial(const vec4<T>& in)
   {
     float a = in[3] / (T)2;
     float s = std::sin(a);
@@ -292,7 +298,7 @@ template <typename T> struct quat
   }
 
   /// Convert an axial rotation into a rotation quaternion
-  void fromAxial(T const &xIn, T const &yIn, T const &zIn, T const &angle)
+  void fromAxial(const T& xIn, const T& yIn, const T& zIn, const T& angle)
   {
     float a = angle / (T)2;
     float s = std::sin(a);
@@ -304,7 +310,7 @@ template <typename T> struct quat
   }
 
   /// Convert an axial rotation into a rotation quaternion
-  void fromAxial(vec3<T> const &xyzIn, T const &angle)
+  void fromAxial(const vec3<T>& xyzIn, const T& angle)
   {
     float a = angle / (T)2;
     float s = std::sin(a);
@@ -319,7 +325,7 @@ template <typename T> struct quat
   /// \param originPos Typically the position of the camera
   /// \param targetPos The point in the world to aim at
   /// \param upVec A normalized direction vector specifying what direction up is to be considered
-  [[nodiscard]] static quat lookAt(vec3<T> const &originPos, vec3<T> const &targetPos, vec3<T> const &upVec)
+  [[nodiscard]] static quat lookAt(const vec3<T>& originPos, const vec3<T>& targetPos, const vec3<T>& upVec)
   {
     vec3<T> front = targetPos - originPos;
     front.normalize();
@@ -341,15 +347,14 @@ template <typename T> struct quat
   }
 
   /// A cumulative version of lookAt
-  [[nodiscard]] static quat lookAt(vec3<T> originPos, vec3<T> targetPos, quat const &currentRotation,
-                                      T lerp = (T)1)
+  [[nodiscard]] static quat lookAt(const vec3<T> originPos, const vec3<T> targetPos, const quat& currentRotation, const T lerp = (T)1)
   {
     vec3<T> frontTo = vec3<T>{targetPos - originPos}.normalized() * currentRotation.conjugated();
     return vecDelta({0, 0, 1}, frontTo, lerp);
   }
 
   /// Create a rotation quaternion to multiply an orientation quaternion by, from relative mouse movement values
-  [[nodiscard]] static quat rotateFromMouse(T xrel, T yrel, T lookSensitivity)
+  [[nodiscard]] static quat rotateFromMouse(const T xrel, const T yrel, const T lookSensitivity)
   {
     float a = (-xrel * lookSensitivity) / 2.0f;
     quat xQuat = quat{0.0f, std::sin(a), 0.0f, std::cos(a)};
@@ -358,7 +363,7 @@ template <typename T> struct quat
     return quat{xQuat * yQuat}.normalized();
   }
 
-  [[nodiscard]] static quat vecDelta(vec3<T> from, vec3<T> to, T lerp = (T)1)
+  [[nodiscard]] static quat vecDelta(const vec3<T> from, const vec3<T> to, const T lerp = (T)1)
   {
     if(lerp < 0) lerp = 0;
     if(lerp > 1) lerp = 1;
@@ -373,7 +378,7 @@ template <typename T> struct quat
     return axialToQuat(rotAxis.x(), rotAxis.y(), rotAxis.z(), rot * lerp);
   }
 
-  [[nodiscard]] quat limitRotationRange(vec3<T> up, T angleLimit, T lerp = (T)1)
+  [[nodiscard]] quat limitRotationRange(const vec3<T> up, const T angleLimit, const T lerp = (T)1)
   {
     vec3<T> upQ = -up * this->conjugated();
     upQ.normalize();
@@ -389,7 +394,7 @@ template <typename T> struct quat
     return out;
   }
 
-  [[nodiscard]] quat correctOrientation(vec3<T> up, T lerp = (T)1)
+  [[nodiscard]] quat correctOrientation(const vec3<T> up, const T lerp = (T)1)
   {
     vec3<T> upQ = up * this->conjugated();
     upQ.normalize();
@@ -401,7 +406,7 @@ template <typename T> struct quat
     return vecDelta({0, 1, 0}, upFixed, lerp);
   }
 
-  [[nodiscard]] size_t size() const
+  [[nodiscard]] static size_t size()
   {
     return 4;
   }
@@ -436,7 +441,7 @@ template <typename T> struct quat
   }
 
   /// Print this quaternion with printf
-  void print(std::string const &name) const
+  void print(const std::string& name) const
   {
     printf("%s: %s\n", name.data(), this->toString().data());
   }

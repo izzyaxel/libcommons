@@ -3,10 +3,14 @@
 #include <ctgmath>
 #include <cstring>
 
-template <typename T> struct vec3;
-template <typename T> struct mat4x4;
+template <typename T>
+struct vec3;
 
-template <typename T> struct mat3x3
+template <typename T>
+struct mat4x4;
+
+template <typename T>
+struct mat3x3
 {
   /// X Y Z W on each row, init to identity, row dominant
   T data[3][3]{
@@ -17,7 +21,8 @@ template <typename T> struct mat3x3
 
   constexpr mat3x3() = default;
 
-  template <typename U> constexpr explicit mat3x3(mat3x3<U> const &in)
+  template <typename U>
+  constexpr explicit mat3x3(const mat3x3<U>& in)
   {
     this->data[0][0] = in[0][0];
     this->data[0][1] = in[0][1];
@@ -30,7 +35,7 @@ template <typename T> struct mat3x3
     this->data[2][2] = in[2][2];
   }
 
-  constexpr explicit mat3x3(mat4x4<T> const &in)
+  constexpr explicit mat3x3(const mat4x4<T>& in)
   {
     this->data[0][0] = in[0][0];
     this->data[0][1] = in[0][1];
@@ -44,31 +49,31 @@ template <typename T> struct mat3x3
   }
 
   /// Copy constructor
-  mat3x3(mat3x3 const &other)
+  mat3x3(const mat3x3& other)
   {
     memcpy(&this->data[0][0], &other[0][0], sizeof(other.data));
   }
 
   /// Copy assignment operator
-  mat3x3& operator=(mat4x4<T> const &other)
+  mat3x3& operator=(const mat4x4<T>& other)
   {
     memcpy(&this->data[0][0], &other[0][0], sizeof(other.data));
     return *this;
   }
 
   /// Subscript operators
-  T* operator[](size_t index)
+  T* operator[](const size_t index)
   {
     return this->data[index];
   }
 
-  T const* operator[](size_t index) const
+  T const* operator[](const size_t index) const
   {
     return this->data[index];
   }
 
   /// Compare equality with another 3x3 matrix
-  bool operator==(mat3x3 const &other) const
+  bool operator==(const mat3x3& other) const
   {
     return this->data[0][0] == other[0][0] && this->data[1][0] == other[1][0] && this->data[2][0] == other[2][0] &&
            this->data[0][1] == other[0][1] && this->data[1][1] == other[1][1] && this->data[2][1] == other[2][1] &&
@@ -76,7 +81,7 @@ template <typename T> struct mat3x3
   }
 
   /// Compare inequality with another 3x3 matrix
-  bool operator!=(mat3x3 const &other) const
+  bool operator!=(const mat3x3& other) const
   {
     return this->data[0][0] != other[0][0] || this->data[1][0] != other[1][0] || this->data[2][0] != other[2][0] ||
            this->data[0][1] != other[0][1] || this->data[1][1] != other[1][1] || this->data[2][1] != other[2][1] ||
@@ -84,7 +89,7 @@ template <typename T> struct mat3x3
   }
 
   /// Multiply this 3x3 matrix by another
-  mat3x3 operator*(mat3x3 const &other) const
+  mat3x3 operator*(const mat3x3& other) const
   {
     mat4x4<T> out;
     out[0][0] = this->data[0][0] * other[0][0] + this->data[0][1] * other[1][0] + this->data[0][2] * other[2][0];
@@ -112,7 +117,7 @@ template <typename T> struct mat3x3
   }
 
   /// Get a compound scaled 4x4 matrix from this matrix and a 3-dimensional vector
-  [[nodiscard]] mat3x3 compoundScale(vec3<T> const &scaleVec) const
+  [[nodiscard]] mat3x3 compoundScale(const vec3<T>& scaleVec) const
   {
     mat3x3 out;
     out[0][0] = this->data[0][0] * scaleVec[0];
@@ -127,7 +132,7 @@ template <typename T> struct mat3x3
     return out;
   }
 
-  [[nodiscard]] mat3x3 compoundScale(T const &scalar) const
+  [[nodiscard]] mat3x3 compoundScale(const T& scalar) const
   {
     mat3x3 out;
     out[0][0] = this->data[0][0] * scalar;
@@ -176,7 +181,7 @@ template <typename T> struct mat3x3
     return out;
   }
 
-  [[nodiscard]] size_t size() const
+  [[nodiscard]] static size_t size()
   {
     return 9;
   }
@@ -213,7 +218,7 @@ template <typename T> struct mat3x3
   }
 
   /// Print this mat4x4 with printf
-  void print(std::string const &name) const
+  void print(const std::string& name) const
   {
     printf("%s: %s\n", name.data(), this->toString().data());
   }

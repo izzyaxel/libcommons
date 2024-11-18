@@ -20,8 +20,8 @@ std::string Logger::endl()
 std::string Logger::timestamp() const
 {
   std::stringstream prefix;
-  auto t = std::time(nullptr);
-  auto tm = *std::localtime(&t);
+  const auto t = std::time(nullptr);
+  const auto tm = *std::localtime(&t);
   
   switch(this->stamping)
   {
@@ -52,7 +52,7 @@ Logger::~Logger()
   fclose(this->out);
 }
 
-Logger& Logger::operator<<(Sev val)
+Logger& Logger::operator<<(const Sev val)
 {
   switch(val)
   {
@@ -82,31 +82,31 @@ Logger& Logger::operator<<(Sev val)
   return *this;
 }
 
-Logger& Logger::operator<<(char const* val)
+Logger& Logger::operator<<(const char* val)
 {
   this->tempBuf << val;
   return *this;
 }
 
-Logger& Logger::operator<<(std::string const &val)
+Logger& Logger::operator<<(const std::string& val)
 {
   this->tempBuf << val;
   return *this;
 }
 
-Logger& Logger::operator<<(char val)
+Logger& Logger::operator<<(const char val)
 {
   this->tempBuf << val;
   return *this;
 }
 
-Logger& Logger::operator<<(double val)
+Logger& Logger::operator<<(const double val)
 {
   std::stringstream tmpSS;
   tmpSS << val;
   std::string tmpStr = tmpSS.str();
-  size_t periodLoc = tmpStr.find_last_of('.') + 1;
-  size_t numDec = tmpStr.size() - periodLoc;
+  const size_t periodLoc = tmpStr.find_last_of('.') + 1;
+  const size_t numDec = tmpStr.size() - periodLoc;
   
   if(this->decimalPlaces >= numDec)
   {
@@ -119,7 +119,7 @@ Logger& Logger::operator<<(double val)
   return *this;
 }
 
-Logger& Logger::operator<<(float val)
+Logger& Logger::operator<<(const float val)
 {
   std::stringstream tmpSS;
   tmpSS << val;
@@ -144,7 +144,7 @@ void Logger::push()
   this->tempBuf.str(std::string());
 }
 
-void Logger::setOptions(LoggerOptions const &options)
+void Logger::setOptions(const LoggerOptions& options)
 {
   if((this->target == LogTarget::FILE || this->target == LogTarget::BOTH) && options.target == LogTarget::STDOUT)
   {
@@ -168,7 +168,7 @@ void Logger::setOptions(LoggerOptions const &options)
   this->autoFlush = options.autoFlush;
 }
 
-void Logger::setFileTarget(std::string const &filePath, bool append)
+void Logger::setFileTarget(const std::string& filePath, const bool append)
 {
   if(this->out)
   {
@@ -184,12 +184,12 @@ void Logger::setFileTarget(std::string const &filePath, bool append)
   }
 }
 
-void Logger::setDecimalPlaces(uint8_t numDecimalPlaces)
+void Logger::setDecimalPlaces(const uint8_t numDecimalPlaces)
 {
   this->decimalPlaces = numDecimalPlaces;
 }
 
-void Logger::log(Sev severity, std::string const &message)
+void Logger::log(const Sev severity, const std::string& message)
 {
   if(this->verbosity == LogVerbosity::NONE)
   {
@@ -197,19 +197,26 @@ void Logger::log(Sev severity, std::string const &message)
   }
   
   std::stringstream prefix;
-  auto t = std::time(nullptr);
-  auto tm = *std::localtime(&t);
+  const auto t = std::time(nullptr);
+  const auto tm = *std::localtime(&t);
   
   switch(this->stamping)
   {
-    case LogStamping::NONE: break;
+    case LogStamping::NONE:
+    {
+      break;
+    }
     case LogStamping::TIMESTAMPS:
+    {
       prefix << std::put_time(&tm, "[%H:%M.%S]");
       break;
+    }
 
     case LogStamping::TIMESTAMPSANDDATES:
+    {
       prefix << std::put_time(&tm, "[%d-%m-%Y %H:%M.%S]");
       break;
+    }
   }
   
   switch(severity)
@@ -262,18 +269,18 @@ void Logger::flush()
   {
     case LogTarget::STDOUT:
     {
-      for(auto const &message : this->buf)
+      for(const auto& message : this->buf)
       {
         fprintf(stdout, "%s\n", message.data());
       }
+      
       fflush(stdout);
       break;
-      
     }
     
     case LogTarget::FILE:
     {
-      for(auto const &message : this->buf)
+      for(const auto& message : this->buf)
       {
         fprintf(this->out, "%s\n", message.data());
       }
@@ -283,7 +290,7 @@ void Logger::flush()
 
     case LogTarget::BOTH:
     {
-      for(auto const &message : this->buf)
+      for(const auto& message : this->buf)
       {
         fprintf(stdout, "%s\n", message.data());
         fprintf(this->out, "%s\n", message.data());
@@ -293,6 +300,5 @@ void Logger::flush()
       break;
     }
   }
-
   this->buf.clear();
 }

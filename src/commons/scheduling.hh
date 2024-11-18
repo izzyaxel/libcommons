@@ -9,7 +9,7 @@ struct Scheduler
 {
   using Task = std::function<void (double)>;
 
-  [[nodiscard]] COMMONS_API int32_t scheduleTask(long msDelay, Task task);
+  [[nodiscard]] COMMONS_API int32_t scheduleTask(long msDelay, const Task& taskCallback);
 
   COMMONS_API void cancelTask(int32_t id);
 
