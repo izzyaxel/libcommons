@@ -31,6 +31,10 @@ struct aabb2D
     this->maxY = this->centerY + halfY;
   }
   
+  [[nodiscard]] vec2<T> center() const
+  {
+  return {this->centerX, this->centerY};
+  
   [[nodiscard]] vec2<T> upperLeft() const
   {
     return {this->minX, this->maxY};
