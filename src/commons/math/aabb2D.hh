@@ -33,7 +33,8 @@ struct aabb2D
   
   [[nodiscard]] vec2<T> center() const
   {
-  return {this->centerX, this->centerY};
+    return {this->centerX, this->centerY};
+  }
   
   [[nodiscard]] vec2<T> upperLeft() const
   {
