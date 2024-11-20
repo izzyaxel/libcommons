@@ -1,6 +1,7 @@
 #pragma once
 
 #include "vec2.hh"
+#include "vec3.hh"
 
 #include <vector>
 #include <ctgmath>
