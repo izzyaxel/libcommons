@@ -34,21 +34,29 @@ struct circle
     const T dX = other.point2.x() - other.point1.x();
     const T dY = other.point2.y() - other.point1.y();
     const T dR = std::sqrt((dX * dX) + (dY * dY));
-    const T D = (other.point1.x() * other.point2.y()) - (other.point2.x() * other.point1.y());
-    const T incidence = (this->radius * this->radius) * (dR * dR) - (D * D);
-    if(incidence < 0)
+    const T determinant = (other.point1.x() * other.point2.y()) - (other.point2.x() * other.point1.y());
+    const T delta = (this->radius * this->radius) * (dR * dR) - (determinant * determinant);
+    if(delta < 0)
     {
       return false;
     }
-    if(incidence == 0)
+    return true;
+  }
+
+  [[nodiscard]] bool intersection(const linesegment2D<T>& other, vec2<T>& hitA, vec2<T>& hitB) const
+  {
+    const T dX = other.point2.x() - other.point1.x();
+    const T dY = other.point2.y() - other.point1.y();
+    const T dR = std::sqrt((dX * dX) + (dY * dY));
+    const T determinant = (other.point1.x() * other.point2.y()) - (other.point2.x() * other.point1.y());
+    const T incidence = (this->radius * this->radius) * (dR * dR) - (determinant * determinant);
+    hitA = {(determinant * dY + sign(dY) * dX * incidence) / (dR * dR), (-determinant * dX + std::abs(dY) * dY) / (dR * dR)};
+    hitB = {(determinant * dY - sign(dY) * dX * incidence) / (dR * dR), (-determinant * dX - std::abs(dY) * dY) / (dR * dR)};
+    const T delta = (this->radius * this->radius) * (dR * dR) - (determinant * determinant);
+    if(delta < 0)
     {
       return false;
     }
-    //TODO finish
-    /*outFirst.x() = ((D * dY) + sign<T>(dY) * dX * std::sqrt(((this->radius * this->radius) * (dR * dR)) - (D * D))) / (dR * dR);
-    outFirst.y() = ((-D * dX) + std::abs(dY) * std::sqrt(((this->radius * this->radius) * (dR * dR)) - (D * D))) / (dR * dR);
-    outSecond.x() = ((D * dY) - sign<T>(dY) * dX * std::sqrt(((this->radius * this->radius) * (dR * dR)) - (D * D))) / (dR * dR);
-    outSecond.y() = ((-D * dX) - std::abs(dY) * std::sqrt(((this->radius * this->radius) * (dR * dR)) - (D * D))) / (dR * dR);*/
     return true;
   }
 
