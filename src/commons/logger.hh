@@ -52,18 +52,18 @@ struct LoggerOptions
 
 struct Logger
 {
-  COMMONS_API ~Logger();
+  ~Logger();
 
-  COMMONS_API std::string endl();
-  [[nodiscard]] COMMONS_API std::string timestamp() const;
+  std::string endl();
+  [[nodiscard]] std::string timestamp() const;
 
   //Writes into the temporary buffer to construct a log message, must then be pushed to the main buffer
-  COMMONS_API Logger& operator <<(Sev val);
-  COMMONS_API Logger& operator <<(const char* val);
-  COMMONS_API Logger& operator <<(const std::string& val);
-  COMMONS_API Logger& operator <<(char val);
-  COMMONS_API Logger& operator <<(double val);
-  COMMONS_API Logger& operator <<(float val);
+  Logger& operator <<(Sev val);
+  Logger& operator <<(const char* val);
+  Logger& operator <<(const std::string& val);
+  Logger& operator <<(char val);
+  Logger& operator <<(double val);
+  Logger& operator <<(float val);
   
   template <typename T> Logger& operator <<(const T val)
   {
@@ -77,12 +77,12 @@ struct Logger
   }
 
   /// Push the temporary buffer to the main buffer
-  COMMONS_API void push();
-  COMMONS_API void setOptions(const LoggerOptions& options);
-  COMMONS_API void setFileTarget(const std::string& filePath, bool append = false);
-  COMMONS_API void setDecimalPlaces(uint8_t numDecimalPlaces);
-  COMMONS_API void log(Severity severity, const std::string& message);
-  COMMONS_API void flush();
+  void push();
+  void setOptions(const LoggerOptions& options);
+  void setFileTarget(const std::string& filePath, bool append = false);
+  void setDecimalPlaces(uint8_t numDecimalPlaces);
+  void log(Severity severity, const std::string& message);
+  void flush();
 
   private:
   LogTarget target = LogTarget::FILE;
