@@ -1,7 +1,7 @@
 #pragma once
 
 #include "vec2.hh"
-#include "linesegment2D.hh"
+#include "linesegment.hh"
 
 template<typename T>
 struct circle;

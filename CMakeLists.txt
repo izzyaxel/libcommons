@@ -39,7 +39,6 @@ endif()
 project(commons)
 set(CMAKE_CXX_STANDARD 23)
 set(SRC
-    src/commons/export.hh
 
     src/commons/events.hh
     src/commons/serialization.hh
@@ -75,12 +74,12 @@ set(SRC
     src/commons/math/mat3.hh
     src/commons/math/mat4.hh
     src/commons/math/quaternion.hh
-    src/commons/math/linesegment2D.hh
     src/commons/math/capsule.hh
     src/commons/math/obb.hh
     src/commons/math/quad.hh
     src/commons/math/triangle.hh
-    src/commons/math/aabb.hh)
+    src/commons/math/aabb.hh
+    src/commons/math/linesegment.hh
+    src/commons/math/sphere.hh)
 
-add_definitions(-DSTATICBUILD)
 add_library(${PROJECT_NAME} STATIC ${SRC})

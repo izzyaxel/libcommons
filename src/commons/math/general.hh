@@ -42,6 +42,12 @@ template <typename T>
   return (T)std::sqrt(std::pow(b.x() - a.x(), 2) + std::pow(b.y() - a.y(), 2));
 }
 
+template <typename T>
+[[nodiscard]] T distance3D(const vec3<T>& a, const vec3<T>& b)
+{
+  return (T)std::sqrt(std::pow(b.x() - a.x(), 2) + std::pow(b.y() - a.y(), 2) + std::pow(b.z() - a.z(), 2));
+}
+
 /// A pascal triangle, typically used for finding weights, eg for blurring algorithms
 template <typename T>
 struct PascalTriangle
@@ -59,7 +65,7 @@ struct PascalTriangle
     return rows[row];
   }
 
-protected:
+  protected:
   void generateRow()
   {
     auto &lastRow = rows.back();

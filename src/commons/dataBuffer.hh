@@ -3,7 +3,6 @@
 #include <vector>
 #include <cstdint>
 #include <cstring>
-#include "export.hh"
 
 enum struct SeekPos
 {
@@ -16,15 +15,15 @@ enum struct SeekPos
 struct DataBuffer
 {
   DataBuffer() = default;
-  COMMONS_API explicit DataBuffer(std::vector<uint8_t> buffer);
-  COMMONS_API DataBuffer(const uint8_t* src, size_t size);
+  explicit DataBuffer(std::vector<uint8_t> buffer);
+  DataBuffer(const uint8_t* src, size_t size);
   
-  COMMONS_API size_t read(void* dst, size_t amt);
-  COMMONS_API void rewind();
-  COMMONS_API bool seek(size_t amt, SeekPos seekPos);
-  [[nodiscard]] COMMONS_API size_t tell() const;
-  [[nodiscard]] COMMONS_API bool eof() const;
-  [[nodiscard]] COMMONS_API uint8_t* data();
+  size_t read(void* dst, size_t amt);
+  void rewind();
+  bool seek(size_t amt, SeekPos seekPos);
+  [[nodiscard]] size_t tell() const;
+  [[nodiscard]] bool eof() const;
+  [[nodiscard]] uint8_t* data();
 
   private:
   size_t pos = 0;

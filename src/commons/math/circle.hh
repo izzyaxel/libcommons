@@ -1,6 +1,6 @@
 #pragma once
 
-#include "linesegment2D.hh"
+#include "linesegment.hh"
 #include "aabb.hh"
 #include "general.hh"
 

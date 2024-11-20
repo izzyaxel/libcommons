@@ -4,11 +4,10 @@
 #include <cstring>
 #include <vector>
 #include <string>
-#include "export.hh"
 
 struct Serializer
 {
-  COMMONS_API void writeString(const std::string& in)
+  void writeString(const std::string& in)
   {
     this->write<size_t>(in.size());
     this->data.insert(this->data.end(), reinterpret_cast<uint8_t const*>(in.data()), reinterpret_cast<uint8_t const*>(in.data()) + in.size());
@@ -25,14 +24,14 @@ struct Serializer
     this->data.insert(this->data.end(), reinterpret_cast<uint8_t const*>(&in), reinterpret_cast<uint8_t const*>(&in) + sizeof(T));
   }
 
-  COMMONS_API void read(uint8_t* dest, const size_t size)
+  void read(uint8_t* dest, const size_t size)
   {
     memcpy(dest, this->data.data() + this->readOffset, size);
     this->readOffset += size;
     this->sz -= size;
   }
 
-  COMMONS_API void readString(std::string& out)
+  void readString(std::string& out)
   {
     size_t stringSize = 0;
     this->read<size_t>(stringSize);
@@ -52,12 +51,12 @@ struct Serializer
     this->read(reinterpret_cast<uint8_t*>(&out), sizeof(T));
   }
 
-  [[nodiscard]] COMMONS_API size_t size() const
+  [[nodiscard]] size_t size() const
   {
     return this->sz;
   }
 
-  COMMONS_API void end()
+  void end()
   {
     this->readOffset = 0;
     this->data.clear();
@@ -71,11 +70,11 @@ private:
 
 struct Serializable
 {
-  COMMONS_API virtual ~Serializable() = default;
+  virtual ~Serializable() = default;
 
-  COMMONS_API virtual void serialize(Serializer& serializer) = 0;
+  virtual void serialize(Serializer& serializer) = 0;
 
-  COMMONS_API virtual void deserialize(Serializer& serializer) = 0;
+  virtual void deserialize(Serializer& serializer) = 0;
 
 protected:
   Serializable() = default;

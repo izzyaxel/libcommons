@@ -1,11 +1,10 @@
 #pragma once
 
 #include <string>
-#include "export.hh"
 
-[[nodiscard]] COMMONS_API std::string getCWD();
+[[nodiscard]] std::string getCWD();
 
-[[nodiscard]] COMMONS_API std::string ptrToString(void* ptr);
+[[nodiscard]] std::string ptrToString(void* ptr);
 
 template <typename T> [[nodiscard]] T bound(const T val, const T lower, const T upper)
 {
