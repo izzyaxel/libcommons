@@ -3,8 +3,7 @@
 #include "circle.hh"
 #include "vec2.hh"
 #include "vec3.hh"
-#include "aabb2D.hh"
-#include "aabb3D.hh"
+#include "aabb.hh"
 
 /// A 2D axis-aligned capsule shape, defined by 2 circles and an aabb
 template <typename T>

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "linesegment2D.hh"
-#include "aabb2D.hh"
+#include "aabb.hh"
 #include "general.hh"
 
 /// A mathematical circle
