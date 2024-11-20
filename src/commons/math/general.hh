@@ -37,7 +37,7 @@ template <typename T>
 }
 
 template <typename T>
-[[nodiscard]] T distance(const vec2<T>& a, const vec2<T>& b)
+[[nodiscard]] T distance2D(const vec2<T>& a, const vec2<T>& b)
 {
   return (T)std::sqrt(std::pow(b.x() - a.x(), 2) + std::pow(b.y() - a.y(), 2));
 }

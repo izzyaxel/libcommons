@@ -43,7 +43,7 @@ set(SRC
 
     src/commons/events.hh
     src/commons/serialization.hh
-    
+
     src/buffer.cc
     src/commons/buffer.hh
     src/misc.cc
@@ -77,7 +77,11 @@ set(SRC
     src/commons/math/mat3.hh
     src/commons/math/mat4.hh
     src/commons/math/quaternion.hh
-    src/commons/math/linesegment2D.hh)
+    src/commons/math/linesegment2D.hh
+    src/commons/math/capsule.hh
+    src/commons/math/obb.hh
+    src/commons/math/quad.hh
+    src/commons/math/triangle.hh)
 
 add_definitions(-DSTATICBUILD)
 add_library(${PROJECT_NAME} STATIC ${SRC})

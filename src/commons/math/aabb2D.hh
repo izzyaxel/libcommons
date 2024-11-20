@@ -118,10 +118,10 @@ struct aabb2D
     const bool bottomInter = bottom.isIntersecting(other, bottomInterPt);
     const bool leftInter = left.isIntersecting(other, leftInterPt);
     const bool rightInter = right.isIntersecting(other, rightInterPt);
-    const float topDist = distance<T>(top.point2, topInterPt);
-    const float bottomDist = distance<T>(bottom.point2, bottomInterPt);
-    const float leftDist = distance<T>(left.point2, leftInterPt);
-    const float rightDist = distance<T>(right.point2, rightInterPt);
+    const float topDist = distance2D<T>(top.point2, topInterPt);
+    const float bottomDist = distance2D<T>(bottom.point2, bottomInterPt);
+    const float leftDist = distance2D<T>(left.point2, leftInterPt);
+    const float rightDist = distance2D<T>(right.point2, rightInterPt);
     if(topInter || bottomInter || leftInter || rightInter)
     {
       closestHit = std::min(std::min(topDist, bottomDist), std::min(leftDist, rightDist));

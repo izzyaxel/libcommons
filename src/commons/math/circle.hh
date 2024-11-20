@@ -2,6 +2,7 @@
 
 #include "linesegment2D.hh"
 #include "aabb2D.hh"
+#include "general.hh"
 
 /// A mathematical circle
 template<typename T>
@@ -22,30 +23,19 @@ struct circle
   }
 
   /// Circle-circle collision
-  [[nodiscard]] bool isIntersecting(const circle<T>& other)
+  [[nodiscard]] bool isIntersecting(const circle<T>& other) const
   {
-    aabb2D<T> broadThis = aabb2D<T>(this->center.x() - this->radius, this->center.x() + this->radius, this->center.y() - this->radius, this->center.y() + this->radius);
-    aabb2D<T> broadOther = aabb2D<T>(other.center.x() - other.radius, other.center.x() + other.radius, other.center.y() - other.radius, other.center.y() + other.radius);
-    if(!broadThis.isIntersecting(broadOther))
-    {
-      return false;
-    }
-    
-    T a = (this->center.x() - other.center.x()) * (this->center.x() - other.center.x());
-    T b = (this->center.y() - other.center.y()) * (this->center.y() - other.center.y());
-    T distance = std::sqrt(a + b);
-    return distance < this->radius + other.radius;
+    return this->radius + other.radius >= distance2D(this->center, other.center);
   }
 
   /// Circle-line
-  [[nodiscard]] bool isIntersecting(const linesegment2D<T>& other)
+  [[nodiscard]] bool isIntersecting(const linesegment2D<T>& other) const
   {
-    T dX, dY, dR, D, incidence;
-    dX = other.point2.x() - other.point1.x();
-    dY = other.point2.y() - other.point1.y();
-    dR = std::sqrt((dX * dX) + (dY * dY));
-    D = (other.point1.x() * other.point2.y()) - (other.point2.x() * other.point1.y());
-    incidence = (this->radius * this->radius) * (dR * dR) - (D * D);
+    const T dX = other.point2.x() - other.point1.x();
+    const T dY = other.point2.y() - other.point1.y();
+    const T dR = std::sqrt((dX * dX) + (dY * dY));
+    const T D = (other.point1.x() * other.point2.y()) - (other.point2.x() * other.point1.y());
+    const T incidence = (this->radius * this->radius) * (dR * dR) - (D * D);
     if(incidence < 0)
     {
       return false;
@@ -63,70 +53,69 @@ struct circle
   }
 
   /// Circle-aabb collision
-  [[nodiscard]] bool isIntersecting(const aabb2D<T>& other) //TODO optimization
+  [[nodiscard]] bool isIntersecting(const aabb2D<T>& other) const //TODO optimization
   {
     //broad phase
-    if(this->containsPoint({other.centerX, other.centerY}))
+    if(this->isIntersecting({other.centerX, other.centerY}))
     {
       return true;
     }
     
-    aabb2D<T> broadThis = aabb2D<T>(this->center.x() - this->radius, this->center.x() + this->radius, this->center.y() - this->radius, this->center.y() + this->radius);
+    const aabb2D<T> broadThis = aabb2D<T>(this->center.x() - this->radius, this->center.x() + this->radius, this->center.y() - this->radius, this->center.y() + this->radius);
     if(!broadThis.isIntersecting(other))
     {
       return false;
     }
 
-    vec2<T> ul = {other.minX, other.maxY};
-    if(this->containsPoint(ul))
+    const vec2<T> ul = {other.minX, other.maxY};
+    if(this->isIntersecting(ul))
     {
       return true;
     }
     
-    vec2<T> ur = {other.maxX, other.maxY};
-    if(this->containsPoint(ur))
+    const vec2<T> ur = {other.maxX, other.maxY};
+    if(this->isIntersecting(ur))
     {
       return true;
     }
     
-    vec2<T> ll = {other.minX, other.minY};
-    if(this->containsPoint(ll))
+    const vec2<T> ll = {other.minX, other.minY};
+    if(this->isIntersecting(ll))
     {
       return true;
     }
     
-    vec2<T> lr = {other.maxX, other.maxY};
-    if(this->containsPoint(lr))
+    const vec2<T> lr = {other.maxX, other.maxY};
+    if(this->isIntersecting(lr))
     {
       return true;
     }
 
-    linesegment2D<T> top = linesegment2D<T>(ul, ur);
+    const linesegment2D<T> top = linesegment2D<T>(ul, ur);
     if(this->isIntersecting(top))
     {
       return true;
     }
     
-    linesegment2D<T> bottom = linesegment2D<T>(ll, lr);
+    const linesegment2D<T> bottom = linesegment2D<T>(ll, lr);
     if(this->isIntersecting(bottom))
     {
       return true;
     }
     
-    linesegment2D<T> right = linesegment2D<T>(ur, lr);
+    const linesegment2D<T> right = linesegment2D<T>(ur, lr);
     if(this->isIntersecting(right))
     {
       return true;
     }
     
-    linesegment2D<T> left = linesegment2D<T>(ul, ll);
+    const linesegment2D<T> left = linesegment2D<T>(ul, ll);
     return this->isIntersecting(left);
   }
 
-  [[nodiscard]] bool containsPoint(const vec2<T>& point)
+  [[nodiscard]] bool isIntersecting(const vec2<T>& point) const
   {
-    T distance = std::sqrt(((this->center.x() - point.x()) * (this->center.x() - point.x())) + ((this->center.y() - point.y()) * (this->center.y() - point.y())));
-    return distance < this->radius;
+    return this->radius >= distance2D(point, this->center);
   }
 
   vec2<T> center;
