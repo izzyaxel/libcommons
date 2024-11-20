@@ -72,8 +72,6 @@ set(SRC
     src/commons/math/vec3.hh
     src/commons/math/vec4.hh
     src/commons/math/circle.hh
-    src/commons/math/aabb2D.hh
-    src/commons/math/aabb3D.hh
     src/commons/math/mat3.hh
     src/commons/math/mat4.hh
     src/commons/math/quaternion.hh
@@ -81,7 +79,8 @@ set(SRC
     src/commons/math/capsule.hh
     src/commons/math/obb.hh
     src/commons/math/quad.hh
-    src/commons/math/triangle.hh)
+    src/commons/math/triangle.hh
+    src/commons/math/aabb.hh)
 
 add_definitions(-DSTATICBUILD)
 add_library(${PROJECT_NAME} STATIC ${SRC})
