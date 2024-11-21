@@ -28,6 +28,19 @@ struct circle
     return this->radius + other.radius >= distance2D(this->center, other.center);
   }
 
+  [[nodiscard]] bool intersection(const circle<T>& other, T& depth) const
+  {
+    const T radii = this->radius + other.radius;
+    const T centerDist = distance2D(this->center, other.center);
+    if(radii >= centerDist)
+    {
+      //line along velocity vector/circle intersection to determine depth along the correct axis
+      //depth = radii - centerDist;
+      return true;
+    }
+    return false;
+  }
+
   /// Circle-line
   [[nodiscard]] bool isIntersecting(const linesegment2D<T>& other) const
   {
