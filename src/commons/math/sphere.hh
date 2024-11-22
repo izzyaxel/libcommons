@@ -10,11 +10,6 @@ struct sphere
   center(center), radius(radius)
   {}
 
-  [[nodiscard]] bool isIntersecting(const sphere<T>& other) const
-  {
-    return this->radius + other.radius >= distance3D(this->center, other.center);
-  }
-
   vec3<T> center;
   T radius;
 };

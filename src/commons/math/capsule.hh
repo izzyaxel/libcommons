@@ -50,30 +50,6 @@ struct aacapsule2D
     this->circleA = circle<T>(vec2<T>{xCenter, this->rect.maxY}, width);
     this->circleB = circle<T>(vec2<T>{xCenter, this->rect.minY}, width);
   }
-
-  bool isIntersecting(const vec2<T>& point)
-  {
-    return this->circleA.isIntersecting(point) || this->circleB.isIntersecting(point) || this->rect.isIntersecting(point);
-  }
-
-  bool isIntersecting(const circle<T>& other)
-  {
-    return this->circleA.isIntersecting(other) || this->circleB.isIntersecting(other) || this->rect.isIntersecting(other);
-  }
-
-  bool isIntersecting(const aabb2D<T>& other)
-  {
-    return this->circleA.isIntersecting(other) || this->circleB.isIntersecting(other) || this->rect.isIntersecting(other);
-  }
-
-  bool isIntersecting(const aacapsule2D<T>& other)
-  {
-    return
-      this->circleA.isIntersecting(other.circleA) || this->circleB.isIntersecting(other.circleB) ||
-      this.rect.isIntersecting(other.rect) || this->circleA.isIntersecting(other.circleB) ||
-      this->rect.isIntersecting(other.circleA) || this->rect.isIntersecting(other.circleB) ||
-      other.rect.isIntersecting(this->circleA) || other.rect.isIntersecting(this->circleB);
-  }
   
   circle<T> circleA, circleB;
   aabb2D<T> rect;

@@ -80,6 +80,7 @@ set(SRC
     src/commons/math/triangle.hh
     src/commons/math/aabb.hh
     src/commons/math/linesegment.hh
-    src/commons/math/sphere.hh)
+    src/commons/math/sphere.hh
+    src/commons/math/intersection.hh)
 
 add_library(${PROJECT_NAME} STATIC ${SRC})
