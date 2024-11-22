@@ -130,13 +130,14 @@ void findIntersectionPoints(const circle<T>& a, const circle<T>& b, vec2<T>& hit
   T centerToChordLength = std::pow(centerDist, 2) - std::pow(b.radius, 2) + std::pow(a.radius, 2) / (2 * centerDist);
   T yHalfLength = 4 * std::pow(centerDist, 2) * std::pow(a.radius, 2) - std::pow(std::pow(centerDist, 2) - std::pow(b.radius, 2) + std::pow(a.radius, 2), 2) / (4 * std::pow(centerDist, 2));
   T cuspsChordLength = (1 / centerDist) * std::sqrt(4 * std::pow(centerDist, 2) * std::pow(a.radius, 2) - std::pow(std::pow(centerDist, 2) - std::pow(b.radius, 2) + std::pow(a.radius, 2), 2));
+  //TODO need a generalized formula to find the intersection points with arbitrary circle placement, this one assumes their y-axes are aligned so the chord is vertical
   hitA = {a.center.x() + centerToChordLength, a.center.y() + yHalfLength};
   hitB = {a.center.x() + centerToChordLength, a.center.y() - yHalfLength};
 }
 
 /// Circle/circle intersection test
 template <typename T>
-[[nodiscard]] bool intersection(const circle<T>& a, const circle<T>& b, const vec2<T>& otherVelocity, T& depth)
+T intersection(const circle<T>& a, const circle<T>& b, const vec2<T>& otherVelocity)
 {
   const T radii = a.radius + b.radius;
   const T centerDist = distance2D(a.center, b.center);
@@ -151,26 +152,27 @@ template <typename T>
       const bool intersects = a.intersection(velLine, hitA, hitB);
       if(!intersects || (hitA.x() == 0 && hitA.y() == 0 && hitB.x() == 0 && hitB.y() == 0))
       {
-        return false;
+        return 0;
       }
       
       if(hitA.x() == 0 && hitA.y() == 0)
       {
-        depth = distance2D(hitB, endPoint);
+        return distance2D(hitB, endPoint);
       }
-      else if(hitB.x() == 0 && hitB.y() == 0)
+      if(hitB.x() == 0 && hitB.y() == 0)
       {
-        depth = distance2D(hitA, endPoint);
+        return distance2D(hitA, endPoint);
       }
-      return true;
     }
-    //TODO find intersection points, find which ones earlier on the velocity vector, that's the tangency point
-    //TODO find point on velocity vector that's 1 moving circle radius away from tangency point
+    vec2<T> hitA, hitB;
+    intersection(a, b, hitA, hitB);
+    //TODO project points onto velocity line, find which one is closer to the start point
+    //TODO find point on velocity vector that's 1 moving circle radius away from selected tangency point
     //TODO distance between that point and the end of the velocity vector is the intersection depth
     
-    return true;
+    return 0;
   }
-  return false;
+  return 0;
 }
 
 /// Circle/line intersection test
