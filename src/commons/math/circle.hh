@@ -1,8 +1,6 @@
 #pragma once
 
 #include "linesegment.hh"
-#include "aabb.hh"
-#include "general.hh"
 
 /// A mathematical circle
 template<typename T>
