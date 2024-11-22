@@ -28,14 +28,49 @@ struct circle
     return this->radius + other.radius >= distance2D(this->center, other.center);
   }
 
-  [[nodiscard]] bool intersection(const circle<T>& other, T& depth) const
+  /// Assumes intersection is true, finds the points at which the intersection occured
+  void findIntersectionPoints(const circle<T>& other, vec2<T>& hitA, vec2<T>& hitB) const
+  {
+    T centerDist = distance2D(this->center, other.center);
+    T centerToChordLength = std::pow(centerDist, 2) - std::pow(other.radius, 2) + std::pow(this->radius, 2) / (2 * centerDist);
+    T yHalfLength = 4 * std::pow(centerDist, 2) * std::pow(this->radius, 2) - std::pow(std::pow(centerDist, 2) - std::pow(other.radius, 2) + std::pow(this->radius, 2), 2) / (4 * std::pow(centerDist, 2));
+    T cuspsChordLength = (1 / centerDist) * std::sqrt(4 * std::pow(centerDist, 2) * std::pow(this->radius, 2) - std::pow(std::pow(centerDist, 2) - std::pow(other.radius, 2) + std::pow(this->radius, 2), 2));
+    hitA = {this->center.x() + centerToChordLength, this->center.y() + yHalfLength};
+    hitB = {this->center.x() + centerToChordLength, this->center.y() - yHalfLength};
+  }
+
+  [[nodiscard]] bool intersection(const circle<T>& other, const vec2<T>& otherVelocity, T& depth) const
   {
     const T radii = this->radius + other.radius;
     const T centerDist = distance2D(this->center, other.center);
-    if(radii >= centerDist)
+    if(radii >= centerDist) //A collision is guaranteed
     {
-      //line along velocity vector/circle intersection to determine depth along the correct axis
-      //depth = radii - centerDist;
+      vec2<T> startPoint = other.center;
+      vec2<T> endPoint = other.center + otherVelocity;
+      linesegment2D<T> velLine{startPoint, endPoint};
+      if(centerDist + std::min(this->radius, other.radius) < std::max(this->radius, other.radius)) //One circle is entirely inside the other
+      {
+        vec2<T> hitA{}, hitB{};
+        const bool intersects = this->intersection(velLine, hitA, hitB);
+        if(!intersects || (hitA.x() == 0 && hitA.y() == 0 && hitB.x() == 0 && hitB.y() == 0))
+        {
+          return false;
+        }
+        
+        if(hitA.x() == 0 && hitA.y() == 0)
+        {
+          depth = distance2D(hitB, endPoint);
+        }
+        else if(hitB.x() == 0 && hitB.y() == 0)
+        {
+          depth = distance2D(hitA, endPoint);
+        }
+        return true;
+      }
+      //TODO find intersection points, find which ones earlier on the velocity vector, that's the tangency point
+      //TODO find point on velocity vector that's 1 moving circle radius away from tangency point
+      //TODO distance between that point and the end of the velocity vector is the intersection depth
+      
       return true;
     }
     return false;
