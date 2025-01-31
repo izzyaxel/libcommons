@@ -46,7 +46,7 @@ void integraldeltalerp(T& current, const T to, const U decay, const V deltaTime)
 template <typename T>
 [[nodiscard]] T lerp(const T a, const T b, const T progress)
 {
-  return a * std::pow(b / a, progress);
+  return a + (b - a) * progress;
 }
 
 //Vec2
