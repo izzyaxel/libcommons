@@ -55,8 +55,8 @@ template <typename T>
 [[nodiscard]] vec2<T> lerpV2(const vec2<T>& src, const vec2<T>& dest, const float progress)
 {
   vec2<T> out;
-  out[0] = progress * dest[0] + (1 - progress) * src[0];
-  out[1] = progress * dest[1] + (1 - progress) * src[1];
+  out.x() = lerp(src.x(), dest.x(), progress);
+  out.y() = lerp(src.y(), dest.y(), progress);
   return out;
 }
 
