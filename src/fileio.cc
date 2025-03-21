@@ -31,7 +31,7 @@ std::vector<uint8_t> readFile(const std::string& filePath)
     printf("File reader: failed to read input file: %s\n", filePath.data());
     return {};
   }
-  fseek(in, SEEK_END, SEEK_SET);
+  fseek(in, 0, SEEK_END);
   const size_t len = (size_t)ftell(in);
   rewind(in);
   std::vector<uint8_t> data;
