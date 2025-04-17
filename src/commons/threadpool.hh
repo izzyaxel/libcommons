@@ -13,11 +13,10 @@ struct ThreadPool
   explicit ThreadPool(size_t poolSize = std::max(std::thread::hardware_concurrency() - 1u, 1u));
 
   ~ThreadPool();
-
-  //TODO FIXME Note: thread pool can't accept moved args yet because of buggy type deduction in C++
-  template <typename F, typename... Args> auto enqueue(const F func, const Args... args)
+  
+  template <typename F, typename... Args> auto enqueue(F func, Args... args)
   {
-    auto invokeBinding = std::bind(std::forward<F>(func), std::forward<Args>(args)...);
+    auto invokeBinding = std::bind(std::forward<F>(std::move(func)), std::forward<Args>(args)...);
     using invokePkg = std::packaged_task<std::invoke_result_t<decltype(invokeBinding)>()>;
     invokePkg pkg{std::move(invokeBinding)};
     auto future = pkg.get_future();
