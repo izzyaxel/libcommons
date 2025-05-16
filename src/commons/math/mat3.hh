@@ -48,19 +48,6 @@ struct mat3x3
     this->data[2][2] = in[2][2];
   }
 
-  /// Copy constructor
-  mat3x3(const mat3x3& other)
-  {
-    memcpy(&this->data[0][0], &other[0][0], sizeof(other.data));
-  }
-
-  /// Copy assignment operator
-  mat3x3& operator=(const mat4x4<T>& other)
-  {
-    memcpy(&this->data[0][0], &other[0][0], sizeof(other.data));
-    return *this;
-  }
-
   /// Subscript operators
   T* operator[](const size_t index)
   {

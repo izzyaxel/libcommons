@@ -93,23 +93,6 @@ struct mat4x4
     this->data[1][2] = (T)2 * (t1 - t2);
   }
 
-  /// Copy constructor
-  mat4x4(const mat4x4& other)
-  {
-    memcpy(&this->data[0][0], &other[0][0], sizeof(other.data));
-  }
-
-  /// Copy assignment operator
-  mat4x4& operator=(const mat4x4& other)
-  {
-    if(this == &other)
-    {
-      return *this;
-    }
-    memcpy(&this->data[0][0], &other[0][0], sizeof(other.data));
-    return *this;
-  }
-
   /// Subscript operators
   T* operator[](const size_t index)
   {
