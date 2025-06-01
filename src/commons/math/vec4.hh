@@ -3,6 +3,7 @@
 #include "vec2.hh"
 
 #include <cmath>
+#include <string>
 
 template <typename T>
 struct vec2;
