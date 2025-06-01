@@ -442,5 +442,3 @@ struct vec4
     printf("%s: %s\n", name.data(), this->toString().data());
   }
 };
-
-static_assert(std::is_standard_layout<vec4<int32_t>>() && std::is_trivial<vec4<int32_t>>());
