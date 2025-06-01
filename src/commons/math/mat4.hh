@@ -3,7 +3,7 @@
 #include "vec3.hh"
 #include "general.hh"
 
-#include <ctgmath>
+#include <cmath>
 
 template <typename T>
 struct quat;

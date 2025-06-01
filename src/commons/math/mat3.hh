@@ -1,7 +1,6 @@
 #pragma once
 
-#include <ctgmath>
-#include <cstring>
+#include <cmath>
 
 template <typename T>
 struct vec3;
