@@ -2,9 +2,7 @@
 
 #include "vec2.hh"
 
-#include <ctgmath>
-#include <cstdint>
-#include <cstring>
+#include <cmath>
 
 template <typename T>
 struct vec2;
