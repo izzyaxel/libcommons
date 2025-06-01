@@ -4,7 +4,8 @@
 #include "vec3.hh"
 
 #include <vector>
-#include <ctgmath>
+#include <cmath>
+#include <cstdint>
 
 /// PI constant
 template <typename T>

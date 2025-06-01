@@ -2,6 +2,8 @@
 
 #include "vec2.hh"
 
+#include <string>
+
 template <typename T>
 struct vec4;
 
