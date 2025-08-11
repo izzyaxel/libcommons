@@ -19,28 +19,34 @@ struct vec3
   /// Get a reference to one of the contained values
 
   [[nodiscard]] T& x() { return this->data[0]; }
-
   [[nodiscard]] T& y() { return this->data[1]; }
-
   [[nodiscard]] T& z() { return this->data[2]; }
-
   [[nodiscard]] const T& x() const { return this->data[0]; }
-
   [[nodiscard]] const T& y() const { return this->data[1]; }
-
   [[nodiscard]] const T& z() const { return this->data[2]; }
 
   [[nodiscard]] T& r() { return this->data[0]; }
-
   [[nodiscard]] T& g() { return this->data[1]; }
-
   [[nodiscard]] T& b() { return this->data[2]; }
-
   [[nodiscard]] const T& r() const { return this->data[0]; }
-
   [[nodiscard]] const T& g() const { return this->data[1]; }
-
   [[nodiscard]] const T& b() const { return this->data[2]; }
+
+  [[nodiscard]] T& cyan() { return this->data[0]; }
+  [[nodiscard]] T& magenta() { return this->data[1]; }
+  [[nodiscard]] T& yellow() { return this->data[2]; }
+  [[nodiscard]] const T& cyan() const { return this->data[0]; }
+  [[nodiscard]] const T& magenta() const { return this->data[1]; }
+  [[nodiscard]] const T& yellow() const { return this->data[2]; }
+
+  [[nodiscard]] T& hue() { return this->data[0]; }
+  [[nodiscard]] T& saturation() { return this->data[1]; }
+  [[nodiscard]] T& value() { return this->data[2]; }
+  [[nodiscard]] T& lightness() { return this->data[2]; }
+  [[nodiscard]] const T& hue() const { return this->data[0]; }
+  [[nodiscard]] const T& saturation() const { return this->data[1]; }
+  [[nodiscard]] const T& value() const { return this->data[2]; }
+  [[nodiscard]] const T& lightness() const { return this->data[2]; }
 
   // 3-way Swizzling (sort of), 26 permutations (excluded xyz)
 

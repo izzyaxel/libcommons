@@ -26,36 +26,31 @@ struct vec4
   /// Get a reference to one of the contained values
 
   [[nodiscard]] T& x() { return this->data[0]; }
-
   [[nodiscard]] T& y() { return this->data[1]; }
-
   [[nodiscard]] T& z() { return this->data[2]; }
-
   [[nodiscard]] T& w() { return this->data[3]; }
-
   [[nodiscard]] T const& x() const { return this->data[0]; }
-
   [[nodiscard]] T const& y() const { return this->data[1]; }
-
   [[nodiscard]] T const& z() const { return this->data[2]; }
-
   [[nodiscard]] T const& w() const { return this->data[3]; }
 
   [[nodiscard]] T& r() { return this->data[0]; }
-
   [[nodiscard]] T& g() { return this->data[1]; }
-
   [[nodiscard]] T& b() { return this->data[2]; }
-
   [[nodiscard]] T& a() { return this->data[3]; }
-
   [[nodiscard]] T const& r() const { return this->data[0]; }
-
   [[nodiscard]] T const& g() const { return this->data[1]; }
-
   [[nodiscard]] T const& b() const { return this->data[2]; }
-
   [[nodiscard]] T const& a() const { return this->data[3]; }
+
+  [[nodiscard]] T& cyan() { return this->data[0]; }
+  [[nodiscard]] T& magenta() { return this->data[1]; }
+  [[nodiscard]] T& yellow() { return this->data[2]; }
+  [[nodiscard]] T& black() { return this->data[3]; }
+  [[nodiscard]] T const& cyan() const { return this->data[0]; }
+  [[nodiscard]] T const& magenta() const { return this->data[1]; }
+  [[nodiscard]] T const& yellow() const { return this->data[2]; }
+  [[nodiscard]] T const& black() const { return this->data[3]; }
 
   //TODO do it
   /// 4-way Swizzling (sort of), 256 permutations
