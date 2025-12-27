@@ -150,13 +150,22 @@ struct quat
     return this->data[0] != other[0] || this->data[1] != other[1] || this->data[2] != other[2] || this->data[3] != other[3];
   }
 
+  quat operator+(const quat& other) const
+  {
+    return quat{
+    this->data[0] + other.data[0],
+    this->data[1] + other.data[1],
+    this->data[2] + other.data[2],
+    this->data[3] + other.data[3]};
+  }
+
   quat operator*(const float val) const
   {
-    this->data[0] *= val;
-    this->data[1] *= val;
-    this->data[2] *= val;
-    this->data[3] *= val;
-    return this;
+    return quat{
+    this->data[0] * val,
+    this->data[1] * val,
+    this->data[2] * val,
+    this->data[3] * val};
   }
 
   /// Multiply/compose this quaternion by/with another
