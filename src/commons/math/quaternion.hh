@@ -390,7 +390,7 @@ struct quat
     T angle = std::acos(dot);
     if(angle > angleLimit) return {};
     vec3<T> rotAxis = vec3<T>{0, 1, 0}.cross(upQ);
-    rotAxis.normalize(); //TODO FIXME this becomes NaN when rotAxis is 0, 0, 0 because of a divide by zero
+    rotAxis.normalize();
     quat out;
     out.fromAxial(rotAxis.x(), rotAxis.y(), rotAxis.z(), (angleLimit - angle) * lerp);
     return out;

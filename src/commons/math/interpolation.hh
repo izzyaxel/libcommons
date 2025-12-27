@@ -210,23 +210,42 @@ template <typename T>
   return lerpV4(src, dest, (float)(std::pow(progress, 3) * (progress * ((T)6.0 * progress - (T)15.0) + (T)10.0)));
 }
 
-//Quat
+template <typename T>
+[[nodiscard]] auto lerpQuat(const quat<T>& a, const quat<T>& b, const T t) -> quat<T>
+{
+  return quat<T>{a * (1 - t) + b * t};
+}
+
 /// Quaternion spherical linear interpolation
 template <typename T>
-[[nodiscard]] quat<T> slerpQuat(const quat<T>& A, const quat<T>& B, const T value)
+[[nodiscard]] quat<T> slerpQuat(const quat<T>& a, const quat<T>& b, const T t)
 {
-  T dot = A[0] * B[0] + A[1] * B[1] + A[2] * B[2] + A[3] * B[3];
-  if(dot > 1) dot = 1;
-  if(dot < -1) dot = -1;
-  if(dot == 1) return A;
-  T angle = std::acos(dot);
-  T sqi = std::sqrt((T)1 - dot * dot);
-  T vA = std::sin(((T)1 - value) * angle) / sqi;
-  T vB = std::sin(value * angle) / sqi;
+  quat<T> aNorm = a.normalized();
+  quat<T> bNorm = b.normalized();
+  float dot = a.dot(a, b);
+  quat<T> qB = aNorm;
+  if(dot < 0.0f)
+  {
+    qB.x() = -bNorm.x();
+    qB.y() = -bNorm.y();
+    qB.z() = -bNorm.z();
+    qB.w() = -bNorm.w();
+    dot = -dot;
+  }
+
+  if(dot > 0.9995f)
+  {
+    return lerpQuat(a, qB, t).normalized();
+  }
+
+  float theta = std::acos(dot);
+  float sinTheta = std::sin(theta);
+  float scaleA = std::sin((1.0f - t) * theta) / sinTheta;
+  const float scaleB = std::sin(t * theta) / sinTheta;
+
   return quat<T>{
-    A[0] * vA + B[0] * vB,
-    A[1] * vA + B[1] * vB,
-    A[2] * vA + B[2] * vB,
-    A[3] * vA + B[3] * vB
-  }.normalized();
+    scaleA * a.x() + scaleB * qB.x(),
+    scaleA * a.y() + scaleB * qB.y(),
+    scaleA * a.z() + scaleB * qB.z(),
+    scaleA * a.w() + scaleB * qB.w()}.normalized();
 }
