@@ -375,7 +375,9 @@ struct quat
     T rot = std::acos(dot);
     vec3<T> rotAxis = to.cross(from);
     rotAxis.normalize();
-    return axialToQuat(rotAxis.x(), rotAxis.y(), rotAxis.z(), rot * lerp);
+    quat out{};
+    out.fromAxial(rotAxis.x(), rotAxis.y(), rotAxis.z(), rot * lerp);
+    return out;
   }
 
   [[nodiscard]] quat limitRotationRange(const vec3<T> up, const T angleLimit, const T lerp = (T)1)
