@@ -363,7 +363,7 @@ struct quat
     return quat{xQuat * yQuat}.normalized();
   }
 
-  [[nodiscard]] static quat vecDelta(const vec3<T> from, const vec3<T> to, const T lerp = (T)1)
+  [[nodiscard]] static quat vecDelta(const vec3<T> from, const vec3<T> to, T lerp = (T)1)
   {
     if(lerp < 0) lerp = 0;
     if(lerp > 1) lerp = 1;
@@ -396,7 +396,7 @@ struct quat
     return out;
   }
 
-  [[nodiscard]] quat correctOrientation(const vec3<T> up, const T lerp = (T)1)
+  [[nodiscard]] quat correctOrientation(vec3<T> up, T lerp = (T)1)
   {
     vec3<T> upQ = up * this->conjugated();
     upQ.normalize();
