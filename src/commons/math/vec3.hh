@@ -447,9 +447,12 @@ struct vec3
   void normalize()
   {
     T length = this->mag();
-    this->data[0] /= length;
-    this->data[1] /= length;
-    this->data[2] /= length;
+    if(length > 1e-5f)
+    {
+      this->data[0] /= length;
+      this->data[1] /= length;
+      this->data[2] /= length;
+    }
   }
 
   /// Get a normalized v3
@@ -457,9 +460,12 @@ struct vec3
   {
     vec3 out;
     T length = this->mag();
-    out[0] = this->data[0] / length;
-    out[1] = this->data[1] / length;
-    out[2] = this->data[2] / length;
+    if(length > 1e-5f)
+    {
+      out[0] = this->data[0] / length;
+      out[1] = this->data[1] / length;
+      out[2] = this->data[2] / length;
+    }
     return out;
   }
 
