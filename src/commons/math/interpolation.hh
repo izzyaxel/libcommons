@@ -222,7 +222,7 @@ template <typename T>
 {
   quat<T> aNorm = a.normalized();
   quat<T> bNorm = b.normalized();
-  float dot = a.dot(a, b);
+  float dot = aNorm.dot(bNorm);
   quat<T> qB = aNorm;
   if(dot < 0.0f)
   {
