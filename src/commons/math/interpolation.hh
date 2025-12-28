@@ -213,7 +213,7 @@ template <typename T>
 template <typename T>
 [[nodiscard]] auto lerpQuat(const quat<T>& a, const quat<T>& b, const T t) -> quat<T>
 {
-  return quat<T>{a * (1 - t) + b * t};
+  return quat<T>{a * (1.0f - t) + b * t};
 }
 
 /// Quaternion spherical linear interpolation
@@ -232,20 +232,17 @@ template <typename T>
     qB.w() = -bNorm.w();
     dot = -dot;
   }
-
   if(dot > 0.9995f)
   {
     return lerpQuat(a, qB, t).normalized();
   }
 
   float theta = std::acos(dot);
-  float sinTheta = std::sin(theta);
-  float scaleA = std::sin((1.0f - t) * theta) / sinTheta;
-  const float scaleB = std::sin(t * theta) / sinTheta;
+  const float sinTheta = std::sin(theta);
+  float invSinTheta = 1.0f / sinTheta;
 
-  return quat<T>{
-    scaleA * a.x() + scaleB * qB.x(),
-    scaleA * a.y() + scaleB * qB.y(),
-    scaleA * a.z() + scaleB * qB.z(),
-    scaleA * a.w() + scaleB * qB.w()}.normalized();
+  const float scaleA = std::sin((1.0f - t) * theta) * invSinTheta;
+  const float scaleB = std::sin(t * theta) * invSinTheta;
+
+  return a * scaleA + b * scaleB;
 }

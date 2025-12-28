@@ -110,23 +110,6 @@ struct quat
     }
   }
 
-  /// Copy constructor
-  /*quat(const quat& other)
-  {
-    memcpy(&this->data[0], &other.data[0], sizeof(other.data));
-  }
-
-  /// Copy assignment operator
-  quat& operator=(const quat& other)
-  {
-    if(this == &other)
-    {
-      return *this;
-    }
-    memcpy(&this->data[0], &other.data[0], sizeof(other.data));
-    return *this;
-  }*/
-
   /// Subscript operators
   T& operator[](const size_t index)
   {
