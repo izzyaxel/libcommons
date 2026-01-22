@@ -1,6 +1,7 @@
 #pragma once
 
 #include "vec2.hh"
+#include "vec3.hh"
 
 /// 2-dimensional axis aligned bounding box
 template<typename T>
@@ -79,8 +80,8 @@ struct aabb2D
     this->maxX += xOffset;
     this->minY += yOffset;
     this->maxY += yOffset;
-    this->centerX = (maxX - minX) / (T)2.0;
-    this->centerY = (maxY - minY) / (T)2.0;
+    this->centerX = (this->maxX - this->minX) / (T)2.0;
+    this->centerY = (this->maxY - this->minY) / (T)2.0;
   }
 
   T minX, maxX, minY, maxY, centerX, centerY;
@@ -109,6 +110,39 @@ struct aabb3D //TODO mirror 2D version's functions
     this->centerX = (maxX - minX) / (T)2;
     this->centerY = (maxY - minY) / (T)2;
     this->centerZ = (maxZ - minZ) / (T)2;
+  }
+
+  [[nodiscard]] auto center() const -> vec3<T>
+  {
+    return {this->centerX, this->centerY, this->centerZ};
+  }
+
+  [[nodiscard]] auto width() const -> T
+  {
+    return this->maxX - this->minX;
+  }
+
+  [[nodiscard]] auto height() const -> T
+  {
+    return this->maxY - this->minY;
+  }
+
+  [[nodiscard]] auto depth() const -> T
+  {
+    return this->maxZ - this->minZ;
+  }
+
+  auto offset(const T xOffset, const T yOffset, const T zOffset) -> void
+  {
+    this->minX += xOffset;
+    this->maxX += xOffset;
+    this->minY += yOffset;
+    this->maxY += yOffset;
+    this->minZ += zOffset;
+    this->maxZ += zOffset;
+    this->centerX = (this->maxX - this->minX) / (T)2.0;
+    this->centerY = (this->maxY - this->minY) / (T)2.0;
+    this->centerZ = (this->maxZ - this->minZ) / (T)2.0;
   }
 
   T minX, maxX, minY, maxY, minZ, maxZ, centerX, centerY, centerZ;
