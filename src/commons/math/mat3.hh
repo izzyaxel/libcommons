@@ -11,7 +11,7 @@ struct mat4x4;
 template <typename T>
 struct mat3x3
 {
-  /// X Y Z W on each row, init to identity, row dominant
+  /// X Y Z on each row, init to identity, row dominant
   T data[3][3]{
     {1, 0, 0},
     {0, 1, 0},

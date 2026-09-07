@@ -11,7 +11,7 @@
 #include <unistd.h>
 #endif
 
-std::string readTextFile(const std::string& filePath)
+auto readTextFile(const std::string& filePath) -> std::string
 {
   std::ifstream fileIn;
   fileIn.open(filePath);
@@ -20,10 +20,10 @@ std::string readTextFile(const std::string& filePath)
     printf("Error opening file %s\n", filePath.data());
   }
   
-  return {std::istreambuf_iterator<char>(fileIn), std::istreambuf_iterator<char>()};
+  return {std::istreambuf_iterator(fileIn), std::istreambuf_iterator<char>()};
 }
 
-std::vector<uint8_t> readFile(const std::string& filePath)
+auto readFile(const std::string& filePath) -> std::vector<uint8_t>
 {
   FILE* in = fopen(filePath.data(), "rb");
   if(!in)
@@ -41,7 +41,7 @@ std::vector<uint8_t> readFile(const std::string& filePath)
   return data;
 }
 
-void createDirectory(const std::string& folderPath)
+auto createDirectory(const std::string& folderPath) -> void
 {
 #if defined(WINDOWS)
   CreateDirectory(folderPath.data(), nullptr);
@@ -50,38 +50,41 @@ void createDirectory(const std::string& folderPath)
 #endif
 }
 
-void closeFile(FILE*& file)
+auto closeFile(FILE*& file) -> void
 {
   if(fclose(file) != 0)
   {
-    throw std::runtime_error("Failed to close file");
+    printf("Failed to close file\n");
+    return;
   }
   
   file = nullptr;
 }
 
-FILE* openFile(const std::string& name, const std::string& mode)
+auto openFile(const std::string& name, const std::string& mode) -> FILE*
 {
   FILE* out = fopen(name.data(), mode.data());
   if(!out)
   {
-    throw std::runtime_error("Failed to open " + name + " with mode " + mode);
+    printf("Failed to open %s with mode %s\n", name.c_str(), mode.c_str());
+    return nullptr;
   }
   
   return out;
 }
 
-size_t readFile(FILE* file, void* destBuffer, const size_t amount, const size_t acceptableTimeouts)
+auto readFile(FILE* file, void* destBuffer, const size_t amount, const size_t acceptableTimeouts) -> size_t
 {
   size_t amtRead = 0, timeoutCounter = 0;
   do
   {
     if(timeoutCounter >= acceptableTimeouts)
     {
-      throw std::runtime_error("Unable to read from file, timed out after " + std::to_string(acceptableTimeouts) + " 0-length reads");
+      printf("Unable to read from file, timed out after %zu 0-length reads\n", acceptableTimeouts);
+      return 0;
     }
     
-    const size_t read = fread(reinterpret_cast<uint8_t*>(destBuffer) + amtRead, 1, amount - amtRead, file);
+    const size_t read = fread(static_cast<uint8_t*>(destBuffer) + amtRead, 1, amount - amtRead, file);
     amtRead += read;
     if(read == 0)
     {
@@ -93,14 +96,15 @@ size_t readFile(FILE* file, void* destBuffer, const size_t amount, const size_t 
   return amtRead;
 }
 
-size_t writeFile(FILE* file, const void* inputBuffer, const size_t amount, const size_t acceptableTimeouts)
+auto writeFile(FILE* file, const void* inputBuffer, const size_t amount, const size_t acceptableTimeouts) -> size_t
 {
   size_t amtWritten = 0, timeoutCounter = 0;
   do
   {
     if(timeoutCounter >= acceptableTimeouts)
     {
-      throw std::runtime_error("Unable to write to file, timed out after " + std::to_string(acceptableTimeouts) + " 0-length writes");
+      printf("Unable to write to file, timed out after %zu 0-length writes\n", acceptableTimeouts);
+      return 0;
     }
     const size_t wrote = fwrite(inputBuffer, 1, amount - amtWritten, file);
     amtWritten += wrote;

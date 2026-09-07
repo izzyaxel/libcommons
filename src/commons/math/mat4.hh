@@ -208,29 +208,29 @@ struct mat4x4
     T A0113 = this->data[0][1] * this->data[1][3] - this->data[1][1] * this->data[0][3];
     T A0112 = this->data[0][1] * this->data[1][2] - this->data[1][1] * this->data[0][2];
 
-    T det = +data[0][0] * (data[1][1] * A2323 - data[2][1] * A1323 + data[3][1] * A1223)
-            - data[1][0] * (data[0][1] * A2323 - data[2][1] * A0323 + data[3][1] * A0223)
-            + data[2][0] * (data[0][1] * A1323 - data[1][1] * A0323 + data[3][1] * A0123)
-            - data[3][0] * (data[0][1] * A1223 - data[1][1] * A0223 + data[2][1] * A0123);
+    T det = + this->data[0][0] * (this->data[1][1] * A2323 - this->data[2][1] * A1323 + this->data[3][1] * A1223)
+            - this->data[1][0] * (this->data[0][1] * A2323 - this->data[2][1] * A0323 + this->data[3][1] * A0223)
+            + this->data[2][0] * (this->data[0][1] * A1323 - this->data[1][1] * A0323 + this->data[3][1] * A0123)
+            - this->data[3][0] * (this->data[0][1] * A1223 - this->data[1][1] * A0223 + this->data[2][1] * A0123);
     det = (T)1 / det;
 
     *this = mat4x4{
-      det * (data[1][1] * A2323 - data[2][1] * A1323 + data[3][1] * A1223),
-      det * -(data[1][0] * A2323 - data[2][0] * A1323 + data[3][0] * A1223),
-      det * (data[1][0] * A2313 - data[2][0] * A1313 + data[3][0] * A1213),
-      det * -(data[1][0] * A2312 - data[2][0] * A1312 + data[3][0] * A1212),
-      det * -(data[0][1] * A2323 - data[2][1] * A0323 + data[3][1] * A0223),
-      det * (data[0][0] * A2323 - data[2][0] * A0323 + data[3][0] * A0223),
-      det * -(data[0][0] * A2313 - data[2][0] * A0313 + data[3][0] * A0213),
-      det * (data[0][0] * A2312 - data[2][0] * A0312 + data[3][0] * A0212),
-      det * (data[0][1] * A1323 - data[1][1] * A0323 + data[3][1] * A0123),
-      det * -(data[0][0] * A1323 - data[1][0] * A0323 + data[3][0] * A0123),
-      det * (data[0][0] * A1313 - data[1][0] * A0313 + data[3][0] * A0113),
-      det * -(data[0][0] * A1312 - data[1][0] * A0312 + data[3][0] * A0112),
-      det * -(data[0][1] * A1223 - data[1][1] * A0223 + data[2][1] * A0123),
-      det * (data[0][0] * A1223 - data[1][0] * A0223 + data[2][0] * A0123),
-      det * -(data[0][0] * A1213 - data[1][0] * A0213 + data[2][0] * A0113),
-      det * (data[0][0] * A1212 - data[1][0] * A0212 + data[2][0] * A0112),
+      det *  (this->data[1][1] * A2323 - this->data[2][1] * A1323 + this->data[3][1] * A1223),
+      det * -(this->data[1][0] * A2323 - this->data[2][0] * A1323 + this->data[3][0] * A1223),
+      det *  (this->data[1][0] * A2313 - this->data[2][0] * A1313 + this->data[3][0] * A1213),
+      det * -(this->data[1][0] * A2312 - this->data[2][0] * A1312 + this->data[3][0] * A1212),
+      det * -(this->data[0][1] * A2323 - this->data[2][1] * A0323 + this->data[3][1] * A0223),
+      det *  (this->data[0][0] * A2323 - this->data[2][0] * A0323 + this->data[3][0] * A0223),
+      det * -(this->data[0][0] * A2313 - this->data[2][0] * A0313 + this->data[3][0] * A0213),
+      det *  (this->data[0][0] * A2312 - this->data[2][0] * A0312 + this->data[3][0] * A0212),
+      det *  (this->data[0][1] * A1323 - this->data[1][1] * A0323 + this->data[3][1] * A0123),
+      det * -(this->data[0][0] * A1323 - this->data[1][0] * A0323 + this->data[3][0] * A0123),
+      det *  (this->data[0][0] * A1313 - this->data[1][0] * A0313 + this->data[3][0] * A0113),
+      det * -(this->data[0][0] * A1312 - this->data[1][0] * A0312 + this->data[3][0] * A0112),
+      det * -(this->data[0][1] * A1223 - this->data[1][1] * A0223 + this->data[2][1] * A0123),
+      det *  (this->data[0][0] * A1223 - this->data[1][0] * A0223 + this->data[2][0] * A0123),
+      det * -(this->data[0][0] * A1213 - this->data[1][0] * A0213 + this->data[2][0] * A0113),
+      det *  (this->data[0][0] * A1212 - this->data[1][0] * A0212 + this->data[2][0] * A0112),
     };
   }
 
@@ -257,29 +257,29 @@ struct mat4x4
     T A0113 = this->data[0][1] * this->data[1][3] - this->data[1][1] * this->data[0][3];
     T A0112 = this->data[0][1] * this->data[1][2] - this->data[1][1] * this->data[0][2];
 
-    T det = +data[0][0] * (data[1][1] * A2323 - data[2][1] * A1323 + data[3][1] * A1223)
-            - data[1][0] * (data[0][1] * A2323 - data[2][1] * A0323 + data[3][1] * A0223)
-            + data[2][0] * (data[0][1] * A1323 - data[1][1] * A0323 + data[3][1] * A0123)
-            - data[3][0] * (data[0][1] * A1223 - data[1][1] * A0223 + data[2][1] * A0123);
+    T det = + this->data[0][0] * (this->data[1][1] * A2323 - this->data[2][1] * A1323 + this->data[3][1] * A1223)
+            - this->data[1][0] * (this->data[0][1] * A2323 - this->data[2][1] * A0323 + this->data[3][1] * A0223)
+            + this->data[2][0] * (this->data[0][1] * A1323 - this->data[1][1] * A0323 + this->data[3][1] * A0123)
+            - this->data[3][0] * (this->data[0][1] * A1223 - this->data[1][1] * A0223 + this->data[2][1] * A0123);
     det = (T)1 / det;
 
     return mat4x4{
-      det * (data[1][1] * A2323 - data[2][1] * A1323 + data[3][1] * A1223),
-      det * -(data[1][0] * A2323 - data[2][0] * A1323 + data[3][0] * A1223),
-      det * (data[1][0] * A2313 - data[2][0] * A1313 + data[3][0] * A1213),
-      det * -(data[1][0] * A2312 - data[2][0] * A1312 + data[3][0] * A1212),
-      det * -(data[0][1] * A2323 - data[2][1] * A0323 + data[3][1] * A0223),
-      det * (data[0][0] * A2323 - data[2][0] * A0323 + data[3][0] * A0223),
-      det * -(data[0][0] * A2313 - data[2][0] * A0313 + data[3][0] * A0213),
-      det * (data[0][0] * A2312 - data[2][0] * A0312 + data[3][0] * A0212),
-      det * (data[0][1] * A1323 - data[1][1] * A0323 + data[3][1] * A0123),
-      det * -(data[0][0] * A1323 - data[1][0] * A0323 + data[3][0] * A0123),
-      det * (data[0][0] * A1313 - data[1][0] * A0313 + data[3][0] * A0113),
-      det * -(data[0][0] * A1312 - data[1][0] * A0312 + data[3][0] * A0112),
-      det * -(data[0][1] * A1223 - data[1][1] * A0223 + data[2][1] * A0123),
-      det * (data[0][0] * A1223 - data[1][0] * A0223 + data[2][0] * A0123),
-      det * -(data[0][0] * A1213 - data[1][0] * A0213 + data[2][0] * A0113),
-      det * (data[0][0] * A1212 - data[1][0] * A0212 + data[2][0] * A0112),
+      det *  (this->data[1][1] * A2323 - this->data[2][1] * A1323 + this->data[3][1] * A1223),
+      det * -(this->data[1][0] * A2323 - this->data[2][0] * A1323 + this->data[3][0] * A1223),
+      det *  (this->data[1][0] * A2313 - this->data[2][0] * A1313 + this->data[3][0] * A1213),
+      det * -(this->data[1][0] * A2312 - this->data[2][0] * A1312 + this->data[3][0] * A1212),
+      det * -(this->data[0][1] * A2323 - this->data[2][1] * A0323 + this->data[3][1] * A0223),
+      det *  (this->data[0][0] * A2323 - this->data[2][0] * A0323 + this->data[3][0] * A0223),
+      det * -(this->data[0][0] * A2313 - this->data[2][0] * A0313 + this->data[3][0] * A0213),
+      det *  (this->data[0][0] * A2312 - this->data[2][0] * A0312 + this->data[3][0] * A0212),
+      det *  (this->data[0][1] * A1323 - this->data[1][1] * A0323 + this->data[3][1] * A0123),
+      det * -(this->data[0][0] * A1323 - this->data[1][0] * A0323 + this->data[3][0] * A0123),
+      det *  (this->data[0][0] * A1313 - this->data[1][0] * A0313 + this->data[3][0] * A0113),
+      det * -(this->data[0][0] * A1312 - this->data[1][0] * A0312 + this->data[3][0] * A0112),
+      det * -(this->data[0][1] * A1223 - this->data[1][1] * A0223 + this->data[2][1] * A0123),
+      det *  (this->data[0][0] * A1223 - this->data[1][0] * A0223 + this->data[2][0] * A0123),
+      det * -(this->data[0][0] * A1213 - this->data[1][0] * A0213 + this->data[2][0] * A0113),
+      det *  (this->data[0][0] * A1212 - this->data[1][0] * A0212 + this->data[2][0] * A0112),
     };
   }
 
