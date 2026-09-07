@@ -43,44 +43,15 @@ set(SRC
     src/commons/events.hh
     src/commons/serialization.hh
 
-    src/buffer.cc
-    src/commons/buffer.hh
-    src/misc.cc
-    src/commons/misc.hh
-    src/stringtools.cc
-    src/commons/stringtools.hh
-    src/fileio.cc
-    src/commons/fileio.hh
-    src/logger.cc
-    src/commons/logger.hh
-    src/scheduling.cc
-    src/commons/scheduling.hh
-    src/threadpool.cc
-    src/commons/threadpool.hh
-    src/dataBuffer.cc
-    src/commons/dataBuffer.hh
-    src/random.cc
-    src/commons/random.hh
-
-    src/commons/math/general.hh
-    src/commons/math/util.hh
-    src/commons/math/glmconversion.hh
-    src/commons/math/interpolation.hh
-    src/commons/math/compound.hh
-    src/commons/math/vec2.hh
-    src/commons/math/vec3.hh
-    src/commons/math/vec4.hh
-    src/commons/math/circle.hh
-    src/commons/math/mat3.hh
-    src/commons/math/mat4.hh
-    src/commons/math/quaternion.hh
-    src/commons/math/capsule.hh
-    src/commons/math/obb.hh
-    src/commons/math/quad.hh
-    src/commons/math/triangle.hh
-    src/commons/math/aabb.hh
-    src/commons/math/linesegment.hh
-    src/commons/math/sphere.hh
-    src/commons/math/intersection.hh)
+    src/buffer.cc src/commons/buffer.hh
+    src/misc.cc src/commons/misc.hh
+    src/stringtools.cc src/commons/stringtools.hh
+    src/fileio.cc src/commons/fileio.hh
+    src/logger.cc src/commons/logger.hh
+    src/scheduling.cc src/commons/scheduling.hh
+    src/threadpool.cc src/commons/threadpool.hh
+    src/dataBuffer.cc src/commons/dataBuffer.hh
+    src/random.cc src/commons/random.hh
+)
 
 add_library(${PROJECT_NAME} STATIC ${SRC})
