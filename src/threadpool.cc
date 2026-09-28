@@ -14,18 +14,27 @@ ThreadPool::~ThreadPool()
 
 void ThreadPool::threadRun()
 {
-  while(this->runSem)
+  while(true)
   {
+    std::unique_ptr<TaskBase> task = nullptr;
     {
-      std::unique_lock lock{this->cvMutex};
-      this->queueCV.wait_for(lock, std::chrono::milliseconds(5000));
-    }
-    {
-      std::unique_lock lock{this->queueMutex};
-      if(this->taskQueue.empty()) continue;
-      const auto task = std::move(this->taskQueue.front());
+      std::unique_lock lock(this->queueMutex);
+      this->queueCV.wait(lock, [this]() -> bool
+      {
+        return !this->runSem.load() || !this->taskQueue.empty();
+      });
+
+      if(!this->runSem.load() && this->taskQueue.empty())
+      {
+        return;
+      }
+
+      task = std::move(this->taskQueue.front());
       this->taskQueue.pop();
-      lock.unlock();
+    }
+
+    if(task)
+    {
       task->execute();
     }
   }

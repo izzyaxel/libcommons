@@ -16,13 +16,18 @@ struct ThreadPool
   
   template <typename F, typename... Args> auto enqueue(F func, Args... args)
   {
-    auto invokeBinding = std::bind(std::forward<F>(std::move(func)), std::forward<Args>(args)...);
+    auto invokeBinding = [func = std::forward<F>(func), ...args = std::forward<Args>(args)]() mutable
+    {
+      return std::invoke(std::move(func), std::move(args)...);
+    };
+    
     using invokePkg = std::packaged_task<std::invoke_result_t<decltype(invokeBinding)>()>;
     invokePkg pkg{std::move(invokeBinding)};
     auto future = pkg.get_future();
-    this->queueMutex.lock();
+
+    std::unique_lock lock{this->queueMutex};
     this->taskQueue.push(std::make_unique<Task<invokePkg>>(std::move(pkg)));
-    this->queueMutex.unlock();
+    lock.unlock();
     this->queueCV.notify_one();
     return future;
   }
